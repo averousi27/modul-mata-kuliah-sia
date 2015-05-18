@@ -93,11 +93,10 @@ public class CapPembMKController {
 	}	
 	@RequestMapping(value = "/simpan", method = RequestMethod.POST)
     public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("capPembMK") CapPembMK capPembMK, 
-    		@RequestParam ("idMK") UUID idMK, @RequestParam ("idCapPemb[]") UUID[] idCapPemb,
+    		@RequestParam ("idMK") UUID idMK, @RequestParam ("idIndukCapPemb[]") UUID[] idCapPemb,
     		BindingResult result, Map<String, Object> model) {
 		AjaxResponse response = new AjaxResponse();   
-		MK mk = mkServ.findById(idMK);  
-		capPembMK.setMk(mk);
+		
         if (result.hasErrors()) {
         	response.setStatus("error");
         	List<FieldError> fieldError = result.getFieldErrors();
@@ -113,18 +112,15 @@ public class CapPembMKController {
         	response.setData(fieldError);
             return response;
         } 
-        response.setData(capPembMKServ.save(capPembMK));   
-        if(idCapPemb.length>1){
-        	for (UUID uuid : idCapPemb) {
-	        	if(uuid!=null){ 
-	        		CapPemb cp = capPembServ.findById(uuid);
-		        	SubCapPembMK subCapPembMKNew = new SubCapPembMK();  
-		        	subCapPembMKNew.setCapPemb(cp);
-		        	subCapPembMKNew.setCapPembMK(capPembMK);
-		        	response.setData(subCapPembMKServ.save(subCapPembMKNew));   
-	        	}
-        	}	  
+        MK mk = mkServ.findById(idMK);  
+		capPembMK.setMk(mk);
+        response.setData(capPembMKServ.save(capPembMK));    
+        List<SubCapPembMK> scpMKList = subCapPembMKServ.findCapPemb(capPembMK.getIdCapPembMK().toString()); 
+        if(scpMKList!=null){
+        	for(SubCapPembMK scpmk : scpMKList){
+        		subCapPembMKServ.delete(scpmk.getIdSubCapPembMK()); 
         } 
+    }
         
         if(response.getData()!=null) response.setMessage("Data berhasil disimpan");
         else

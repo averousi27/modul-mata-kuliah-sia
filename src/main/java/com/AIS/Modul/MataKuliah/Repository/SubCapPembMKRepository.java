@@ -19,6 +19,10 @@ public interface SubCapPembMKRepository {
 	public long count(String string);
 
 	public List<SubCapPembMK> findParent(String idCapPembMK);
+
+	public void delete(UUID idSubCapPembMK);
+
+	public SubCapPembMK findById(UUID idSubCapPembMK);
  
 
 }

@@ -90,4 +90,10 @@ public class SubCapPembMKServiceImpl implements SubCapPembMKService {
 		// TODO Auto-generated method stub
 		return subCapPembMKRepo.findParent(idCapPembMK);
 	}
+
+	@Override
+	public void delete(UUID idSubCapPembMK) {
+		// TODO Auto-generated method stub
+		 subCapPembMKRepo.delete(idSubCapPembMK);
+	}
 }

@@ -474,8 +474,7 @@
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script>
 					var showModal;
-					$(document).ready(function(){ 
-						$('#parentCapPemb').html("");
+					$(document).ready(function(){  
 						$('#masterpage').masterPage(
 						{ 
 							detailFocusId: '#idCapPemb',

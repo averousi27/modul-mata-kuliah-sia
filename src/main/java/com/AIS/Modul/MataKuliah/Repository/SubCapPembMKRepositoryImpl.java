@@ -116,5 +116,30 @@ public class SubCapPembMKRepositoryImpl implements SubCapPembMKRepository {
 		System.out.println(queryResult.get(0).getCapPemb().getNamaCapPemb());
 		if(queryResult.size()==0) return null;
 		return queryResult;
+	}
+
+	@Override
+	public void delete(UUID idSubCapPembMK) {
+		// TODO Auto-generated method stub
+		SubCapPembMK scpMKObj = findById(idSubCapPembMK);
+		if(scpMKObj!=null){ 
+			sessionFactory.getCurrentSession().delete(scpMKObj);
+        	sessionFactory.getCurrentSession().flush();
+		} 
+        System.out.println("data sudah terhapus");
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public SubCapPembMK findById(UUID idSubCapPembMK) {
+		// TODO Auto-generated method stub
+		List<SubCapPembMK> queryResult = sessionFactory.getCurrentSession().createQuery("select scpmk from SubCapPembMK scpmk "
+				+ "join scpmk.capPemb cp "
+				+ "join scpmk.capPembMK cpmk "
+				+ "join cpmk.mk mk "
+		        + "join cp.kurikulum kur "
+		        + "join cp.satMan satman WHERE scpmk.idSubCapPembMK='"+ idSubCapPembMK.toString() +"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult.get(0);
 	} 
 }

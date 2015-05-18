@@ -366,7 +366,7 @@
 							<div class="row">
 								<div class="col-md-8 masteractions">
 									<div class="pull-right">  
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/rumpun/'">
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/rencanapembelajaran/'">
 											  Selanjutnya >>
 										</button>
 									</div> 
@@ -406,7 +406,7 @@
 											<button type="button" class="btn btn-primary" onclick="showModal()">Tambah capaian pembelajaran satuan manajemen</button>
 										</div>  
 										 <div id="capPembDiv">   
-										 <input type='hidden' name='idCapPemb[]' value="" />
+										 <input type='hidden' name='idIndukCapPemb[]' value="" />
 										 </div> 
 										<div class="form-group">
 											<label>Nama Capaian Belajar Mata Kuliah</label>
@@ -528,9 +528,9 @@
 									contentType : 'application/json; charset=utf-8', 
 									traditional : true, 
 									success : function(data){  
-										var labelId = "idCapPemb";
+										var labelId = "indukCapPemb";
 										console.log(data); 
-										$("#capPembDiv").html("<input type='hidden' name='idCapPemb[]' value=''/>"); 
+										$("#capPembDiv").html("<input type='hidden' name='idIndukCapPemb[]' value=''/>"); 
 										for(var i=0; i<data.data.length; ++i){
 											if(data.data[i].capPemb != null){
 												console.log(data.data[i].capPemb.namaCapPemb);
@@ -539,10 +539,10 @@
 															+ "<button type='button' id='button1' class='close' data-dismiss='alert' aria-hidden='true' onclick='removeHiddenId(\"" + labelId + i + "\")'>x</button>" 
 															+"<p>"+data.data[i].capPemb.namaCapPemb+"<p>"
 														+"</div>"
-														+"<input type='hidden' id='"+ labelId + i +"' name='idCapPemb[]' value='"+data.data[i].capPemb.idCapPemb+"' />")
+														+"<input type='hidden' id='"+ labelId + i +"' name='idIndukCapPemb[]' value='"+data.data[i].capPemb.idCapPemb+"' />")
 											} 
 											else{
-													$("#capPembDiv").append("<input type='hidden' name='idCapPemb[]' value=''/>"); 
+													$("#capPembDiv").append("<input type='hidden' name='idIndukCapPemb[]' value=''/>"); 
 											}
 										}  
 									},
@@ -570,7 +570,7 @@
 						})
 						$('#masterpageCapPembMK').masterPage(
 						{
-							detailFocusId: '#idCapPemb',
+							detailFocusId: '#idIndukCapPemb',
 							dataUrl: context_path+'matakuliah/capaianbelajar/subcapaian/json',
 							detailUrl: context_path+'matakuliah/capaianbelajar/subcapaian/edit',
 							primaryKey: 'idCapPemb',
@@ -606,7 +606,7 @@
 											+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>x</button>"
 											+"<p>"+aData[4]+"<p>"
 										+"</div>" 
- 										+"<input type='hidden' name='idCapPemb[]' value='"+ aData[0] +"' />"
+ 										+"<input type='hidden' name='idIndukCapPemb[]' value='"+ aData[0] +"' />"
 										);  
 								$('#myModal').modal('toggle');
 							}

@@ -1,6 +1,7 @@
 package com.AIS.Modul.MataKuliah.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.sia.main.domain.CapPemb;
 import com.sia.main.domain.CapPembMK;
@@ -18,5 +19,7 @@ public interface SubCapPembMKService {
 	public String save(SubCapPembMK subCapPembMKNew);
 
 	public List<SubCapPembMK> findCapPemb(String idCapPembMK);
+
+	public void delete(UUID idSubCapPembMK);
 
 }
