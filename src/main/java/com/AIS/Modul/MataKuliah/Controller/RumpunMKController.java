@@ -92,8 +92,7 @@ public class RumpunMKController {
     public @ResponseBody AjaxResponse edit(@RequestParam("idRumpunMK") UUID idRumpunMK) {
 		AjaxResponse response;
 		RumpunMK rumpunMK = rumpunMKServ.findById(idRumpunMK);
-		rumpunMK.setStatusRumpunMK(rumpunMK.getStatusRumpunMK());
-		System.out.println("ini status sblm diupdate1 "+rumpunMK.getStatusRumpunMK());
+		rumpunMK.setStatusRumpunMK(rumpunMK.getStatusRumpunMK()); 
 		if(rumpunMK == null) response = new AjaxResponse("error","Data tidak ditemukan",null);
 		else response = new AjaxResponse("ok","Data ditemukan",rumpunMK);
         return response;

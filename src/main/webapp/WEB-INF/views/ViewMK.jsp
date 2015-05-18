@@ -333,7 +333,7 @@
 												<div class="form-group">
 													<label>Status Aktif</label>
 													<select id="filter" name="filter">
-														<option value="true">Aktif</option>
+														<option value="false">Aktif</option>
 														<option value="">Semua</option>
 													</select>
 												</div> 
@@ -506,7 +506,7 @@
 								{ 
 									"bVisible":    false, 
 									mRender: function(data,type,full){
-										if(full[9] == 'true') return "Aktif";
+										if(full[9] == 'false') return "Aktif";
 										else return "Non-Aktif";
 									}
 								},
@@ -516,7 +516,7 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[9]=='true') action += ' <button type="button" class="btn btn-danger deleterow">Non-Aktif</button>'
+										if(full[9]=='false') action += ' <button type="button" class="btn btn-danger deleterow">Non-Aktif</button>'
 										return action;
 									}
 								}

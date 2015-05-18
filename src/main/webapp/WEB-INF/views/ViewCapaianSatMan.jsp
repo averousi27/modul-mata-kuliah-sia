@@ -558,9 +558,9 @@
 												
 											}
 											
-											else{
-													$("#parentCapPemb").append("<input type='hidden' name='idIndukCapPemb[]' value=''/>"); 
-											}
+											//else{
+											//		$("#parentCapPemb").append("<input type='hidden' name='idIndukCapPemb[]' value=''/>"); 
+											//}
 										}
 										
 									},
