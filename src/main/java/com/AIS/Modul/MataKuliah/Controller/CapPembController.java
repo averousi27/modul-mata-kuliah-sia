@@ -135,6 +135,7 @@ public class CapPembController {
 		            subCapPembNew.setParentCapPemb(parentCapPemb);
 		            subCapPembNew.setChildCapPemb(capPemb);
 		            response.setData(subCapPembServ.save(subCapPembNew)); 
+		            System.out.println("sub capaian sudah ditambahkan");
 	        	}
         	}	  
         }
@@ -143,6 +144,7 @@ public class CapPembController {
             subCapPembNew.setParentCapPemb(null);
             subCapPembNew.setChildCapPemb(capPemb);
             response.setData(subCapPembServ.save(subCapPembNew));
+            System.out.println("sub capaian sudah ditambahkan");
         }
         
         if(response.getData()!=null) response.setMessage("Data berhasil disimpan");

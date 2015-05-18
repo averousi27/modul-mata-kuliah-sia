@@ -123,6 +123,6 @@ public class SubCapPembRepositoryImpl implements SubCapPembRepository {
 			sessionFactory.getCurrentSession().delete(scpObj);
         	sessionFactory.getCurrentSession().flush();
 		} 
-        System.out.println("data sudah terhapus");
+        System.out.println("sub capaian sudah dihapus dari repository");
 	} 
 }
