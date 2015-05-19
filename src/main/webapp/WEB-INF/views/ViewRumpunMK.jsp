@@ -396,8 +396,8 @@
 											<label>Status Aktif Rumpun Mata Kuliah</label>
 											<select id="statusRumpunMK" name="statusRumpunMK" class="form-control">
 													<option value="">Pilih status keaktifan rumpun mata kuliah</option>  
-													<option value="true">Aktif</option>  
-													<option value="false">Non-Aktif</option>  
+													<option value="false">Aktif</option>  
+													<option value="true">Non-Aktif</option>  
 											<select> 
 										</div>
 										<div class="form-group detailcontrol">
