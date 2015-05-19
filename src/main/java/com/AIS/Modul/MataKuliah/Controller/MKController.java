@@ -28,9 +28,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
 import com.sia.main.domain.*;
 import com.AIS.Modul.MataKuliah.Service.AjaxResponse;
 import com.AIS.Modul.MataKuliah.Service.Datatable;
+import com.AIS.Modul.MataKuliah.Service.KonversiNilaiService;
 import com.AIS.Modul.MataKuliah.Service.KurikulumService;
 import com.AIS.Modul.MataKuliah.Service.MKService;
 import com.AIS.Modul.MataKuliah.Service.RumpunMKService;
@@ -51,6 +53,9 @@ public class MKController {
 	private MKService mkServ;
 	
 	@Autowired
+	private KonversiNilaiService konversiNilaiServ;
+	
+	@Autowired
 	private SatManService satManServ;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MKController.class);
@@ -61,10 +66,12 @@ public class MKController {
 		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
 		List<RumpunMK> rumpunMKList = rumpunMKServ.findAll();
 		List<SatMan> satManList = satManServ.findAll();
+		List<KonversiNilai> konversiNilaiList = konversiNilaiServ.findAll();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("kurikulumList", kurikulumList);
 		mav.addObject("rumpunMKList", rumpunMKList);
 		mav.addObject("satManList", satManList);
+		mav.addObject("konversiNilaiList", konversiNilaiList);
 		mav.addObject("mk", mk);
 		mav.setViewName("ViewMK");  
 		return mav;
@@ -85,8 +92,10 @@ public class MKController {
 		return rumpunMKDatatable;
 	} 
 	@RequestMapping(value = "/simpan", method = RequestMethod.POST)
-    public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("MK") MK mk, @RequestParam("idKurikulum") UUID idKurikulum, 
+    public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("MK") MK mk, 
+    		@RequestParam("idKurikulum") UUID idKurikulum, 
     		@RequestParam("idRumpunMK") UUID idRumpunMK,
+    		@RequestParam("idKonversi") UUID idKonversi,
     		BindingResult result, Map<String, Object> model) { 
 		AjaxResponse response = new AjaxResponse(); 
 		if(idRumpunMK!=null){ 
@@ -96,9 +105,10 @@ public class MKController {
 		else{ 
 			mk.setRumpunMK(null);
 		}  
+		KonversiNilai konvNilai = konversiNilaiServ.findById(idKonversi);
 		Kurikulum kurikulumObj = kurikulumServ.findById(idKurikulum);
 		mk.setKurikulum(kurikulumObj);
-		
+		mk.setKonversiNilai(konvNilai);
         if (result.hasErrors()) {
         	response.setStatus("error");
         	List<FieldError> fieldError = result.getFieldErrors();
@@ -140,24 +150,5 @@ public class MKController {
 		}
 		response = new AjaxResponse("ok","Data telah di non-aktifkan",null);
         return response;
-    } 
-	
-	/*@RequestMapping(value="/getcappemblist", method = RequestMethod.GET)
-	public @ResponseBody AjaxResponse getCapPembList(@RequestParam("idCapPembSatMan") String idCapPembSatMan) {
-		AjaxResponse respongan = null;
-		List<UUID> idIndukCapPemb = new ArrayList<UUID>();  
-		List<SubCapPemb> scpList = subCapPembServ.findParent(idCapPemb);  
-		if(scpList!=null){
-			for(SubCapPemb scp : scpList){  
-				if(scp.getParentCapPemb()!=null){ 
-					idIndukCapPemb.add(scp.getParentCapPemb().getIdCapPemb()); 
-				} 
-				else{
-					idIndukCapPemb.add(null); 
-				}
-			} 
-			respongan = new AjaxResponse("ok","Success",scpList); 
-		} 
-		return respongan;
-	}*/
+    }  
 }

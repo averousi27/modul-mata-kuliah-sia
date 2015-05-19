@@ -358,6 +358,7 @@
 											<td>Tingkat</td> 
 											<td>Jumlah SKS</td>   
 											<td>Sifat MK</td>
+											<td>Nilai Minimal MK</td>
 											<td>Deskripsi MK</td>  
 											<td>Status Aktif</td>
 											<td>Aksi</td>
@@ -414,7 +415,7 @@
 												</select>
 										</div>
 										<div class="form-group">
-											<label>Nama Rumpun Mata Kuliah</label>
+											<label>Rumpun Mata Kuliah</label>
 											<select id="idRumpunMK" name="idRumpunMK" class="form-control">
 													<option value="">Pilih rumpun untuk mata kuliah</option> 
 												<c:forEach items="${rumpunMKList}" var="rumpunMK"> 
@@ -439,6 +440,15 @@
 											</select>
 										</div>
 										<div class="form-group">
+											<label>Nilai Minimal Mata Kuliah</label>
+											<select id="idKonversi" name="idKonversi" class="form-control" required="true">
+													<option value="">Pilih nilai minimal untuk mata kuliah</option> 
+												<c:forEach items="${konversiNilaiList}" var="konvNilai"> 
+													<option value="${konvNilai.idKonversi}">${konvNilai.huruf} - Batas bawah : ${konvNilai.batasBawah} </option>
+												</c:forEach> 
+											</select>
+										</div>
+										<div class="form-group">
 											<label>Deskripsi Mata Kuliah</label>
 											<form:input path="deskripsiMK" class="form-control" placeholder="Berisi deskripsi mata kuliah"/>
 										</div>
@@ -446,8 +456,8 @@
 											<label>Status Keaktifan Mata Kuliah</label>
 											<select id="statusMK" name="statusMK" class="form-control">
 													<option value="">Pilih status keaktifan mata kuliah</option>
-													<option value="true">Aktif</option>
-													<option value="false">Non-aktif</option>
+													<option value="false">Aktif</option>
+													<option value="true">Non-aktif</option>
 											</select>
 										</div>
 										<div class="form-group detailcontrol">
@@ -486,9 +496,9 @@
 								/* nama mata kuliah */
 								{ "bVisible":    true }, 
 								/* tahun kurikulum */
-								{ "bVisible":    true }, 
+								{ "bVisible":    false }, 
 								/* nama rumpun mk */
-								{ "bVisible":    true }	, 
+								{ "bVisible":    false }	, 
 								/* tingkat pembelajaran */
 								{ "bVisible":    true }, 
 								/* jumlah sks */
@@ -500,13 +510,15 @@
 										else return "Pilihan";
 									}	
 								}, 
+								/* nilai minimal */
+								{ "bVisible":    true }, 
 								/* deskripsi MK */
 								{ "bVisible":    false }, 
 								/*status kurikulum*/
 								{ 
 									"bVisible":    false, 
 									mRender: function(data,type,full){
-										if(full[9] == 'false') return "Aktif";
+										if(full[10] == 'false') return "Aktif";
 										else return "Non-Aktif";
 									}
 								},
@@ -516,7 +528,7 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[9]=='false') action += ' <button type="button" class="btn btn-danger deleterow">Non-Aktif</button>'
+										if(full[10]=='false') action += ' <button type="button" class="btn btn-danger deleterow">Non-Aktif</button>'
 										return action;
 									}
 								}
@@ -529,6 +541,7 @@
 								$("#idMK").val(response.data.idMK);
 								$("#idKurikulum").val(response.data.kurikulum.idKurikulum);
 								$("#idRumpunMK").val(response.data.rumpunMK.idRumpunMK);
+								$("#idKonversi").val(response.data.konversiNilai.idKonversi);
 							}
 						});
 					});

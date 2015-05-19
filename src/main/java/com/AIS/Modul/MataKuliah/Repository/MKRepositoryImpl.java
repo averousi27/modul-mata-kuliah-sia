@@ -26,7 +26,10 @@ public class MKRepositoryImpl implements MKRepository {
 		String dbWhere ="";
 		if(where != "") dbWhere = " WHERE "+where;
 		Query query = sessionFactory.getCurrentSession().createQuery(
-		        "select count(*) from MK mk inner join mk.kurikulum kur left join mk.rumpunMK rumpunMK"+dbWhere);
+		        "select count(*) from MK mk "
+		        + "inner join mk.kurikulum kur "
+		        + "inner join mk.konversiNilai kn "
+		        + "left join mk.rumpunMK rumpunMK"+dbWhere);
 		Long count = (Long)query.uniqueResult();
 		return count;
 	}
@@ -39,7 +42,10 @@ public class MKRepositoryImpl implements MKRepository {
 		if(where != "") dbWhere = " WHERE "+where;
 		if(order != "") dbOrder = " ORDER BY "+order;
 		 
-		Query query = sessionFactory.getCurrentSession().createQuery("select mk from MK mk inner join mk.kurikulum kur left join mk.rumpunMK rumpunMK "+dbWhere+dbOrder); 
+		Query query = sessionFactory.getCurrentSession().createQuery("select mk from MK mk "
+				+ "inner join mk.kurikulum kur "
+				+ "inner join mk.konversiNilai kn "
+				+ "left join mk.rumpunMK rumpunMK "+dbWhere+dbOrder); 
 		if(limit != -1 && limit>0) {
 			query.setFirstResult(offset);
 			if(offset < 0) offset = 0;
@@ -76,7 +82,10 @@ public class MKRepositoryImpl implements MKRepository {
 	@Override
 	public MK findById(UUID idMK) {
 		// TODO Auto-generated method stub
-		List<MK> queryResult = sessionFactory.getCurrentSession().createQuery("select mk from MK mk inner join mk.kurikulum kur left join mk.rumpunMK rumpunMK  WHERE mk.idMK='"+idMK.toString()+"'").list();
+		List<MK> queryResult = sessionFactory.getCurrentSession().createQuery("select mk from MK mk "
+				+ "inner join mk.kurikulum kur "
+				+ "inner join mk.konversiNilai kn "
+				+ "left join mk.rumpunMK rumpunMK  WHERE mk.idMK='"+idMK.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
 	}
@@ -85,7 +94,11 @@ public class MKRepositoryImpl implements MKRepository {
 	@Override
 	public List<MK> findAll() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("select mk from MK mk inner join mk.kurikulum kur left join mk.rumpunMK rumpunMK  where mk.statusMK = true").list();
+		return sessionFactory.getCurrentSession().createQuery("select mk from MK mk "
+				+ "inner join mk.kurikulum kur "
+				+ "left join mk.rumpunMK rumpunMK"
+				+ "inner join mk.konversiNilai kn "
+				+ " where mk.statusMK = true").list();
 		
 	}
 }

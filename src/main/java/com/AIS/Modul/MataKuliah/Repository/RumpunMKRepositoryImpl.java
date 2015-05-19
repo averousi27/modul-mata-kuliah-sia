@@ -28,6 +28,7 @@ public class RumpunMKRepositoryImpl implements RumpunMKRepository{
 		return count;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<RumpunMK> get(String where, String order, int limit, int offset) {
 		String dbWhere ="";
@@ -69,6 +70,7 @@ public class RumpunMKRepositoryImpl implements RumpunMKRepository{
 		return insertId;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public RumpunMK findById(UUID idRumpunMK) {
 		// TODO Auto-generated method stub
@@ -77,10 +79,11 @@ public class RumpunMKRepositoryImpl implements RumpunMKRepository{
 		return queryResult.get(0);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<RumpunMK> findAll() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("from RumpunMK where statusRumpunMK = true").list();
+		return sessionFactory.getCurrentSession().createQuery("from RumpunMK where statusRumpunMK = false").list();
 	}
 	
 }

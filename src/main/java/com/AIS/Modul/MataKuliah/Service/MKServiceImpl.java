@@ -17,8 +17,8 @@ public class MKServiceImpl implements MKService{
 	private MKRepository mkRepo;
 	
 	private String [] column = {"mk.idMK", "mk.kodeMK", "mk.namaMK", "kur.thnMulai", "rumpunMK.namaRumpunMK", "mk.tingkatPemb", 
-			"mk.jumlahSKS", "mk.sifatMK", "mk.deskripsiMK", "mk.statusMK"};
-	private Boolean[] searchable = {false,true,true,true,true,true,true,true,true,false};
+			"mk.jumlahSKS", "mk.sifatMK", "kn.huruf", "mk.deskripsiMK", "mk.statusMK"};
+	private Boolean[] searchable = {false,true,true,true,true,true,true,true,true,true,false};
 	
 	
 	@Override
@@ -34,7 +34,7 @@ public class MKServiceImpl implements MKService{
 			List<MK> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
 			List<String[]> aData = new ArrayList<String[]>();
 			for (MK mk : queryResult) {
-				String[] mkString = new String[11];
+				String[] mkString = new String[12];
 				mkString[0] = mk.getIdMK().toString();
 				mkString[1] = String.valueOf(mk.getKodeMK());
 				mkString[2] = String.valueOf(mk.getNamaMK());
@@ -46,9 +46,10 @@ public class MKServiceImpl implements MKService{
 				mkString[5] = String.valueOf(mk.getTingkatPemb());
 				mkString[6] = String.valueOf(mk.getJumlahSKS());
 				mkString[7] = String.valueOf(mk.getSifatMK());
-				mkString[8] = String.valueOf(mk.getDeskripsiMK());
-				mkString[9] = String.valueOf(mk.getStatusMK());
+				mkString[8] = String.valueOf(mk.getKonversiNilai().getHuruf());
+				mkString[9] = String.valueOf(mk.getDeskripsiMK());
 				mkString[10] = String.valueOf(mk.getStatusMK());
+				mkString[11] = String.valueOf(mk.getStatusMK());
 				aData.add(mkString);
 			}                                                                        
 			mkDatatable.setAaData(aData);
