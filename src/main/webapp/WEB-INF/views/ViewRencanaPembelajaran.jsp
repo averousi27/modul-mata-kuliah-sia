@@ -362,10 +362,10 @@
 												<td>Minggu Ke-</td> 
 												<td>Materi</td> 
 												<td>Target</td> 
+												<td>Pemetaan Capaian</td>
 												<td>Bahan Kajian</td> 
 												<td>Metode</td>
-												<td>Waktu</td>
-												<td>Status Hapus</td>
+												<td>Waktu</td> 
 												<td>Bentuk Penilaian</td>
 												<td>Bobot</td>
 												<td>Referensi</td>
@@ -495,7 +495,7 @@
 					var showModal;
 					$(document).ready(function(){  
 						$('#masterpage').masterPage(
-						{ 
+						{  
 							detailFocusId: '#idRPPerTemu',
 							dataUrl: context_path+'rencanapembelajaran/json',
 							detailUrl: context_path+'rencanapembelajaran/edit',
@@ -516,13 +516,15 @@
 									}
 								},
 								/* nama mk */
-								{ "bVisible":    true }, 
+								{ "bVisible":    false }, 
 								/* minggu ke */
 								{ "bVisible":    true }, 
 								/* materi */
 								{ "bVisible":    true }, 
 								/* target mingguan */
-								{ "bVisible":    false },
+								{ "bVisible":    false }, 
+								/* pemetaan capaian belajar */
+								{ "bVisible":    true },
 								/* bahan kajian */
 								{ "bVisible":    false },
 								/* metode pembelajaran */
@@ -539,7 +541,7 @@
 								{ 
 									"bVisible":    false, 
 									mRender: function(data,type,full){
-										if(full[11]=='false') return "Aktif";
+										if(full[12]=='false') return "Aktif";
 										return "Terhapus";
 									}
 								},
@@ -549,7 +551,7 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[11]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
+										if(full[12]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
 										return action;
 									}
 								}

@@ -16,7 +16,7 @@ public class MKServiceImpl implements MKService{
 	@Autowired
 	private MKRepository mkRepo;
 	
-	private String [] column = {"mk.namaMK", "rppt.mingguPembKe", "rppt..namaMK", "kur.thnMulai", "rumpunMK.namaRumpunMK", "mk.tingkatPemb", 
+	private String [] column = {"mk.idMK", "mk.kodeMK", "mk.namaMK", "kur.thnMulai", "rumpunMK.namaRumpunMK", "mk.tingkatPemb", 
 			"mk.jumlahSKS", "mk.sifatMK", "kn.huruf", "mk.deskripsiMK", "mk.statusMK"};
 	private Boolean[] searchable = {false,true,true,true,true,true,true,true,true,true,false};
 	
