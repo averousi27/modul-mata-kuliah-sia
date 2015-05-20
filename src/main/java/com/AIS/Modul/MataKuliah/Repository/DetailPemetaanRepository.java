@@ -1,9 +1,17 @@
 package com.AIS.Modul.MataKuliah.Repository;
 
+import java.util.List;
 import java.util.UUID;
+
+import com.sia.main.domain.DetailPemetaan;
 
 public interface DetailPemetaanRepository {
 
 	public boolean findRP(UUID idMK);
+
+	public long count(String string);
+
+	public List<DetailPemetaan> get(String where, String order, int limit,
+			int offset); 
 
 }
