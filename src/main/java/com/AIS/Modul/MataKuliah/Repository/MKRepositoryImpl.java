@@ -98,7 +98,7 @@ public class MKRepositoryImpl implements MKRepository {
 				+ "inner join mk.kurikulum kur "
 				+ "left join mk.rumpunMK rumpunMK"
 				+ "inner join mk.konversiNilai kn "
-				+ " where mk.statusMK = true").list();
+				+ " where mk.statusMK = false").list();
 		
 	}
 }
