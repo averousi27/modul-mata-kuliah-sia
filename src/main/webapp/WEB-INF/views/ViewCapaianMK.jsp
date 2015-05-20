@@ -393,7 +393,7 @@
 										<div class="form-group">
 											<label>Mata Kuliah</label>
 											<select id="idMK" name="idMK" class="form-control">
-													<option value="">Pilih kode dan nama kurikulum</option> 
+													<option value="">Pilih kode dan nama mata kuliah</option> 
 												<c:forEach items="${mkList}" var="mk"> 
 													<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
 												</c:forEach> 
@@ -585,6 +585,7 @@
 									bSortable: false,
 									bSearchable: false,
 									mRender: function(data,type,full){
+										console.log(data);
 										return '<button type="button" class="btn btn-primary">Pilih</button>';
 									}
 								},
@@ -600,18 +601,21 @@
 								{ "bVisible":    false }, 
 							],
 							callOnSelect : function(aData, options){
-								console.log(aData);  
+								console.log(aData);
+								var i;
 								$("#capPembDiv").append(
 										"<div class='alert alert-warning alert-dismissable'>"
-											+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>x</button>"
+											+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true' onclick='removeHiddenId(labelId)'>x</button>"
 											+"<p>"+aData[4]+"<p>"
 										+"</div>" 
- 										+"<input type='hidden' name='idIndukCapPemb[]' value='"+ aData[0] +"' />"
+ 										+"<input type='hidden' name='idIndukCapPemb[]' id='labelId' value='"+ aData[0] +"' />"
 										);  
 								$('#myModal').modal('toggle');
+								$('#')
 							}
 						});
 					});
+					
 				</script>
 				<!-- akhir script custom pada halaman -->
 				
