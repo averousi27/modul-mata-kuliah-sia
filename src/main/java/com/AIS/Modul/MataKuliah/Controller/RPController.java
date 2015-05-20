@@ -2,6 +2,7 @@ package com.AIS.Modul.MataKuliah.Controller;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import com.AIS.Modul.MataKuliah.Service.CapPembMKService;
 import com.AIS.Modul.MataKuliah.Service.DetailPemetaanService;
 import com.AIS.Modul.MataKuliah.Service.Datatable;
 import com.AIS.Modul.MataKuliah.Service.MKService;
+import com.AIS.Modul.MataKuliah.Service.RPService;
 import com.sia.main.domain.*;
 
 @Controller
@@ -27,6 +29,9 @@ public class RPController {
 	
 	@Autowired
 	private CapPembMKService capPembMKServ;
+	
+	@Autowired
+	private RPService rpServ;
 	
 	@Autowired
 	private DetailPemetaanService detailPemetaanServ;
@@ -51,12 +56,20 @@ public class RPController {
             @RequestParam("sSearch") String sSearch,
 			@RequestParam("iDisplayStart") int iDisplayStart,
 			@RequestParam("statusRPPerTemu") String statusRPPerTemu,
-			@RequestParam("optionMK") String namaMK
+			@RequestParam("optionMK") UUID idMK
             ) {
+		boolean isMKHasRP = rpServ.findRP(idMK.toString());
+		MK mk = mkServ.findById(idMK);
+		if(isMKHasRP!=true){
+			RP rp = new RP();
+			rp.setMk(mk);
+			rpServ.save(rp); 
+		}
 		String filter = "CAST(rppt.statusRPPerTemu as string) LIKE '%"+statusRPPerTemu+"%'";
-		Datatable rumpunMKDatatable = mkServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch, filter);
+		Datatable detailPemetaanDatatable = detailPemetaanServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, 
+				iSortCol_0, sSortDir_0, sSearch, filter, idMK);
 		
-		return rumpunMKDatatable;
+		return detailPemetaanDatatable;
 	} 
 	
 }

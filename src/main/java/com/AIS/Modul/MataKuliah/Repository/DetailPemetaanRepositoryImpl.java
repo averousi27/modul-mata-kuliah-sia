@@ -19,11 +19,11 @@ public class DetailPemetaanRepositoryImpl implements DetailPemetaanRepository{
 	public boolean findRP(UUID idMK) {
 		// TODO Auto-generated method stub
 	DetailPemetaan queryResult = (DetailPemetaan) sessionFactory.getCurrentSession().createQuery(
-				"from detailPemetaan dp "
+				"select dp from detailPemetaan dp "
 				+ "join dp.capPembMK cpmk"
 				+ "join dp.rpPerTemu rppt"
 				+ "join cpmk.mk mk"
-				+ "where mk.idMK = '"+idMK.toString()+"'");
+				+ "where mk.idMK = '"+idMK.toString()+"'"); 
 		return false;
 	}
 
