@@ -483,6 +483,7 @@
 									"bVisible":    true,
 									bSortable: false,
 									mRender: function(data,type,full){ 
+										console.log(data);
 										return '<input type="checkbox" class="checkbox-data" name="idCapPembMK[]" value="'+data+'">';
 									}
 								},
