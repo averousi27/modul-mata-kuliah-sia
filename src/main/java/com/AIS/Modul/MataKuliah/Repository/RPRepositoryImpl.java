@@ -1,5 +1,7 @@
 package com.AIS.Modul.MataKuliah.Repository;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +16,15 @@ public class RPRepositoryImpl implements RPRepository{
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public RP findRP(String idMK) {
 		// TODO Auto-generated method stub
-		RP queryResult = (RP)sessionFactory.getCurrentSession().createQuery("from RP rp "
+		List<RP> queryResult = sessionFactory.getCurrentSession().createQuery("select rp from RP rp "
 				+ "join rp.mk mk "
-				+ "where mk.idMK = '"+idMK.toString()+"'");
-		if(queryResult!=null) return queryResult;
-		else return null;
+				+ "where mk.idMK = '"+idMK+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult.get(0);
 	}
 
 	@Override

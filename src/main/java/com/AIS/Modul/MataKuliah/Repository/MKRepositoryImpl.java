@@ -101,4 +101,16 @@ public class MKRepositoryImpl implements MKRepository {
 				+ " where mk.statusMK = false").list();
 		
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public MK findByIdString(String idMK) {
+		// TODO Auto-generated method stub
+		List<MK> queryResult = sessionFactory.getCurrentSession().createQuery("select mk from MK mk "
+				+ "inner join mk.kurikulum kur "
+				+ "inner join mk.konversiNilai kn "
+				+ "left join mk.rumpunMK rumpunMK  WHERE mk.idMK='"+idMK+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult.get(0);
+	}
 }

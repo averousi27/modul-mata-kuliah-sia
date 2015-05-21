@@ -88,7 +88,7 @@ public class SubCapPembMKServiceImpl implements SubCapPembMKService {
 	@Override
 	public List<SubCapPembMK> findCapPemb(String idCapPembMK) {
 		// TODO Auto-generated method stub
-		return subCapPembMKRepo.findParent(idCapPembMK);
+		return subCapPembMKRepo.findCapPemb(idCapPembMK);
 	}
 
 	@Override

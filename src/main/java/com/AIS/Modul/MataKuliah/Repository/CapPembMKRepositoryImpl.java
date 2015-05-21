@@ -24,10 +24,7 @@ public class CapPembMKRepositoryImpl implements CapPembMKRepository{
 		// TODO Auto-generated method stub
 		String dbWhere ="";
 		if(where != "") dbWhere = " WHERE " +where;
-		Query query = sessionFactory.getCurrentSession().createQuery("select count(*) from SubCapPembMK scpmk "  
-				+ "join scpmk.capPemb cp "
-				+ "join scpmk.capPembMK cpmk "
-				+ "join cp.satMan satman "
+		Query query = sessionFactory.getCurrentSession().createQuery("select count(*) from CapPembMK cpmk "  
 				+ "join cpmk.mk mk" 
 		        +dbWhere);
 		Long count = (Long)query.uniqueResult();
@@ -41,16 +38,8 @@ public class CapPembMKRepositoryImpl implements CapPembMKRepository{
 		String dbWhere ="";
 		String dbOrder ="";
 		if(where != "") dbWhere = " WHERE "+where;
-		if(order != "") dbOrder = " ORDER BY "+order;
-//		 
-//		Query query = sessionFactory.getCurrentSession().createQuery("select cpmk from CapPembMK cpmk "  
-//				+ "join cpmk.mk mk" 
-//				+ ""
-//				+dbWhere+dbOrder);
-		Query query = sessionFactory.getCurrentSession().createQuery("select scpmk from SubCapPembMK scpmk "  
-				+ "join scpmk.capPemb cp "
-				+ "join scpmk.capPembMK cpmk "
-				+ "join cp.satMan satman "
+		if(order != "") dbOrder = " ORDER BY "+order; 
+		Query query = sessionFactory.getCurrentSession().createQuery("select cpmk from CapPembMK cpmk "   
 				+ "join cpmk.mk mk" 
 				+dbWhere+dbOrder);
 		if(limit != -1 && limit>0) {
@@ -89,7 +78,8 @@ public class CapPembMKRepositoryImpl implements CapPembMKRepository{
 	@Override
 	public CapPembMK findById(UUID idCapPembMK) {
 		// TODO Auto-generated method stub  
-		List<CapPembMK> queryResult = sessionFactory.getCurrentSession().createQuery("select cpmk from CapPembMK cpmk WHERE  cpmk.idCapPembMK='"+idCapPembMK.toString()+"'").list();
+		List<CapPembMK> queryResult = sessionFactory.getCurrentSession().createQuery("select cpmk from CapPembMK cpmk "
+				+ "join cpmk.mk mk WHERE cpmk.idCapPembMK='"+idCapPembMK.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
 	} 

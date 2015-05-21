@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon"
 		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Kelola Capaian Belajar untuk Mata Kuliah</title>
+	<title>Kelola Rencana Pembelajaran</title>
 	
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<meta charset="UTF-8">
@@ -323,12 +323,21 @@
 						<div class="col-md-12" style="margin-bottom:10px;">
 						 	<div class="panel panel-white">
 								<div class="panel-heading clearfix">
-									<h4 class="panel-title">Mata Kuliah</h4>
+									<h4 class="panel-title">Rencana Pembelajaran</h4>
 								</div>
 								<div class="panel-body">  
-									<p>Tabel menampilkan capaian pembelajaran untuk mata kuliah</p>
+									<p>Tabel menampilkan rencana pembelajaran mingguan</p>
 									<div class="row">
 										<div class="col-md-4">
+											<div class="form-group">
+												<label>Kode dan Nama Mata Kuliah</label>
+												<select id="optionMK" name="idMK" class="form-control">
+														<option value="">Pilih kode dan nama mata kuliah</option> 
+													<c:forEach items="${mkList}" var="mk"> 
+														<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
+													</c:forEach> 
+												</select>
+											</div>
 											<div class="form-group">
 												<label>Status Aktif</label>
 												<select id="filter" name="filter">
@@ -348,13 +357,19 @@
 											<tr>
 												<td> 
 														<input class="checkbox-all" type="checkbox" id="flat-checkbox-1"> 
-												</td>   
-												<td>Mata Kuliah</td>
-												<td>Capaian Utama</td> 
-												<td>Satuan Manajemen</td>
-												<td>Capaian Induk</td>
-												<td>Deskripsi Capaian</td>
-												<td>Status Hapus</td>
+												</td> 
+												<td>Nama Mata Kuliah</td>   
+												<td>Minggu Ke-</td> 
+												<td>Materi</td> 
+												<td>Target</td> 
+												<td>Pemetaan Capaian</td>
+												<td>Bahan Kajian</td> 
+												<td>Metode</td>
+												<td>Waktu</td> 
+												<td>Bentuk Penilaian</td>
+												<td>Bobot</td>
+												<td>Referensi</td>
+												<td>Status Aktif</td>
 												<td>Aksi</td>
 											</tr>
 										</thead>
@@ -364,14 +379,9 @@
 								</div>
 							</form>
 							<div class="row">
-								<div class="col-md-8 masteractions">
-									<div class="pull-right">  
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/rencanapembelajaran/'">
-											  Selanjutnya >>
-										</button>
-									</div> 
+								<div class="col-md-8 masteractions"> 
 									<div class="pull-right"> 
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/prasyarat/'">
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/capaianbelajar/'">
 											 << Kembali
 										</button>
 										</div>
@@ -385,39 +395,55 @@
 						<div class="col-md-6 col-md-offset-3">
 							<div class="panel panel-white">
 								<div class="panel-heading clearfix">
-									<h4 class="panel-title">Capaian Belajar</h4>
+									<h4 class="panel-title">Rencana Pembelajaran</h4>
 								</div>
 								<div class="panel-body">
-									<h4 id="title">Kelola capaian belajar untuk mata kuliah</h4>
-									<form:form role="form" commandName="capPembMK" class="formdetail">  
+									<h4 id="title">Kelola Rencana Pembelajaran Tiap Pertemuan</h4>
+									<form:form role="form" commandName="rpPerTemu" class="formdetail"> 
 										<div class="form-group">
-											<label>Mata Kuliah</label>
-											<select id="idMK" name="idMK" class="form-control">
-													<option value="">Pilih kode dan nama mata kuliah</option> 
-												<c:forEach items="${mkList}" var="mk"> 
-													<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
-												</c:forEach> 
-											</select>
-										</div>   
-										<div class="form-group">
-											<label>Capaian Pembelajaran dari Satuan Manajemen</label> 
-											<br />  
-											
-											<button type="button" class="btn btn-primary" onclick="showModal()">Tambah capaian pembelajaran satuan manajemen</button>
-										</div>  
-										 <div id="capPembDiv">   
-										 <input type='hidden' name='idCapPemb[]' value="" />
-										 </div> 
-										<div class="form-group">
-											<label>Nama Capaian Belajar Mata Kuliah</label>
-											<form:input path="namaCapPembMK" class="form-control" placeholder="Berisi nama capaian pembelajaran untuk mata kuliah" required="true" />
-											<form:hidden path="idCapPembMK" class="form-control" />
+											<label>Minggu Ke-</label>
+											<form:input path="mingguPembKe" class="form-control" placeholder="Berisi angka minggu pembelajaran" />
 										</div> 
 										<div class="form-group">
-											<label>Deskripsi Capaian Belajar Mata Kuliah</label>
-											<form:input path="deskripsiCapPembMK" class="form-control" placeholder="Berisi deskripsi capaian pembelajaran untuk mata kuliah" />
+											<label>Materi Pembelajaran</label>
+											<form:input path="materiPemb" class="form-control" placeholder="Berisi materi pembelajaran" />
 										</div>
-										
+										<div class="form-group">
+											<label>Target Mingguan</label>
+											<form:input path="materiPemb" class="form-control" placeholder="Berisi target pembelajaran mingguan" />
+										</div>
+										<div class="form-group">
+											<label>Pemetaan Capaian Pembelajaran Mata Kuliah</label> 
+											<br />  
+											<button type="button" class="btn btn-primary" onclick="showModal()">Tambah pemetaan capaian</button>
+											<div id="divCapPembMK">   
+										  		<input type='hidden' name='idCapPembMK[]' id="idCapPembMK" value=null />
+										 	</div>
+										</div>
+										<div class="form-group">
+											<label>Bahan Kajian</label>
+											<form:input path="bahanKajian" class="form-control" placeholder="Berisi bahan kajian pembelajaran" />
+										</div>
+										<div class="form-group">
+											<label>Metode Pembelajaran</label>
+											<form:input path="metodePemb" class="form-control" placeholder="Berisi metode pembelajaran" />
+										</div>
+										<div class="form-group">
+											<label>Waktu</label>
+											<form:input path="waktuPemb" class="form-control" placeholder="Berisi angka rentang waktu pembelajaran" />
+										</div>
+										<div class="form-group">
+											<label>Bentuk Penilaian</label>
+											<form:input path="bentukPenilaian" class="form-control" placeholder="Berisi bentuk penilaian pembelajaran" />
+										</div>
+										<div class="form-group">
+											<label>Bobot Penilaian</label>
+											<form:input path="bobotPenilaian" class="form-control" placeholder="Berisi bobot penilaian pembelajaran" />
+										</div>
+										<div class="form-group">
+											<label>Referensi</label>
+											<form:input path="referensiPemb" class="form-control" placeholder="Berisi referensi pembelajaran" />
+										</div> 
 										<div class="form-group detailcontrol">
 										</div>
 							        </form:form>
@@ -430,20 +456,18 @@
 				    <div class="modal-content">
 				      <div class="modal-header">
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				        <h4 class="modal-title">Capaian Pembelajaran dari Satuan Manajemen</h4>
+				        <h4 class="modal-title">Capaian Pembelajaran Mata Kuliah</h4>
 				      </div>
 				      <div class="modal-body">
-				      	<div id="masterpageCapPembMK"> 
+				      	<div id="masterpageCapPemb"> 
 							<form class="tableform">
 								<table class="table table-striped table-bordered table-hover table-checkable table-colvis datatable" style="width:100%">
 									<thead>
 										<tr>
 											<td>
 												#
-											</td>
-											<td>Tahun Kurikulum</td>
-											<td>Nama Kurikulum</td>
-											<td>Nama Satuan Manajemen</td>
+											</td> 
+											<td>Nama Mata Kuliah</td> 
 											<td>Nama Capaian</td>
 											<td>Deskripsi Capaian</td>  
 										</tr>
@@ -464,16 +488,16 @@
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script>
 					var showModal;
-					$(document).ready(function(){
+					$(document).ready(function(){  
 						$('#masterpage').masterPage(
-						{
-							detailFocusId: '#idCapPembMK',
-							dataUrl: context_path+'matakuliah/capaianbelajar/json',
-							detailUrl: context_path+'matakuliah/capaianbelajar/edit',
-							addUrl: context_path+'matakuliah/capaianbelajar/simpan',
-							editUrl: context_path+'matakuliah/capaianbelajar/simpan',
-							deleteUrl: context_path+'matakuliah/capaianbelajar/deletemany',
-							primaryKey: 'idCapPembMK',
+						{  
+							detailFocusId: '#idRPPerTemu',
+							dataUrl: context_path+'rencanapembelajaran/json',
+							detailUrl: context_path+'rencanapembelajaran/edit',
+							addUrl: context_path+'rencanapembelajaran/simpan',
+							editUrl: context_path+'rencanapembelajaran/simpan', 
+							deleteUrl: context_path+'rencanapembelajaran/deletemany',
+							primaryKey: 'idRPPerTemu',
 					        order: [[3,"asc"]],
 							editOnClick: false,
 							editOnClickRow: true,
@@ -482,26 +506,37 @@
 								{ 
 									"bVisible":    true,
 									bSortable: false,
-									mRender: function(data,type,full){ 
-										console.log(data);
-										return '<input type="checkbox" class="checkbox-data" name="idCapPembMK[]" value="'+data+'">';
+									mRender: function(data,type,full){
+										return '<input type="checkbox" class="checkbox-data" name="idRPPerTemu[]" value="'+data+'">';
 									}
 								},
-								/* mata kuliah */
+								/* nama mk */
+								{ "bVisible":    false }, 
+								/* minggu ke */
 								{ "bVisible":    true }, 
-								/* nama capaian utama */
+								/* materi */
 								{ "bVisible":    true }, 
-								/* Nama satuan manajemen */
-								{ "bVisible":    true }, 
-								/* nama capaian induk */
-								{ "bVisible":    true }, 
-								/* deskripsi capaian */
+								/* target mingguan */
+								{ "bVisible":    false }, 
+								/* pemetaan capaian belajar */
+								{ "bVisible":    true },
+								/* bahan kajian */
+								{ "bVisible":    false },
+								/* metode pembelajaran */
+								{ "bVisible":    true },
+								/* waktu pembelajaran */
+								{ "bVisible":    true },
+								/* bentuk nilai */
+								{ "bVisible":    true },
+								/* bobot penilaian */
+								{ "bVisible":    true },
+								/* referensi pembelajaran */
 								{ "bVisible":    false },
 								/*status hapus*/
 								{ 
 									"bVisible":    false, 
-									mRender: function(data,type,full){ 
-										if(full[6]=='false') return "Aktif";
+									mRender: function(data,type,full){
+										if(full[12]=='false') return "Aktif";
 										return "Terhapus";
 									}
 								},
@@ -511,50 +546,53 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[6]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
+										if(full[12]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
 										return action;
 									}
 								}
 							],
-							validationRules: {idMK:{required: true}, namaCapPembMK:{required: true}},
-							filters: [{id:'#filter', name:'statusCapPembMK'}],
-							callOnFillForm : function(response,options){   
-								$("#idCapPembMK").val(response.data.idCapPembMK); 
-								$("#idMK").val(response.data.mk.idMK);
+							validationRules: {idMK:{required: true}, mingguPembKe:{required: true, digits: true}, materiPemb:{required: true},
+								metodePemb:{required: true}, waktuPemb:{required: true, digits: true}, bentukPenilaian: {required: true}, 
+								bobotPenilaian: {required: true, digits: true}},
+							filters: [{id:'#filter', name:'statusRPPerTemu'}],
+							callOnFillForm : function(response,options){  
+								$("#idRPPerTemu").val(response.data.idRPPerTemu);
+								$("#idMK").val(response.data.kurikulum.idMK); 
 								$.ajax({
 									type: 'get',
-									url : context_path+'matakuliah/capaianbelajar/getcappemblist', 
+									url : context_path+'rencanapembelajaran/getcappembmk', 
 									dataType : 'json',
-									data : {'idCapPembMK' : $("#idCapPembMK").val()},
+									data : {'idRPPerTemu' : $("#idRPPerTemu").val()},
 									contentType : 'application/json; charset=utf-8', 
 									traditional : true, 
 									success : function(data){  
-										var labelId = "indukCapPemb";
+										var labelId = "idInduk";
 										console.log(data); 
-										$("#capPembDiv").html("<input type='hidden' name='idCapPemb[]' value=''/>"); 
+										$("#divCapPembMK").html("<input type='hidden' name='idCapPembMK[]' value='' />"); 
 										for(var i=0; i<data.data.length; ++i){
-											if(data.data[i].capPemb != null){
-												console.log(data.data[i].capPemb.namaCapPemb);
-												$("#capPembDiv").append(
+											if(data.data[i].capPembMK != null){
+												
+												console.log(data.data[i].capPembMK.namaCapPembMK);
+												$("#divCapPembMK").append(
 														"<div class='alert alert-warning alert-dismissable'>"
-															+ "<button type='button' id='button1' class='close' data-dismiss='alert' aria-hidden='true' onclick='removeHiddenId(\"" + labelId + i + "\")'>x</button>" 
-															+"<p>"+data.data[i].capPemb.namaCapPemb+"<p>"
+															+"<button type='button' id='button1' class='close' data-dismiss='alert' aria-hidden='true' onclick='removeHiddenId(\"" + labelId + i + "\")'>x</button>"
+															+"<p>"+data.data[i].capPembMK.namaCapPembMK+"<p>"
 														+"</div>"
-														+"<input type='hidden' id='"+ labelId + i +"' name='idCapPemb[]' value='"+data.data[i].capPemb.idCapPemb+"' />")
-											} 
-											else{
-													$("#capPembDiv").append("<input type='hidden' name='idCapPemb[]' value=''/>"); 
+														+"<input type='hidden' id='"+ labelId + i +"' name='idCapPembMK[]' value='"+data.data[i].capPembMK.idCapPembMK+"' />"		
+												)
+												
 											}
-										}  
+										}
+										
 									},
 									error: function(e){
-										alert("Data capaian satuan manajemen tidak ditemukan");
+										alert("Data capaian pembelajaran mata kuliah tidak ditemukan");
 									}
 								}); 
-							} 
-							
-						});
-						
+							}
+						}); 
+						 
+
 						removeHiddenId = function(id){ 
 							var str = '#' + id;
 							var hiddenLabel = $(str);
@@ -571,10 +609,10 @@
 						})
 						$('#masterpageCapPembMK').masterPage(
 						{
-							detailFocusId: '#idCapPemb',
-							dataUrl: context_path+'matakuliah/capaianbelajar/subcapaian/json',
-							detailUrl: context_path+'matakuliah/capaianbelajar/subcapaian/edit',
-							primaryKey: 'idCapPemb',
+							detailFocusId: '#idCapPembMK',
+							dataUrl: context_path+'rencanapembelajaran/subcapaian/json',
+							detailUrl: context_path+'rencanapembelajaran/subcapaian/edit',
+							primaryKey: 'idCapPembMK',
 					        order: [[3,"asc"]],
 							editOnClick: false,
 							dialogDetail: '',
@@ -586,35 +624,29 @@
 									bSortable: false,
 									bSearchable: false,
 									mRender: function(data,type,full){
-										console.log(data);
 										return '<button type="button" class="btn btn-primary">Pilih</button>';
 									}
 								},
-								/* tahun kurikulum */
-								{ "bVisible":    false },
-								/* nama kurikulum  */
+								/* nama mata kuliah  */
 								{ "bVisible":    true },
-								/* nama satuan manajemen */
-								{ "bVisible":    false },
-								/* nama capaian */
-								{ "bVisible":    true }, 
-								/* deskripsi */
+								/* nama capaian  */
+								{ "bVisible":    true },
+								/* deskripsi capaian */
 								{ "bVisible":    false }, 
 							],
 							callOnSelect : function(aData, options){
-								console.log(aData);
-								$("#capPembDiv").append(
+								console.log(aData);  
+								$("#divCapPembMK").append(
 										"<div class='alert alert-warning alert-dismissable'>"
 											+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>x</button>"
-											+"<p>"+aData[4]+"<p>"
+											+"<p>"+aData[2]+"<p>"
 										+"</div>" 
- 										+"<input type='hidden' name='idCapPemb[]' id='labelId' value='"+ aData[0] +"' />"
+ 										+"<input type='hidden' name='idIndukCapPemb[]' value='"+ aData[0] +"' />"
 										);  
-								$('#myModal').modal('toggle'); 
+								$('#myModal').modal('toggle');
 							}
-						});
-					});
-					
+						});  
+				});  
 				</script>
 				<!-- akhir script custom pada halaman -->
 				
@@ -653,4 +685,3 @@
 		</div> 
 	</body>
 </html>
-		

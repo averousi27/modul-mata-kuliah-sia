@@ -20,13 +20,11 @@ public class RPServiceImpl implements RPService {
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public boolean findRP(String idMK) {
+	public RP findRP(String idMK) {
 		// TODO Auto-generated method stub
 		RP rp = rpRepo.findRP(idMK.toString());
-		if(rp!=null){ 
-			return true;
-		}
-		return false;
+		if(rp!=null) return rp;
+		return null;
 	}
 
 	@Override

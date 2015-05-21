@@ -31,23 +31,22 @@ public class DetailPemetaanServiceImpl implements DetailPemetaanService {
 		return idRP;
 	}
 
-	private String [] column = {"mk.namaMK", "rppt.mingguPembKe", "rppt.materiPemb", "rppt.target", "cpmk.namaCapPembMK", "rppt.bahanKajian", 
+	private String [] column = {"rppt.idRPPerTemu", "mk.namaMK", "rppt.mingguPembKe", "rppt.materiPemb", "rppt.target", "cpmk.namaCapPembMK", "rppt.bahanKajian", 
 			"rppt.metodePemb", "rppt.waktuPemb", "rppt.bentukPenilaian", "rppt.bobotPenilaian", "rppt.referensiPemb", "rppt.statusRPPerTemu"};
-	private Boolean[] searchable = {false,true,true,true,false,true,false,true,true,true,false, false};
+	private Boolean[] searchable = {false, true,true,true,true,false,true,false,true,true,true,false, false};
 	
 	@Override
 	public Datatable getdatatable(String sEcho, int iDisplayLength,
 			int iDisplayStart, int iSortCol_0, String sSortDir_0,
-			String sSearch, String filter, UUID idMK) {
+			String sSearch, String filter) {
 		// TODO Auto-generated method stub
 		DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column, this.searchable, iSortCol_0, sSortDir_0);
 		Datatable detailPemetaanDatatable= new Datatable();
 		detailPemetaanDatatable.setsEcho(sEcho);
 		String dbFilter = "";
-		if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter+" AND mk."+idMK.toString(); 
+		if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter; 
 		List<DetailPemetaan> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
 		List<String[]> aData = new ArrayList<String[]>();
-		MK mkObj = mkServ.findById(idMK);
 		for (DetailPemetaan detailPemetaan : queryResult) {
 			String[] detailPemetaanString = new String[14]; 
 			detailPemetaanString[0] = detailPemetaan.getRpPerTemu().getIdRPPerTemu().toString();
@@ -81,5 +80,34 @@ public class DetailPemetaanServiceImpl implements DetailPemetaanService {
 		// TODO Auto-generated method stub
 		return detailPemetaanRepo.get(where, order, limit, offset);
 	}
+
+	@Override
+	public String save(DetailPemetaan detailPemetaanNew) {
+		// TODO Auto-generated method stub
+		if(detailPemetaanNew.getIdDetailPemetaan() != null)
+		{
+			//update
+			detailPemetaanRepo.update(detailPemetaanNew);
+			return detailPemetaanNew.getIdDetailPemetaan().toString();
+		}
+		else
+		{
+			//insert 
+			return detailPemetaanRepo.insert(detailPemetaanNew).toString();
+		}
+	}
+
+	@Override
+	public List<DetailPemetaan> findCapPembMK(String idRPPerTemu) {
+		// TODO Auto-generated method stub
+		return detailPemetaanRepo.findCapPembMK(idRPPerTemu);
+	}
+
+	@Override
+	public void delete(UUID idDetailPemetaan) {
+		// TODO Auto-generated method stub
+		
+	}
+ 
 	
 }

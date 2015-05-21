@@ -36,7 +36,7 @@ public class CapPembMKServiceImpl implements CapPembMKService {
 	private List<CapPembMK> get(String where, String order,
 			int limit, int iDisplayStart) {
 		// TODO Auto-generated method stub
-		return null;
+		return capPembMKRepo.get(where, order, limit, iDisplayStart);
 	}
 	
 	@Override
@@ -77,4 +77,33 @@ public class CapPembMKServiceImpl implements CapPembMKService {
 			return "Ok";
 		}
 	}
+
+	private String [] column = {"cpmk.idCapPembMK","mk.namaMK", "cpmk.namaCapPembMK", "cpmk.deskripsiCapPembMK"};
+	private Boolean[] searchable = {false,true,true,true};
+
+	
+	@Override
+	public Datatable getdatatable(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0, String sSearch) {
+		// TODO Auto-generated method stub
+		DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column, this.searchable, iSortCol_0, sSortDir_0);
+		Datatable capPembmkDatatable= new Datatable();
+		capPembmkDatatable.setsEcho(sEcho);
+		//String dbFilter = "AND cpmk.statusCapPembMK=false"; 
+		List<CapPembMK> queryResult = get("("+parameter.getWhere()+")", parameter.getOrder(), iDisplayLength, iDisplayStart);
+		List<String[]> aData = new ArrayList<String[]>();
+		for (CapPembMK capPembMK : queryResult) {
+			String[] capPembMKString = new String[9];
+			capPembMKString[0] = capPembMK.getIdCapPembMK().toString();
+			capPembMKString[1] = String.valueOf(capPembMK.getMk().getNamaMK());
+			capPembMKString[2] = String.valueOf(capPembMK.getNamaCapPembMK());
+			capPembMKString[3] = String.valueOf(capPembMK.getDeskripsiCapPembMK());
+			aData.add(capPembMKString);
+		}
+		capPembmkDatatable.setAaData(aData);
+		capPembmkDatatable.setiTotalRecords(capPembMKRepo.count(""));
+		capPembmkDatatable.setiTotalDisplayRecords(capPembMKRepo.count(parameter.getWhere()));
+
+		return capPembmkDatatable;
+	}  
 }

@@ -93,7 +93,7 @@ public class CapPembMKController {
 	}	
 	@RequestMapping(value = "/simpan", method = RequestMethod.POST)
     public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("capPembMK") CapPembMK capPembMK, 
-    		@RequestParam ("idMK") UUID idMK, @RequestParam ("idIndukCapPemb[]") UUID[] idCapPemb,
+    		@RequestParam ("idMK") UUID idMK, @RequestParam ("idCapPemb[]") UUID[] idCapPemb,
     		BindingResult result, Map<String, Object> model) {
 		AjaxResponse response = new AjaxResponse();   
 		
@@ -114,13 +114,35 @@ public class CapPembMKController {
         } 
         MK mk = mkServ.findById(idMK);  
 		capPembMK.setMk(mk);
-        response.setData(capPembMKServ.save(capPembMK));    
+        response.setData(capPembMKServ.save(capPembMK));   
+        //get data
         List<SubCapPembMK> scpMKList = subCapPembMKServ.findCapPemb(capPembMK.getIdCapPembMK().toString()); 
         if(scpMKList!=null){
         	for(SubCapPembMK scpmk : scpMKList){
         		subCapPembMKServ.delete(scpmk.getIdSubCapPembMK()); 
-        } 
-    }
+        	} 
+        }
+        //save
+        if(idCapPemb.length>1){
+        	for (UUID uuid : idCapPemb) {
+        		System.out.println(uuid);
+	        	if(uuid!=null){ 
+	        		CapPemb capPemb = capPembServ.findById(uuid);
+		        	SubCapPembMK subCapPembMKNew = new SubCapPembMK();
+		        	subCapPembMKNew.setCapPembMK(capPembMK);
+		        	subCapPembMKNew.setCapPemb(capPemb);
+		            response.setData(subCapPembMKServ.save(subCapPembMKNew)); 
+		            System.out.println("sub capaian sudah ditambahkan");
+	        	}
+        	}	  
+        }
+    	else{ 
+        	SubCapPembMK subCapPembMKNew = new SubCapPembMK();
+        	subCapPembMKNew.setCapPembMK(capPembMK);
+        	subCapPembMKNew.setCapPemb(null);
+            response.setData(subCapPembMKServ.save(subCapPembMKNew)); 
+            System.out.println("sub capaian sudah ditambahkan");
+        }
         
         if(response.getData()!=null) response.setMessage("Data berhasil disimpan");
         else

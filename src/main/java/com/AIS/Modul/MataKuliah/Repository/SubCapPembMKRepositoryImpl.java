@@ -32,8 +32,7 @@ public class SubCapPembMKRepositoryImpl implements SubCapPembMKRepository {
 		Query query = sessionFactory.getCurrentSession().createQuery("select scpmk from SubCapPembMK scpmk " 
 				+ "join scpmk.capPemb cp "
 				+ "join scpmk.capPembMK cpmk "
-				+ "join cpmk.mk mk "
-		        + "join cp.kurikulum kur "
+				+ "join cpmk.mk mk " 
 		        + "join cp.satMan satman " 
 		        +dbWhere+dbOrder);
 		if(limit != -1 && limit>0) {
@@ -96,8 +95,7 @@ public class SubCapPembMKRepositoryImpl implements SubCapPembMKRepository {
 		        "select count(*) from SubCapPembMK scpmk "
 				+ "join scpmk.capPemb cp "
 				+ "join scpmk.capPembMK cpmk "
-				+ "join cpmk.mk mk "
-		        + "join cp.kurikulum kur "
+				+ "join cpmk.mk mk " 
 		        + "join cp.satMan satman "  +dbWhere);
 		Long count = (Long)query.uniqueResult();
 		return count;
@@ -105,17 +103,19 @@ public class SubCapPembMKRepositoryImpl implements SubCapPembMKRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SubCapPembMK> findParent(String idCapPembMK) {
+	public List<SubCapPembMK> findCapPemb(String idCapPembMK) {
 		// TODO Auto-generated method stub
 		List<SubCapPembMK> queryResult = sessionFactory.getCurrentSession().createQuery( "select scpmk from SubCapPembMK scpmk "
 				+ "join scpmk.capPemb cp "
 				+ "join scpmk.capPembMK cpmk "
-				+ "join cpmk.mk mk "
-		        + "join cp.kurikulum kur "
-		        + "join cp.satMan satman WHERE cpmk.idCapPembMK='"+ idCapPembMK.toString() +"'").list(); 
-		System.out.println(queryResult.get(0).getCapPemb().getNamaCapPemb());
+				+ "join cpmk.mk mk " 
+		        + "join cp.satMan satman WHERE cpmk.idCapPembMK='"+ idCapPembMK+"'").list(); 
+		
 		if(queryResult.size()==0) return null;
-		return queryResult;
+		else {
+			System.out.println(queryResult.get(0).getCapPemb().getNamaCapPemb());
+			return queryResult;
+		}
 	}
 
 	@Override
@@ -136,8 +136,7 @@ public class SubCapPembMKRepositoryImpl implements SubCapPembMKRepository {
 		List<SubCapPembMK> queryResult = sessionFactory.getCurrentSession().createQuery("select scpmk from SubCapPembMK scpmk "
 				+ "join scpmk.capPemb cp "
 				+ "join scpmk.capPembMK cpmk "
-				+ "join cpmk.mk mk "
-		        + "join cp.kurikulum kur "
+				+ "join cpmk.mk mk " 
 		        + "join cp.satMan satman WHERE scpmk.idSubCapPembMK='"+ idSubCapPembMK.toString() +"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);

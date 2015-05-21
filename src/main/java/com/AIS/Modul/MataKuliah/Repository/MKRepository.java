@@ -18,5 +18,6 @@ public interface MKRepository {
 	public MK findById(UUID idMK);
 
 	public List<MK> findAll();
-	
+
+	public MK findByIdString(String idMK);
 }

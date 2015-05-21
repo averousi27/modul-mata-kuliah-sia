@@ -330,21 +330,21 @@
 									<div class="row">
 										<div class="col-md-4">
 											<div class="form-group">
-												<label>Kode dan Nama Mata Kuliah</label>
-												<select id="optionMK" name="idMK" class="form-control">
+												<label>Mata Kuliah</label>
+												<select id="optionMK" name="idMK">
 														<option value="">Pilih kode dan nama mata kuliah</option> 
 													<c:forEach items="${mkList}" var="mk"> 
 														<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
 													</c:forEach> 
 												</select>
 											</div>
-											<div class="form-group">
-												<label>Status Aktif</label>
-												<select id="filter" name="filter">
-													<option value="false">Aktif</option>
-													<option value="">Semua</option>
-												</select>
-											</div>  
+<!-- 											<div class="form-group"> -->
+<!-- 												<label>Status Aktif</label> -->
+<!-- 												<select id="filter" name="filter"> -->
+<!-- 													<option value="false">Aktif</option> -->
+<!-- 													<option value="">Semua</option> -->
+<!-- 												</select> -->
+<!-- 											</div>   -->
 										</div> 
 										<div class="col-md-8 masteractions">
 											<div class="btn-action pull-right"> </div> 
@@ -358,7 +358,7 @@
 												<td> 
 														<input class="checkbox-all" type="checkbox" id="flat-checkbox-1"> 
 												</td> 
-												<td>Nama Mata Kuliah</td>   
+												<td>Mata Kuliah</td>   
 												<td>Minggu Ke-</td> 
 												<td>Materi</td> 
 												<td>Target</td> 
@@ -379,14 +379,9 @@
 								</div>
 							</form>
 							<div class="row">
-								<div class="col-md-8 masteractions">
-									<div class="pull-right">  
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/rumpun/'">
-											  Selanjutnya >>
-										</button>
-									</div> 
+								<div class="col-md-8 masteractions"> 
 									<div class="pull-right"> 
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/kurikulum/'">
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/capaianbelajar/'">
 											 << Kembali
 										</button>
 										</div>
@@ -406,6 +401,15 @@
 									<h4 id="title">Kelola Rencana Pembelajaran Tiap Pertemuan</h4>
 									<form:form role="form" commandName="rpPerTemu" class="formdetail"> 
 										<div class="form-group">
+											<label>Mata Kuliah</label>
+											<select id="idMK" name="idMK" class="form-control">
+													<option value="">Pilih kode dan nama mata kuliah</option> 
+												<c:forEach items="${mkList}" var="mk"> 
+													<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
+												</c:forEach> 
+											</select>
+										</div>
+										<div class="form-group">
 											<label>Minggu Ke-</label>
 											<form:input path="mingguPembKe" class="form-control" placeholder="Berisi angka minggu pembelajaran" />
 										</div> 
@@ -415,14 +419,15 @@
 										</div>
 										<div class="form-group">
 											<label>Target Mingguan</label>
-											<form:input path="materiPemb" class="form-control" placeholder="Berisi target pembelajaran mingguan" />
+											<form:input path="target" class="form-control" placeholder="Berisi target pembelajaran mingguan" />
 										</div>
 										<div class="form-group">
 											<label>Pemetaan Capaian Pembelajaran Mata Kuliah</label> 
 											<br />  
 											<button type="button" class="btn btn-primary" onclick="showModal()">Tambah pemetaan capaian</button>
-											<div id="divCapPembMK">   
-										  		<input type='hidden' name='idCapPembMK[]' id="idCapPembMK" value=null />
+											<div id="divCapPembMK">  
+												<br /> 
+<!-- 										  		<input type='hidden' name='idCapPembMK[]' id="idCapPembMK" value=null /> -->
 										 	</div>
 										</div>
 										<div class="form-group">
@@ -464,7 +469,7 @@
 				        <h4 class="modal-title">Capaian Pembelajaran Mata Kuliah</h4>
 				      </div>
 				      <div class="modal-body">
-				      	<div id="masterpageCapPemb"> 
+				      	<div id="masterpageCapPembMK"> 
 							<form class="tableform">
 								<table class="table table-striped table-bordered table-hover table-checkable table-colvis datatable" style="width:100%">
 									<thead>
@@ -503,7 +508,7 @@
 							editUrl: context_path+'rencanapembelajaran/simpan', 
 							deleteUrl: context_path+'rencanapembelajaran/deletemany',
 							primaryKey: 'idRPPerTemu',
-					        order: [[3,"asc"]],
+					        order: [[2,"asc"]],
 							editOnClick: false,
 							editOnClickRow: true,
 							cols: [
@@ -516,7 +521,7 @@
 									}
 								},
 								/* nama mk */
-								{ "bVisible":    false }, 
+								{ "bVisible":    true }, 
 								/* minggu ke */
 								{ "bVisible":    true }, 
 								/* materi */
@@ -559,13 +564,13 @@
 							validationRules: {idMK:{required: true}, mingguPembKe:{required: true, digits: true}, materiPemb:{required: true},
 								metodePemb:{required: true}, waktuPemb:{required: true, digits: true}, bentukPenilaian: {required: true}, 
 								bobotPenilaian: {required: true, digits: true}},
-							filters: [{id:'#filter', name:'statusRPPerTemu'}],
+							filters: [{id:'#filter', name:'statusRPPerTemu'}, {id: '#optionMK', name: 'idMK'}],
 							callOnFillForm : function(response,options){  
 								$("#idRPPerTemu").val(response.data.idRPPerTemu);
 								$("#idMK").val(response.data.kurikulum.idMK); 
 								$.ajax({
 									type: 'get',
-									url : context_path+'rencanapembelajaran/getcappembmk', 
+									url : context_path+'rencanapembelajaran/getcappembmk/', 
 									dataType : 'json',
 									data : {'idRPPerTemu' : $("#idRPPerTemu").val()},
 									contentType : 'application/json; charset=utf-8', 
@@ -609,16 +614,16 @@
 							$('#myModal').modal('show');
 						}
 						$('#myModal').on('shown.bs.modal', function (e) {
-							$("#masterpageCapPemb").find('.dataTables_length select').change();
+							$("#masterpageCapPembMK").find('.dataTables_length select').change();
 							  //if (!data) return e.preventDefault() // stops modal from being shown
 						})
 						$('#masterpageCapPembMK').masterPage(
 						{
 							detailFocusId: '#idCapPembMK',
-							dataUrl: context_path+'rencanapembelajaran/subcapaian/json',
-							detailUrl: context_path+'rencanapembelajaran/subcapaian/edit',
+							dataUrl: context_path+'rencanapembelajaran/pemetaan/json',
+							detailUrl: context_path+'rencanapembelajaran/pemetaan/edit',
 							primaryKey: 'idCapPembMK',
-					        order: [[3,"asc"]],
+					        order: [[1,"asc"]],
 							editOnClick: false,
 							dialogDetail: '',
 							editOnClickRow: false,
@@ -646,7 +651,7 @@
 											+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>x</button>"
 											+"<p>"+aData[2]+"<p>"
 										+"</div>" 
- 										+"<input type='hidden' name='idIndukCapPemb[]' value='"+ aData[0] +"' />"
+ 										+"<input type='hidden' name='idCapPembMK[]' value='"+ aData[0] +"' />"
 										);  
 								$('#myModal').modal('toggle');
 							}

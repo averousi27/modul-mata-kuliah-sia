@@ -118,4 +118,10 @@ public class MKServiceImpl implements MKService{
 		return mkRepo.findAll();
 	}
 
+	@Override
+	public MK findByIdString(String idMK) {
+		// TODO Auto-generated method stub
+		return mkRepo.findByIdString(idMK);
+	}
+
 }

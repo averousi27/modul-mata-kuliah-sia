@@ -18,5 +18,8 @@ public interface CapPembMKService {
 	public List<CapPemb> findParent(CapPembMK capPembMK);
 
 	public String delete(UUID uuid);
+
+	public Datatable getdatatable(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0, String sSearch);
  
 }
