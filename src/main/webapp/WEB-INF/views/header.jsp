@@ -153,19 +153,17 @@
 			<li class="droplink"><a href="#"
 				class="waves-effect waves-button"><span
 					class="menu-icon glyphicon glyphicon-flash"></span>
-					<p>Levels</p> <span class="arrow"></span></a>
+					<p>Menu</p> <span class="arrow"></span></a>
 				<ul class="sub-menu">
-					<li class="droplink"><a href="#"><p>Level 1.1</p> <span
+					<li><a href="${pageContext.servletContext.contextPath}/kurikulum/">Kurikulum</a></li>
+					<li class="droplink"><a href="#"><p>Kelola Capaian Pembelajaran</p> <span
 							class="arrow"></span></a>
-						<ul class="sub-menu">
-							<li class="droplink"><a href="#"><p>Level 2.1</p> <span
-									class="arrow"></span></a>
-								<ul class="sub-menu">
-									<li><a href="#">Level 3.1</a></li>
-								</ul></li>
-							<li><a href="#">Level 2.2</a></li>
-						</ul></li>
-					<li><a href="#">Level 1.2</a></li>
+						<ul class="sub-menu"> 
+							<li><a href="${pageContext.servletContext.contextPath}/capaianbelajar/satuanmanajemen/">Kelola Capaian Pembelajaran Satuan Manajemen</a></li>
+<!-- 						</ul> -->
+<!-- 						<ul class="sub-menu">  -->
+							<li><a href="${pageContext.servletContext.contextPath}/matakuliah/capaianbelajar/">Kelola Capaian Pembelajaran Mata Kuliah</a></li>
+						</ul>  
 				</ul></li>
 		</ul>
 	</div>
