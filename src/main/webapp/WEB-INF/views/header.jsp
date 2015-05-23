@@ -150,21 +150,26 @@
 			<li><a href="profile.html" class="waves-effect waves-button"><span
 					class="menu-icon glyphicon glyphicon-user"></span>
 					<p>Profile</p></a></li>
-			<li class="droplink"><a href="#"
-				class="waves-effect waves-button"><span
-					class="menu-icon glyphicon glyphicon-flash"></span>
-					<p>Menu</p> <span class="arrow"></span></a>
+			<li class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-flash"></span>
+					<p>Menu</p> <span class="arrow"></span>
 				<ul class="sub-menu">
 					<li><a href="${pageContext.servletContext.contextPath}/kurikulum/">Kurikulum</a></li>
-					<li class="droplink"><a href="#"><p>Kelola Capaian Pembelajaran</p> <span
-							class="arrow"></span></a>
+					<li class="droplink"><a href="#"><p>Capaian Pembelajaran</p> <span class="arrow"></span> </a>
 						<ul class="sub-menu"> 
-							<li><a href="${pageContext.servletContext.contextPath}/capaianbelajar/satuanmanajemen/">Kelola Capaian Pembelajaran Satuan Manajemen</a></li>
-<!-- 						</ul> -->
-<!-- 						<ul class="sub-menu">  -->
-							<li><a href="${pageContext.servletContext.contextPath}/matakuliah/capaianbelajar/">Kelola Capaian Pembelajaran Mata Kuliah</a></li>
+							<li><a href="${pageContext.servletContext.contextPath}/capaianbelajar/satuanmanajemen/">Satuan Manajemen</a></li>
+							<li><a href="${pageContext.servletContext.contextPath}/matakuliah/capaianbelajar/">Mata Kuliah</a></li>
 						</ul>  
-				</ul></li>
+					</li>
+					<li class="droplink"><a href="#"><p>Mata Kuliah</p> <span class="arrow"></span></a>
+							<ul class="sub-menu"> 
+								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/rumpun">Rumpun</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/">Kelola</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/satuanmanajemen/">Satuan Manajemen</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/prasyarat">Prasyarat</a></li>
+							</ul>
+					</li> 
+					<li><a href="${pageContext.servletContext.contextPath}/rencanapembelajaran/">Rencana Pembelajaran</a></li>
+				</ul></li> 
 		</ul>
 	</div>
 	<!-- Page Sidebar Inner -->
