@@ -162,13 +162,25 @@
 					</li>
 					<li class="droplink"><a href="#"><p>Mata Kuliah</p> <span class="arrow"></span></a>
 							<ul class="sub-menu"> 
-								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/rumpun">Rumpun</a></li>
-								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/">Kelola</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/rumpun/">Rumpun</a></li>
 								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/satuanmanajemen/">Satuan Manajemen</a></li>
-								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/prasyarat">Prasyarat</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/prasyarat/">Prasyarat</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/kelola/">Kelola</a></li>
+							</ul>
+					</li>  
+					<li class="droplink"><a href="#"><p>Silabus</p> <span class="arrow"></span></a>
+							<ul class="sub-menu"> 
+								<li><a href="${pageContext.servletContext.contextPath}/silabus/pustaka/">Pustaka Perkuliahan</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/silabus/kelola/">Kelola</a></li>  
 							</ul>
 					</li> 
-					<li><a href="${pageContext.servletContext.contextPath}/rencanapembelajaran/">Rencana Pembelajaran</a></li>
+					<li class="droplink"><a href="#"><p>Rencana Pembelajaran</p> <span class="arrow"></span></a>
+							<ul class="sub-menu"> 
+								<li><a href="${pageContext.servletContext.contextPath}/rencanapembelajaran/metode/">Metode Pembelajaran</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/rencanapembelajaran/bentuk/">Bentuk Penilaian</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/rencanapembelajaran/kelola/">Kelola</a></li> 
+							</ul>
+					</li> 
 				</ul></li> 
 		</ul>
 	</div>

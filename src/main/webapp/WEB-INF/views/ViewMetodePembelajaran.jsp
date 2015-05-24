@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon"
 		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Kelola Mata Kuliah</title>
+	<title>Kelola Metode Pembelajaran</title>
 	
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<meta charset="UTF-8">
@@ -147,14 +147,14 @@
 			<script src="${pageContext.servletContext.contextPath}/resources/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
 				
 				<div class="row" id="masterpage"> 
-						<div class="col-md-12 style="margin-bottom:10px;">
-							 <div class="panel panel-white">
+						<div class="col-md-12" style="margin-bottom:10px;"> 
+							<div class="panel panel-white">
 								<div class="panel-heading clearfix">
-									<h4 class="panel-title">Mata Kuliah</h4>
+									<h4 class="panel-title">Metode Pembelajaran</h4>
 								</div>
 								<div class="panel-body">  
-									<p>Tabel menampilkan mata kuliah</p>
-										<div class="row">
+									<p>Tabel menampilkan metode pembelajaran</p>
+										<div class="row"> 
 											<div class="col-md-4">
 												<div class="form-group">
 													<label>Status Aktif</label>
@@ -162,11 +162,10 @@
 														<option value="false">Aktif</option>
 														<option value="">Semua</option>
 													</select>
-												</div> 
-											</div>
+												</div>  
+											</div> 
 											<div class="col-md-8 masteractions">
-												<div class="btn-action pull-right">  
-												</div>
+												<div class="btn-action pull-right"> </div>
 											</div> 
 										</div>
 							<form class="tableform">
@@ -175,137 +174,61 @@
 										<thead>
 											<tr>
 												<td> 
-													<input class="checkbox-all" type="checkbox" id="flat-checkbox-1">
-												</td>  
-											<td>Kode MK</td>  
-											<td>Nama MK</td>  
-											<td>Kurikulum</td>
-											<td>Rumpun MK</td> 
-											<td>Tingkat</td> 
-											<td>Jumlah SKS</td>   
-											<td>Sifat MK</td>
-											<td>Nilai Minimal MK</td>
-											<td>Deskripsi MK</td>  
-											<td>Status Aktif</td>
-											<td>Aksi</td>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-								</div>
+														<input class="checkbox-all" type="checkbox" id="flat-checkbox-1"> 
+												</td> 
+												<td>Nama Metode</td> 
+												<td>Deskripsi Metode</td> 
+												<td>Status Aktif</td>
+												<td>Aksi</td>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+								  </table>
+								  </div>
 							</form> 
-							<div class="row">
-								<div class="col-md-8 masteractions">
-									<div class="pull-right">  
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/satuanmanajemen/'">
-											  Selanjutnya >>
-										</button>
-									</div> 
-									<div class="pull-right"> 
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/rumpun/'">
-											 << Kembali
-										</button>
-									</div>
-								</div> 
-							</div>
+							  </div>
 						</div>
 					</div>
 				</div>
-			</div>
 				<div class="row" id="master-detail" style="display:none;"> 
 						<div class="col-md-6 col-md-offset-3">
 							<div class="panel panel-white">
 								<div class="panel-heading clearfix">
-									<h4 class="panel-title">Mata Kuliah</h4>
+										<h4 id="title">Metode Pembelajaran</h4>
 								</div>
 								<div class="panel-body">
-									<h4 id="title">Kelola mata kuliah</h4>
-									<form:form role="form" action="login" commandName="mk" class="formdetail">
+									<h4 id="title">Kelola metode pembelajaran</h4>
+									<form:form role="form" action="login" commandName="metodePemb" class="formdetail">
 										<div class="form-group">
-											<label>Kode Mata Kuliah</label>
-												<form:input path="kodeMK" class="form-control" placeholder="Berisi kode mata kuliah" required="true" />
-												<form:hidden path="idMK" class="form-control" />
+											<label>Nama Metode Pembelajaran</label>
+											<form:input path="namaMetodePemb" class="form-control" placeholder="Berisi nama metode pembelajaran" required="true" />
+											<form:hidden path="idMetodePemb" class="form-control" />
 										</div>
 										<div class="form-group">
-											<label>Nama Mata Kuliah</label>
-											<form:input path="namaMK" class="form-control" placeholder="Berisi nama mata kuliah" required="true" /> 
-										</div>
-										<div class="form-group">
-											<label>Tahun Kurikulum</label>
-												<select id="idKurikulum" name="idKurikulum" class="form-control">
-														<option value="">Pilih kurikulum untuk mata kuliah</option> 
-													<c:forEach items="${kurikulumList}" var="kurikulum"> 
-														<option value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.namaKurikulum}</option>
-													</c:forEach> 
-												</select>
-										</div>
-										<div class="form-group">
-											<label>Rumpun Mata Kuliah</label>
-											<select id="idRumpunMK" name="idRumpunMK" class="form-control">
-													<option value="">Pilih rumpun untuk mata kuliah</option> 
-												<c:forEach items="${rumpunMKList}" var="rumpunMK"> 
-													<option value="${rumpunMK.idRumpunMK}">${rumpunMK.namaRumpunMK }</option>
-												</c:forEach> 
-											</select>
-										</div>
-										<div class="form-group">
-											<label>Tingkat Pembelajaran</label>
-											<form:input path="tingkatPemb" class="form-control" placeholder="Berisi angka tingkat pembelajaran mata kuliah (semester)" required="true" digits="true"/>
-										</div>
-										<div class="form-group">
-											<label>Jumlah SKS</label>
-											<form:input path="jumlahSKS" class="form-control" placeholder="Berisi angka jumlah SKS mata kuliah" required="true" digits="true"/>
-										</div>
-										<div class="form-group">
-											<label>Sifat Mata Kuliah</label>
-											<select id="sifatMK" name="sifatMK" class="form-control" required="true">
-													<option value="">Pilih sifat untuk mata kuliah</option>
-													<option value="true">Wajib</option>
-													<option value="false">Pilihan</option>
-											</select>
-										</div>
-										<div class="form-group">
-											<label>Nilai Minimal Mata Kuliah</label>
-											<select id="idKonversi" name="idKonversi" class="form-control" required="true">
-													<option value="">Pilih nilai minimal untuk mata kuliah</option> 
-												<c:forEach items="${konversiNilaiList}" var="konvNilai"> 
-													<option value="${konvNilai.idKonversi}">${konvNilai.huruf} - Batas bawah : ${konvNilai.batasBawah} </option>
-												</c:forEach> 
-											</select>
-										</div>
-										<div class="form-group">
-											<label>Deskripsi Mata Kuliah</label>
-											<form:input path="deskripsiMK" class="form-control" placeholder="Berisi deskripsi mata kuliah"/>
-										</div>
-										<div class="form-group">
-											<label>Status Keaktifan Mata Kuliah</label>
-											<select id="statusMK" name="statusMK" class="form-control">
-													<option value="">Pilih status keaktifan mata kuliah</option>
-													<option value="false">Aktif</option>
-													<option value="true">Non-aktif</option>
-											</select>
-										</div>
+											<label>Deskripsi Metode Pembelajaran</label>
+											<form:input path="deskripsiMetodePemb" class="form-control" placeholder="Berisi deskripsi metode pembelajaran" /> 
+										</div> 
 										<div class="form-group detailcontrol">
 										</div>
-					      	  </form:form>
+							        </form:form>
+								</div>
 							</div>
 					</div>
 				</div> 
-			</div>
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script>
 					$(document).ready(function(){
 						$('#masterpage').masterPage(
 						{
-							detailFocusId: '#idMK',
-							dataUrl: context_path+'matakuliah/kelola/json',
-							detailUrl: context_path+'matakuliah/kelola/edit',
-							addUrl: context_path+'matakuliah/kelola/simpan',
-							editUrl: context_path+'matakuliah/kelola/simpan',
-							deleteUrl: context_path+'matakuliah/kelola/deletemany',
-							primaryKey: 'idMK',
-					        order: [[1,"asc"]],
+							detailFocusId: '#idMetodePemb',
+							dataUrl: context_path+'rencanapembelajaran/metode/json',
+							detailUrl: context_path+'rencanapembelajaran/metode/edit',
+							addUrl: context_path+'rencanapembelajaran/metode/simpan',
+							editUrl: context_path+'rencanapembelajaran/metode/simpan',
+							deleteUrl: context_path+'rencanapembelajaran/metode/deletemany',
+							primaryKey: 'idMetodePemb',
+					        order: [[2,"asc"]],
 							editOnClick: false,
 							editOnClickRow: true,
 							cols: [
@@ -314,38 +237,19 @@
 									"bVisible":    true,
 									bSortable: false,
 									mRender: function(data,type,full){
-										return '<input class="checkbox-data" type="checkbox" name="idMK[]" value="'+data+'">';
+										return '<input type="checkbox" class="checkbox-data" name="idMetodePemb[]" value="'+data+'">';
 									}
 								},
-								/* kode mata kuliah */
+								/* Nama metode pembelajaran */
 								{ "bVisible":    true }, 
-								/* nama mata kuliah */
-								{ "bVisible":    true }, 
-								/* tahun kurikulum */
-								{ "bVisible":    false }, 
-								/* nama rumpun mk */
-								{ "bVisible":    false }	, 
-								/* tingkat pembelajaran */
-								{ "bVisible":    true }, 
-								/* jumlah sks */
-								{ "bVisible":    true }, 
-								/* sifat MK */
-								{ "bVisible":    true, 
-									mRender: function(data,type,full){
-										if(full[7] == 'true') return "Wajib";
-										else return "Pilihan";
-									}	
-								}, 
-								/* nilai minimal */
-								{ "bVisible":    true }, 
-								/* deskripsi MK */
-								{ "bVisible":    false }, 
-								/*status kurikulum*/
+								/* deskripsi metode pembelajaran */
+								{ "bVisible":    false },  
+								/*status hapus*/
 								{ 
 									"bVisible":    false, 
-									mRender: function(data,type,full){
-										if(full[10] == 'false') return "Aktif";
-										else return "Non-Aktif";
+									mRender: function(data,type,full){ 
+										if(full[3]=='false') return "Aktif";
+										return "Terhapus";
 									}
 								},
 								/* Aksi */
@@ -354,37 +258,34 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[10]=='false') action += ' <button type="button" class="btn btn-danger deleterow">Non-Aktif</button>'
+										if(full[3]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
 										return action;
 									}
 								}
 							],
-							validationRules: {idMK:{required: false},kodeMK:{required: true}, idKurikulum:{required:true},
-								namaMK:{required: true},tingkatPemb: {required:true, digits:true}, 
-								jumlahSKS: {required: true, digits: true}, sifatMK: {required:true}, rumpunMK:{required:true}},
-							filters: [{id:'#filter', name:'statusMK'}],
+							validationRules: {idMetodePemb:{required: false},namaMetodePemb:{required: true}}, 
+							filters: [{id:'#filter', name:'statusMetodePemb'}],
 							callOnFillForm : function(response,options){ 
-								$("#idMK").val(response.data.idMK);
-								$("#idKurikulum").val(response.data.kurikulum.idKurikulum);
-								$("#idRumpunMK").val(response.data.rumpunMK.idRumpunMK);
-								$("#idKonversi").val(response.data.konversiNilai.idKonversi);
+								$("#idMetodePemb").val(response.data.idMetodePemb);
 							}
 						});
 					});
 				</script>
 				<!-- akhir script custom pada halaman -->
-				<!-- footer -->
-					</div>
-							<!-- Main Wrapper -->
-							<div class="page-footer">
-								<p class="no-s">2015 &copy; Modern by Steelcoders.</p>
-							</div>
-						</div>
-						<!-- Page Inner -->
-						<!--content-->
-				</main>
+				
 				<!-- akhir dari content content -->
 				
+				<!-- footer -->
+				</div>
+				<!-- Main Wrapper -->
+				<div class="page-footer">
+					<p class="no-s">2015 &copy; Modern by Steelcoders.</p>
+				</div>
+			</div>
+			<!-- Page Inner -->
+			<!--content-->
+	</main>
+	
 				<!-- Javascripts -->
 				<script
 					src="${pageContext.servletContext.contextPath}/resources/plugins/jquery-blockui/jquery.blockui.js"></script>
@@ -401,10 +302,7 @@
 				<script
 					src="${pageContext.servletContext.contextPath}/resources/plugins/3d-bold-navigation/js/main.js"></script>
 				<script
-					src="${pageContext.servletContext.contextPath}/resources/js/modern.js"></script>
-
-			</div>
-		</div> 
+					src="${pageContext.servletContext.contextPath}/resources/js/modern.js"></script> 
 	</body>
 </html>
 		

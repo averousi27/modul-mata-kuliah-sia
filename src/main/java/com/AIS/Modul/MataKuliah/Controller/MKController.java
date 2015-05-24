@@ -40,7 +40,7 @@ import com.AIS.Modul.MataKuliah.Service.SatManMKService;
 import com.AIS.Modul.MataKuliah.Service.SatManService;
 
 @Controller
-@RequestMapping(value = "/matakuliah")
+@RequestMapping(value = "/matakuliah/kelola")
 public class MKController {
 	 
 	@Autowired
