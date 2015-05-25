@@ -39,6 +39,7 @@ public class PustakaServiceImpl implements PustakaService {
 			pustakaString[3] = String.valueOf(pustaka.getSifatPustaka());
 			pustakaString[4] = String.valueOf(pustaka.isStatusPustaka());
 			pustakaString[5] = String.valueOf(pustaka.isStatusPustaka());
+			System.out.println(pustakaString[3]);
 			aData.add(pustakaString);
 		}
 		pustakaDatatable.setAaData(aData);

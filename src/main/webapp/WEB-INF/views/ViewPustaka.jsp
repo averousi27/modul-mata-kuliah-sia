@@ -252,13 +252,13 @@
 								/* Nama rumpun mata kuliah */
 								{ "bVisible":    true },
 								/* deskripsi rumpun mata kuliah */
-								{ "bVisible":    true },  
+								{ "bVisible":    false },  
 								/* sifat rumpun mata kuliah */
 								{ 
 									"bVisible":    true, 
 									mRender: function(data,type,full){
 										if(full[3] == 'U') return "Utama";
-										else if(full[3] == 'P') "Pendukung";
+										else if(full[3] == 'P') return "Pendukung";
 									}  
 								},
 								/*status kurikulum*/
