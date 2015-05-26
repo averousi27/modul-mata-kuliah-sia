@@ -21,5 +21,7 @@ public interface CapPembMKService {
 
 	public Datatable getdatatable(String sEcho, int iDisplayLength,
 			int iDisplayStart, int iSortCol_0, String sSortDir_0, String sSearch);
+
+	public List<CapPembMK> findAll();
  
 }

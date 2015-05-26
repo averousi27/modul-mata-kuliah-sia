@@ -85,7 +85,7 @@ public class CapPembMKRepositoryImpl implements CapPembMKRepository{
 	} 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CapPemb> findAll() {
+	public List<CapPembMK> findAll() {
 		// TODO Auto-generated method stub
 		return sessionFactory.getCurrentSession().createQuery("select cpmk from CapPembMK cpmk WHERE cpmk.statusCapPembMK = false").list();
 
@@ -95,7 +95,7 @@ public class CapPembMKRepositoryImpl implements CapPembMKRepository{
 	@Override
 	public List<CapPemb> findParent(CapPembMK capPembMK) {
 		// TODO Auto-generated method stub
-		List<CapPemb> cpList = sessionFactory.getCurrentSession().createQuery("select scpmk.capPemb from SubCapPembMK scpmk WHERE scpmk.capPembMK = '"+capPembMK+"'").list();
+		List<CapPemb> cpList = sessionFactory.getCurrentSession().createQuery("select scpmk.capPemb from SubCapPembMK scpmk join scpmk.mk mk WHERE scpmk.capPembMK = '"+capPembMK+"' order by mk.namaMK").list();
 		return cpList;
 
 	}

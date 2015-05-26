@@ -105,5 +105,11 @@ public class CapPembMKServiceImpl implements CapPembMKService {
 		capPembmkDatatable.setiTotalDisplayRecords(capPembMKRepo.count(parameter.getWhere()));
 
 		return capPembmkDatatable;
+	}
+
+	@Override
+	public List<CapPembMK> findAll() {
+		// TODO Auto-generated method stub
+		return capPembMKRepo.findAll();
 	}  
 }

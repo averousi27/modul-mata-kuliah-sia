@@ -153,21 +153,18 @@
 								<div class="panel-body" id="wizardsilabus">
 	                                    <div id="rootwizard">
 	                                        <ul class="nav nav-tabs" role="tablist">
-	                                            <li role="presentation" class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-user m-r-xs"></i>Pilih Mata Kuliah</a></li>
-	                                            <li role="presentation"><a href="#tab2" data-toggle="tab"><i class="fa fa-truck m-r-xs"></i>Kelola Silabus</a></li>
-	                                            <li role="presentation"><a href="#tab3" data-toggle="tab"><i class="fa fa-truck m-r-xs"></i>Kelola Pokok Bahasan Silabus</a></li>
-	                                            <li role="presentation"><a href="#tab4" data-toggle="tab"><i class="fa fa-check m-r-xs"></i>Kelola Pustaka Silabus</a></li>
+	                                            <li role="presentation" class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-university m-r-xs"></i>Pilih Mata Kuliah</a></li>
+	                                            <li role="presentation"><a href="#tab2" data-toggle="tab"><i class="fa fa-file-text-o m-r-xs"></i>Kelola Silabus</a></li>
+	                                            <li role="presentation"><a href="#tab3" data-toggle="tab"><i class="fa fa-bars m-r-xs"></i>Kelola Pokok Bahasan Silabus</a></li>
+	                                            <li role="presentation"><a href="#tab4" data-toggle="tab"><i class="fa fa-book m-r-xs"></i>Kelola Pustaka Silabus</a></li>
 	                                        </ul>
 	                                     </div>
-	                                     <div class="progress progress-sm m-t-sm">
-                                            <div id="bar" class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                            </div>
-                                        </div>
                                         <form id="wizardForm">
                                             <div class="tab-content">
                                                 <div class="tab-pane active fade in" id="tab1">
                                                     <div class="row m-b-lg">
                                                         <div class="col-md-6 col-md-offset-3"> 
+                                                    	<h4 class="title">Pilih Mata Kuliah</h4>
                                                         	<div class="form-group">
 																<label>Mata Kuliah</label>
 																<select id="idMK" name="idMK" class="form-control">
@@ -182,35 +179,24 @@
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane fade" id="tab2">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-<!--                                                             <img src="assets/images/envato-logo.png" width="250" alt=""> -->
-                                                            <div class="m-t-md">
-                                                                <address>
-                                                                    <strong>Twitter, Inc.</strong><br>
-                                                                    795 Folsom Ave, Suite 600<br>
-                                                                    San Francisco, CA 94107<br>
-                                                                    <abbr title="Phone">P:</abbr> (123) 456-7890
-                                                                </address>
-                                                                <address>
-                                                                    <strong>Full Name</strong><br>
-                                                                    <a href="mailto:#">first.last@example.com</a>
-                                                                </address>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-9">
-                                                            <div class="form-group col-md-12">
-                                                                <label for="exampleInputProductName">Product Name</label>
-                                                                <input type="text" class="form-control" name="exampleInputProductName" id="exampleInputProductName" placeholder="Product Name" >
-                                                            </div>
-                                                            <div class="form-group col-md-12">
-                                                                <label for="exampleInputProductId">Product ID</label>
-                                                                <input type="text" class="form-control" name="exampleInputProductId" id="exampleInputProductId" placeholder="Product ID">
-                                                            </div>
-                                                            <div class="form-group col-md-12">
-                                                                <label for="exampleInputQuantity">Quantity</label>
-                                                                <input type="number" min="1" max="5" class="form-control" name="exampleInputQuantity" id="exampleInputQuantity" placeholder="Quantity">
-                                                            </div>
+                                                    <div class="row m-b-lg"> 
+                                                        <div class="col-md-8 col-md-offset-2">
+		                                                    <h4 class="title" id="titlepokokbahasan">Isian Pokok Bahasan Silabus</h4>
+		                                                    		<input type="hidden" id="idSilabus" name="idSilabus" value=""/>
+		                                                            <table class="table"> 
+		                                                            	<thead>
+		                                                            		<tr>
+			                                                            		<td>Pokok Bahasan</td>
+			                                                            		<td>Aksi</td>
+		                                                            		</tr>
+		                                                            	</thead> 
+		                                                            	<tbody>
+		                                                            		<tr id="rowPokokBahasanNew">
+		                                                            			<td><input type="text" class="form-control col-md-4" placeholder="Berisi pokok bahasan" id="inputPokokBahasan"></td>
+		                                                            			<td><button type="button" class="btn btn-success" onClick="simpanPokokBahasan()"><i class="glyphicon glyphicon-plus"></i></button></td>
+                                                                    		</tr>
+		                                                            	</tbody>
+		                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -258,28 +244,73 @@
                                                 </ul>
                                             </div>
                                         </form>
-	                            </div>
+                                        <div id="myModal" class="modal fade">
+										  <div class="modal-dialog modal-lg">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										        <h4 class="modal-title">Pemetaan Capaian Pembelajaran Mata Kuliah</h4>
+										      </div>
+										      <div class="modal-body"> 
+										      	  <table class="table"> 
+	                                                   	<thead>
+	                                                   		<tr>
+	                                                    		<td>Capaian Pembelajaran Mata Kuliah</td>
+	                                                    		<td>Aksi</td>
+	                                                   		</tr>
+	                                                   	</thead> 
+	                                                   	<tbody>
+	                                                   		<input type="hidden" id="idDetailSilabus" value="" />
+	                                                   		<tr id="rowCapaianBaru">
+	                                                   			 <select id="idCapPembMK" name="idCapPembMK" class="form-control">
+																		<option value="">Pilih capaian pembelajaran mata kuliah</option> 
+																			<c:forEach items="${cpmkList}" var="cpmk"> 
+																				<option value="${cpmk.idCapPembMK}">${cpmk.mk.namaMK} - ${cpmk.namaCapPembMK}</option>
+																			</c:forEach> 
+																</select>
+	                                                   			<td><button type="button" class="btn btn-success" onclick="simpanCapaian(this)"><i class="glyphicon glyphicon-plus"></i></button></td>
+	                                                        </tr>
+	                                                   	</tbody>
+                                                   </table>
+										      </div>
+										      <div class="modal-footer">
+										      </div>
+										    </div><!-- /.modal-content -->
+										  </div><!-- /.modal-dialog -->
+										</div><!-- /.modal -->
+															
+	                            </div><!-- wizardform -->
 	                         </div>
 	                    </div>
 	             </div>
 				
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script>
-					$(document).ready(function(){ 
-// 						$.validator.addMethod("valueNotEquals", function(value, element, arg){
-// 							return arg!= value;}, "Value must not equal arg.");
-						$('#wizardsilabus') 
-// 						.validate({
-// 							rules: {'idMK' : {valueNotEquals: ""}}, messages: {'idMK' : {valueNotEquals: "Please select an item!"}}
-// 						})
+					$(document).ready(function(){  
+						toastr.options = {
+								  "closeButton": true,
+								  "debug": false,
+								  "newestOnTop": false,
+								  "progressBar": false,
+								  "positionClass": "toast-top-right",
+								  "preventDuplicates": false,
+								  "showDuration": "300",
+								  "hideDuration": "1000",
+								  "timeOut": 0,
+								  "extendedTimeOut": 0,
+								  "showEasing": "swing",
+								  "hideEasing": "linear",
+								  "showMethod": "fadeIn",
+								  "hideMethod": "fadeOut",
+								  "tapToDismiss": true
+								}
+						$('#wizardsilabus')  
 						.bootstrapWizard({ 
-							onTabClick: function(tab, navigation, index) {
-								console.log("ini index"+index);  
+							onTabClick: function(tab, navigation, index) { 
 				                return validateTab(index);
 				            },
 							onNext : function(tab, navigation, index){ 
-								var numTabs = $('#wizardsilabus').find('.tab-pane').length; 
-								console.log("ini jumlah"+numTabs);
+								var numTabs = $('#wizardsilabus').find('.tab-pane').length;  
 								isValidTab = validateTab(index - 1);
 								if(!isValidTab){
 									return false;
@@ -291,14 +322,87 @@
 							}
 						});
 						function validateTab(index){ 
-// 							var a = $("#idMK").value();
-// 							console.log(a);
-// 							if(a==""){
-// 								$("#warning").html('<p>Harus memilih mata kuliah</p>').css('color: red');
-// 								return false	
-// 							}
-// 							return true;
+							var idMKString = $("#idMK").val(); 
+							if(idMKString==""){
+								toastr["error"]("Error input", "Salah satu input yang Anda masukkan salah");  
+								return false;
+							}
+							else if(idMKString!=""){
+								$.ajax({
+									type:'POST', 
+									url: context_path+'silabus/kelola/simpan',
+									dataType: 'json',
+									data : {'idMK' : $("#idMK").val()},
+									traditional : true, 
+									success : function(data){  
+										$("#idSilabus").val(data.data.idSilabus);
+										$("#titlepokokbahasan").html('Isian Pokok Bahasan '+data.data.mk.namaMK);
+									}  
+								});
+								return true;
+							} 
 						}; 
+						showModal = function showModal(){
+							$('#myModal').modal('show');
+						};
+						simpanPokokBahasan = function simpanPokokBahasan(){
+							var pokokBahasan = $("#inputPokokBahasan").val();
+							if($('#inputPokokBahasan').val()!=""){ 
+								$.ajax({
+									type:'POST', 
+									url: context_path+'silabus/kelola/simpandetail',
+									dataType: 'json',
+									data : {'idSilabus' : $("#idSilabus").val(), 
+										'pokokBahasan' : $('#inputPokokBahasan').val()},
+									traditional : true, 
+									success : function(data){  
+										toastr["success"]("Data pokok bahasan telah tersimpan");  
+										console.log("ini id yang udah ditambahin "+data.data);
+										console.log(pokokBahasan);
+										$("#rowPokokBahasanNew").before(
+											"<tr class='rowPokokBahasan' name='"+data.data+"'>" +
+												"<td><input type='text' class='form-control col-md-4' value='" + pokokBahasan + "' /></td>" +
+												"<td><button type='button' class='btn btn-danger' name='"+ data.data +"'><i class='glyphicon glyphicon-minus'></i></button>&nbsp;" +
+												"<button type='button' class='btn btn-info'  onclick='showModal()'><i class='glyphicon glyphicon-pencil'></i></button></td>" +
+											"</tr>"	
+										);
+										$("#inputPokokBahasan").val("");
+										$("#idDetailSilabus").val(data.data);
+									}  
+								});
+							}
+							else{
+								toastr["error"]("Error input", "Salah satu input yang Anda masukkan salah");
+							}
+						};
+						simpanCapaian = function simpanCapaian(button){ 
+							idDetailSilabus = $(this).closest("input").attr("id");
+							console.log("ini id detail silabus "+idDetailSilabus) 
+							console.log("ini id detail silabus "+$("#idDetailSilabus").val())
+							var idCapaian = $("#idCapPembMK").val();
+							if($("#idCapPembMK").val()!=""){
+								$.ajax({
+									type:'POST', 
+									url: context_path+'silabus/kelola/simpanpemetaan', 
+									dataType:"json",
+									data: {'idDetailSilabus' : $("#idDetailSilabus").val(),
+										'idCapaian' : $("#idCapPembMK").val() }, 
+									traditional:true,
+									success: function(data){
+										toastr["success"]("Data pemetaan capaian telah tersimpan");		
+										console.log("ini id capaian yang udah ditambahin "+data.data);
+										console.log(idCapaian);
+										$("#rowCapaianBaru").before(
+											"<tr class='rowCapaian' name='"+data.data.idPemetaanSilabus+"'">"
+											+"<td><input type='text' class='form-control col-md-4' value='" + data.data.namaCapPembMK + "' />"
+											+"<button type='button' class='btn btn-danger' name='"+data.data.idPemetaanSilabus+"'></td>"
+											+"</tr>"		
+										);
+										$("#idCapPembMK").val(""); 
+									}
+								});
+							}
+						}
 					});
 				</script>
 				<!-- akhir script custom pada halaman -->

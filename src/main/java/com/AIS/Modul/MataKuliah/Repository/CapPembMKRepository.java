@@ -11,9 +11,7 @@ public interface CapPembMKRepository {
 
 	public long count(String where);
 
-	public List<CapPembMK> get(String where, String order, int limit, int offset);
-
-	public List<CapPemb> findAll();
+	public List<CapPembMK> get(String where, String order, int limit, int offset); 
 
 	public CapPembMK findById(UUID idCapPembMK);
 
@@ -23,5 +21,5 @@ public interface CapPembMKRepository {
 
 	public List<CapPemb> findParent(CapPembMK capPembMK);
 
-
+	public List<CapPembMK> findAll();
 }
