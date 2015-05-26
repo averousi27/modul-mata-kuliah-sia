@@ -176,6 +176,7 @@
 																		<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
 																	</c:forEach> 
 																</select>
+																<div id="warning"></div>
 															</div>
                                                         </div> 
                                                     </div>
@@ -265,22 +266,12 @@
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script>
 					$(document).ready(function(){ 
+// 						$.validator.addMethod("valueNotEquals", function(value, element, arg){
+// 							return arg!= value;}, "Value must not equal arg.");
 						$('#wizardsilabus') 
-						.formValidation({
-				            framework: 'bootstrap', 
-				            // This option will not ignore invisible fields which belong to inactive panels
-				            excluded: ':disabled',
-				            fields: {
-				                idMK: {
-				                    validators: {
-				                        notEmpty: {
-				                            message: 'The site name is required'
-				                        }
-				                    }
-				                }
-				            }
-				                     
-				        })
+// 						.validate({
+// 							rules: {'idMK' : {valueNotEquals: ""}}, messages: {'idMK' : {valueNotEquals: "Please select an item!"}}
+// 						})
 						.bootstrapWizard({ 
 							onTabClick: function(tab, navigation, index) {
 								console.log("ini index"+index);  
@@ -299,12 +290,15 @@
 								return validateTab(index+1);
 							}
 						});
-						function validateTab(index){
-							//var fv = $('#wizardForm').data('formValidation'),
-							//$tab = $('#wizardForm').find('.tab-pane').eq(index); 
-							$tab = $('#installationForm').find('.tab-pane').eq(index);
-							return true;
-						} 
+						function validateTab(index){ 
+// 							var a = $("#idMK").value();
+// 							console.log(a);
+// 							if(a==""){
+// 								$("#warning").html('<p>Harus memilih mata kuliah</p>').css('color: red');
+// 								return false	
+// 							}
+// 							return true;
+						}; 
 					});
 				</script>
 				<!-- akhir script custom pada halaman -->
