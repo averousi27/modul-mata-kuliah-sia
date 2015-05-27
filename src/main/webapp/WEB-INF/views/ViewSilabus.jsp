@@ -381,16 +381,16 @@
 								toastr["error"]("Error input", "Salah satu input yang Anda masukkan salah");
 							}
 						};
-						simpanCapaian = function simpanCapaian(button){   
+						simpanCapaian = function simpanCapaian(button){    
 							console.log("ini id cappembmk "+$("#idCapPembMK").val());
 							console.log("ini id detail silabus"+$("#idDetailSilabus").val());
 							if($("#idCapPembMK").val()!=""){
 								$.ajax({
 									type:'POST', 
 									url: context_path+'silabus/kelola/simpanpemetaan', 
-									dataType:"json",
+									dataType:"json",	
 									data: {'idDetailSilabus' : $("#idDetailSilabus").val(),
-										'idCapaian' : $("#idCapPembMK").val() },
+										'idCapPembMK' : $("#idCapPembMK").val() },
 									traditional:true,
 									success: function(data){
 										toastr["success"]("Data pemetaan capaian telah tersimpan");		
