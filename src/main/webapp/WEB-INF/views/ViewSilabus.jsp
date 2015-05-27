@@ -148,15 +148,14 @@
 			<script src="${pageContext.servletContext.contextPath}/resources/plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js" type="text/javascript"></script>
 				
 				<div class="row"> 
-						<div class="col-md-8 col-md-offset-2"> 
+						<div class="col-md-12 "> 
 							<div class="panel panel-white">
 								<div class="panel-body">
 	                                    <div id="rootwizard">
 	                                        <ul class="nav nav-tabs" role="tablist">
-	                                            <li role="presentation" class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-university m-r-xs"></i>Pilih Mata Kuliah</a></li>
-	                                            <li role="presentation"><a href="#tab2" data-toggle="tab"><i class="fa fa-file-text-o m-r-xs"></i>Kelola Silabus</a></li>
-	                                            <li role="presentation"><a href="#tab3" data-toggle="tab"><i class="fa fa-bars m-r-xs"></i>Kelola Pokok Bahasan Silabus</a></li>
-	                                            <li role="presentation"><a href="#tab4" data-toggle="tab"><i class="fa fa-book m-r-xs"></i>Kelola Pustaka Silabus</a></li>
+	                                            <li role="presentation" class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-university m-r-xs"></i>Pilih Mata Kuliah</a></li> 
+	                                            <li role="presentation"><a href="#tab2" data-toggle="tab"><i class="fa fa-bars m-r-xs"></i>Kelola Pokok Bahasan Silabus</a></li>
+	                                            <li role="presentation"><a href="#tab3" data-toggle="tab"><i class="fa fa-book m-r-xs"></i>Kelola Pustaka Silabus</a></li>
 	                                        </ul>
 	                                        <div class="progress progress-sm m-t-sm">
 	                                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
@@ -204,34 +203,31 @@
 	                                                    </div>
 	                                                </div>
 	                                                <div class="tab-pane fade" id="tab3">
-	                                                    <div class="row">
-	                                                        <div class="col-md-12">
-	                                                            <div class="form-group col-md-12">
-	                                                                <label for="exampleInputCard">Card Number</label>
-	                                                                <div class="row">
-	                                                                    <div class="col-md-8">
-	                                                                        <input type="text" class="form-control" name="exampleInputCard" id="exampleInputCard" placeholder="Card Number">
-	                                                                    </div>
-	                                                                    <div class="col-md-4">
-	                                                                        <input type="text" class="form-control col-md-4" name="exampleInputSecurity" id="exampleInputSecurity" placeholder="Security Code">
-	                                                                    </div>
-	                                                                </div>
-	                                                            </div>
-	                                                            <div class="form-group col-md-12">
-	                                                                <label for="exampleInputHolder">Card Holders Name</label>
-	                                                                <input type="text" class="form-control" name="exampleInputHolder" id="exampleInputHolder" placeholder="Card Holders Name">
-	                                                            </div>
-	                                                            <div class="form-group col-md-12">
-	                                                                <label for="exampleInputExpiration">Expiration</label>
-	                                                                <input type="text" class="form-control date-picker" name="exampleInputExpiration" id="exampleInputExpiration" placeholder="Expiration">
-	                                                            </div>
-	                                                            <div class="form-group col-md-12">
-	                                                                <label for="exampleInputCsv">CSV</label>
-	                                                                <input type="text" class="form-control" name="exampleInputCsv" id="exampleInputCsv" placeholder="CSV">
-	                                                            </div>
-	                                                            <div class="form-group col-md-12">
-	                                                                <label class="f-s-12">By pressing Next You will Agree to the Payment <a href="#">Terms & Conditions</a></label>
-	                                                            </div>
+	                                                    <div class="row m-b-lg"> 
+	                                                        <div class="col-md-8 col-md-offset-2">
+			                                                    <h4 class="title">Isian Pustaka Silabus</h4>
+			                                                    		<input type="hidden" id="idSilabus" name="idSilabus" value=""/>
+			                                                            <table class="table"> 
+			                                                            	<thead>
+			                                                            		<tr>
+				                                                            		<td>Pokok Bahasan</td>
+				                                                            		<td>Aksi</td>
+			                                                            		</tr>
+			                                                            	</thead> 
+			                                                            	<tbody>
+			                                                            		<tr id="rowPustakaNew">
+			                                                            			<td>
+							                                                   			 <select id="idPustaka" name="idPustaka" class="form-control">
+																								<option value="">Pilih pustaka untuk mata kuliah</option> 
+																									<c:forEach items="${pustakaList}" var="pustaka"> 
+																										<option value="${pustaka.idPustaka}">${pustaka.namaPustaka}</option>
+																									</c:forEach> 
+																						</select>
+																					</td>
+																					<td><button type="button" class="btn btn-success" onClick="simpanPustaka()"><i class="glyphicon glyphicon-plus"></i></button></td>
+	                                                                    		</tr>
+			                                                            	</tbody>
+			                                                            </table>
 	                                                        </div>
 	                                                    </div>
 	                                                </div>
@@ -250,12 +246,14 @@
 	                                        </div>
                                         <div id="myModal" class="modal fade">
 										  <div class="modal-dialog modal-lg">
-										    <div class="modal-content">
+										    <div class="modal-content  ">
 										      <div class="modal-header">
 										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 										        <h4 class="modal-title">Pemetaan Capaian Pembelajaran Mata Kuliah</h4>
 										      </div>
-										      <div class="modal-body"> 
+										      <div class="modal-body">
+										      	<div class="row">
+										      	<div class="col-md-8 col-md-offset-2">
 										      	  <table class="table"> 
 	                                                   	<thead>
 	                                                   		<tr>
@@ -264,8 +262,8 @@
 	                                                   		</tr>
 	                                                   	</thead> 
 	                                                   	<tbody>
-	                                                   		<input type="hidden" id="idDetailSilabus" />
-	                                                   		<tr id="rowCapaianBaru">
+	                                                   		<input type="hidden" id="idDetailSilabus" value=""/>
+	                                                   		<tr id="rowCapaianNew">
 		                                                   		<td>
 		                                                   			 <select id="idCapPembMK" name="idCapPembMK" class="form-control">
 																			<option value="">Pilih capaian pembelajaran mata kuliah</option> 
@@ -274,10 +272,12 @@
 																				</c:forEach> 
 																	</select>
 																</td>
-	                                                   			<td><button type="button" class="btn btn-success" onclick="simpanCapaian(this)"><i class="glyphicon glyphicon-plus"></i></button></td>
+	                                                   			<td><button type="button" class="btn btn-success" onclick="simpanCapaian(this)" id="btnSimpanCapaian"><i class="glyphicon glyphicon-plus"></i></button></td>
 	                                                        </tr>
 	                                                   	</tbody>
                                                    </table>
+                                                   </div>
+                                                   </div>
 										      </div>
 										      <div class="modal-footer">
 										      </div>
@@ -292,7 +292,8 @@
 				
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script>
-					$(document).ready(function(){  
+					$(document).ready(function(){
+						var idPemetaanSilabus="";
 						toastr.options = {
 								  "closeButton": true,
 								  "debug": false,
@@ -302,7 +303,7 @@
 								  "preventDuplicates": false,
 								  "showDuration": "300",
 								  "hideDuration": "1000",
-								  "timeOut": 0,
+								  "timeOut": "5000",
 								  "extendedTimeOut": 0,
 								  "showEasing": "swing",
 								  "hideEasing": "linear",
@@ -310,11 +311,12 @@
 								  "hideMethod": "fadeOut",
 								  "tapToDismiss": true
 								}
-						$('#rootwizard')  
-						.bootstrapWizard({ 
-							onTabClick: false,
-							onNext : function(tab, navigation, index){ 
-								var numTabs = $('#rootwizard').find('.tab-pane').length;  
+						$('#rootwizard').bootstrapWizard({ 
+							onTabClick: function(tab, navigation, index){
+								toastr["warning"]("Anda harus mengisi form");  
+								return false;
+							},
+							onNext : function(tab, navigation, index){  
 								isValidTab = validateTab(index - 1);
 								if(!isValidTab){
 									return false;
@@ -322,39 +324,72 @@
 								return true;
 							},
 							onPrevious : function(tab, navigation, index){
-								return validateTab(index+1);
+								return true;
 							}
 						});
-						function validateTab(index){ 
-							var idMKString = $("#idMK").val(); 
-							if(idMKString==""){
-								toastr["error"]("Error input", "Salah satu input yang Anda masukkan salah");  
-								return false;
+						function validateTab(index){  
+							/*---------------kondisi untuk tab 1----------------*/
+							if(index==0){ 
+								var idMKString = $("#idMK").val();  
+								if(idMKString==""){
+									toastr["error"]("Error input", "Salah satu input yang Anda masukkan salah");  
+									return false;
+								}
+								else if(idMKString!=""){
+									/*-------------memanggil id mata kuliah---------*/
+									$.ajax({
+										type:'POST', 
+										url: context_path+'silabus/kelola/simpan',
+										dataType: 'json',
+										data : {'idMK' : $("#idMK").val()},
+										traditional : true, 
+										success : function(data){  
+											$("#idSilabus").val(data.data.idSilabus);
+											$("#titlepokokbahasan").html('Isian Pokok Bahasan '+data.data.mk.namaMK); 
+										}  
+									});
+									/*-------------end memanggil id mata kuliah---------*/
+									return true;
+								}
 							}
-							else if(idMKString!=""){
-								$.ajax({
-									type:'POST', 
-									url: context_path+'silabus/kelola/simpan',
-									dataType: 'json',
-									data : {'idMK' : $("#idMK").val()},
-									traditional : true, 
-									success : function(data){  
-										$("#idSilabus").val(data.data.idSilabus);
-										$("#titlepokokbahasan").html('Isian Pokok Bahasan '+data.data.mk.namaMK);
-									}  
-								});
-								return true;
-							} 
+							/*---------------end kondisi untuk tab 1----------------*/
+							
+							/*---------------kondisi untuk tab 2----------------*/
+							else if(index==1){ 
+								if(idPemetaanSilabus==""){ 
+									toastr["warning"]("Anda harus mengisi form");  
+									return false;
+								}
+								else if(idPemetaanSilabus!=""){ 
+									return true;
+								}
+							}
+							/*---------------end kondisi untuk tab 2----------------*/   
+							
+							/*---------------kondisi untuk tab 3----------------*/
+							else if(index==1){ 
+								if(idPemetaanSilabus==""){ 
+									toastr["warning"]("Anda harus mengisi form");  
+									return false;
+								}
+								else if(idPemetaanSilabus!=""){ 
+									return true;
+								}
+							}
+							/*---------------end kondisi untuk tab 3----------------*/  
+							
 						}; 
 						showModal = function showModal(button){
 							$('#myModal').modal('show');
-							idDetailSilabus = $(button).closest("tr").attr("name");
-							console.log("ini id detail yang mau dipetakan "+idDetailSilabus);
+							idDetailSilabus = $(button).closest("tr").attr("name"); 
 							$("#idDetailSilabus").val(idDetailSilabus);
+							
 						};
 						simpanPokokBahasan = function simpanPokokBahasan(){
 							var pokokBahasan = $("#inputPokokBahasan").val();
+							
 							if($('#inputPokokBahasan').val()!=""){ 
+								/*-------------tambah pokok bahasan---------*/
 								$.ajax({
 									type:'POST', 
 									url: context_path+'silabus/kelola/simpandetail',
@@ -363,28 +398,43 @@
 										'pokokBahasan' : $('#inputPokokBahasan').val()},
 									traditional : true, 
 									success : function(data){  
-										toastr["success"]("Data pokok bahasan telah tersimpan");  
-										//console.log("ini id yang udah ditambahin "+data.data);
-										//console.log(pokokBahasan);
+										toastr["success"]("Data pokok bahasan telah tersimpan");   
 										$("#rowPokokBahasanNew").before(
-											"<tr class='rowPokokBahasan' name='"+data.data+"'>" +
-												"<td><input type='text' class='form-control col-md-4' value='" + pokokBahasan + "' /></td>" +
+											"<tr class='rowPokokBahasan' name='"+data.data+"' id='resultPokokBahasan'>" +
+												"<td><input type='text' id='textPokokBahasan' class='form-control col-md-4' value='" + pokokBahasan + "'/></td>" +
 												"<td><button type='button' class='btn btn-danger' name='"+ data.data +"'><i class='glyphicon glyphicon-minus'></i></button>&nbsp;" +
-												"<button type='button' class='btn btn-info'  onclick='showModal(this)'><i class='glyphicon glyphicon-pencil'></i></button></td>" +
+												"<button type='button' class='btn btn-warning' onclick='updatePokokBahasan(this)'><i class='glyphicon glyphicon-floppy-disk'></i></button>&nbsp;" +
+												"<button type='button' class='btn btn-primary'  onclick='showModal(this)'><i class='glyphicon glyphicon-pencil'></i></button></td>" +
 											"</tr>"	
 										);
 										$("#inputPokokBahasan").val(""); 
 									}  
 								});
+								/*-------------end tambah pokok bahasan---------*/
 							}
 							else{
 								toastr["error"]("Error input", "Salah satu input yang Anda masukkan salah");
 							}
 						};
-						simpanCapaian = function simpanCapaian(button){    
-							console.log("ini id cappembmk "+$("#idCapPembMK").val());
-							console.log("ini id detail silabus"+$("#idDetailSilabus").val());
+						updatePokokBahasan = function updatePokokBahasan(button){
+							var idDetailSilabus = $(button).closest("tr").attr("name");
+							var pokokBahasan = $(button).find("input").attr("id").value();
+							console.log(pokokBahasan);
+							console.log(idDetailSilabus);
+							$.ajax({
+								type:'POST',
+								url: context_path+'silabus/kelola/ubahdetail',
+								dataType: 'json',
+								data: {'idDetailSilabus' : idDetailSilabus, 'pokokBahasan' : pokokBahasan},
+								traditional: true,
+								success: function(data){
+									toastr["success"]("Data pemetaan capaian telah tersimpan");
+								}
+							})
+						}
+						simpanCapaian = function simpanCapaian(button){     
 							if($("#idCapPembMK").val()!=""){
+								/*-------------tambah capaian untuk silabus---------*/
 								$.ajax({
 									type:'POST', 
 									url: context_path+'silabus/kelola/simpanpemetaan', 
@@ -392,24 +442,62 @@
 									data: {'idDetailSilabus' : $("#idDetailSilabus").val(),
 										'idCapPembMK' : $("#idCapPembMK").val() },
 									traditional:true,
-									success: function(data){
-										toastr["success"]("Data pemetaan capaian telah tersimpan");		
-										console.log("ini id capaian yang udah ditambahin "+data.data.idPemetaanSilabus);
-										console.log(idCapaian);
-										$("#rowCapaianBaru").before(
-											"<tr class='rowCapaian'>"
-											+"<td><input type='text' class='form-control col-md-4' value='"+ data.data.capPembMK.namaCapPembMK + "' />&nbsp;"
-											+"<button type='button' class='btn btn-danger' name='"+data.data.idPemetaanSilabus+"'><i class='glyphicon glyphicon-minus'></i></td>"
+									success: function(data){ 
+										toastr["success"]("Data pemetaan capaian telah tersimpan");		 
+										$("#rowCapaianNew").before(
+											"<tr class='rowCapaian'>" 
+											+"<td><input type='text' class='form-control col-md-4' value='"+ data.data.capPembMK.namaCapPembMK + "' readonly='readonly'/></td>"
+											+"<td><button type='button' class='btn btn-danger' name='"+data.data.idPemetaanSilabus+"'><i class='glyphicon glyphicon-minus'></i></td>"
 											+"</tr>"		
 										);
 										$("#idCapPembMK").val(""); 
+										idPemetaanSilabus = data.data.idPemetaanSilabus;
+									},
+									error: function(e){
+										toastr["error"]("Error input", "Capaian pembelajaran MK harus dipilih");		 
 									}
 								});
+
+								/*-------------end tambah capaian untuk silabus---------*/ 
 							}
 							else{
 								toastr["error"]("Error data input","Salah satu input yang Anda masukkan salah");
 							}
+							
 						}
+						simpanPustaka = function simpanPustaka(){     
+							if($("#idPustaka").val()!=""){
+								/*-------------tambah pustaka untuk silabus---------*/
+								$.ajax({
+									type:'POST', 
+									url: context_path+'silabus/kelola/simpanpustaka', 
+									dataType:"json",	
+									data: {'idPustaka' : $("#idPustaka").val(),
+										'idSilabus' : $("#idSilabus").val() },
+									traditional:true,
+									success: function(data){ 
+										toastr["success"]("Data detail pustaka telah tersimpan");		 
+										$("#rowPustakaNew").before(
+											"<tr class='rowPustaka'>" 
+											+"<td><input type='text' class='form-control col-md-4' value='"+ data.data.pustaka.namaPustaka + "'/></td>"
+											+"<td><button type='button' class='btn btn-danger' name='"+data.data.idPustaka+"'><i class='glyphicon glyphicon-minus'></i></td>"
+											+"</tr>"		
+										);
+										$("#idPustaka").val("");  
+									},
+									error: function(e){
+										toastr["error"]("Error input", "Pustaka mata kuliah harus dipilih");		 
+									}
+								});
+
+								/*-------------end tambah pustaka untuk silabus---------*/ 
+							}
+							else{
+								toastr["error"]("Error data input","Salah satu input yang Anda masukkan salah");
+							}
+							
+						}
+						
 					});
 				</script>
 				<!-- akhir script custom pada halaman -->

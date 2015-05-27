@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.AIS.Modul.MataKuliah.Service.AjaxResponse;
 import com.AIS.Modul.MataKuliah.Service.CapPembMKService;
+import com.AIS.Modul.MataKuliah.Service.DetailPustakaService;
 import com.AIS.Modul.MataKuliah.Service.DetailSilabusService;
 import com.AIS.Modul.MataKuliah.Service.MKService;
 import com.AIS.Modul.MataKuliah.Service.PemetaanSilabusService;
@@ -54,16 +55,23 @@ public class SilabusController {
 	@Autowired
 	private PemetaanSilabusService pemetaanSilabusServ;
 	
+	@Autowired
+	private PustakaService pustakaServ;
+	
+	@Autowired
+	private DetailPustakaService detailPustakaServ;
+	
 	private static final Logger logger = LoggerFactory.getLogger(SilabusController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView datatable(Locale locale, Model model) { 
 		List<MK> mkList = mkServ.findAll();
 		List<CapPembMK> cpmkList = capPembMKServ.findAll();
-		
+		List<Pustaka> pustakaList = pustakaServ.findAll();
 		ModelAndView mav = new ModelAndView();  
 		mav.addObject("mkList", mkList);
 		mav.addObject("cpmkList", cpmkList);
+		mav.addObject("pustakaList", pustakaList);
 		mav.setViewName("ViewSilabus");
 		return mav;
 	}
@@ -113,7 +121,24 @@ public class SilabusController {
 		pemetaanSilabusServ.save(ps);
 		response.setData(ps);
 		response.setStatus("ok");
-		response.setMessage("Data detail silabus tersimpan");
+		response.setMessage("Data pemetaan tersimpan");
+		return response;
+	}
+	
+	@RequestMapping(value="/simpanpustaka", method = RequestMethod.POST)
+	public @ResponseBody AjaxResponse simpanDetailPustaka(@RequestParam("idPustaka") UUID idPustaka,
+			@RequestParam("idSilabus") UUID idSilabus) {
+		AjaxResponse response = new AjaxResponse(); 
+		Silabus silabus = silabusServ.findById(idSilabus); 
+		Pustaka pustaka = pustakaServ.findById(idPustaka); 
+		DetailPustaka dp = new DetailPustaka();  
+		
+		dp.setPustaka(pustaka);
+		dp.setSilabus(silabus);
+		detailPustakaServ.save(dp);
+		response.setData(dp);
+		response.setStatus("ok");
+		response.setMessage("Data detail pustaka tersimpan");
 		return response;
 	}
 }
