@@ -150,7 +150,7 @@
 				<div class="row"> 
 						<div class="col-md-8 col-md-offset-2"> 
 							<div class="panel panel-white">
-								<div class="panel-body" id="wizardsilabus">
+								<div class="panel-body">
 	                                    <div id="rootwizard">
 	                                        <ul class="nav nav-tabs" role="tablist">
 	                                            <li role="presentation" class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-university m-r-xs"></i>Pilih Mata Kuliah</a></li>
@@ -158,92 +158,96 @@
 	                                            <li role="presentation"><a href="#tab3" data-toggle="tab"><i class="fa fa-bars m-r-xs"></i>Kelola Pokok Bahasan Silabus</a></li>
 	                                            <li role="presentation"><a href="#tab4" data-toggle="tab"><i class="fa fa-book m-r-xs"></i>Kelola Pustaka Silabus</a></li>
 	                                        </ul>
-	                                     </div>
-                                        <form id="wizardForm">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active fade in" id="tab1">
-                                                    <div class="row m-b-lg">
-                                                        <div class="col-md-6 col-md-offset-3"> 
-                                                    	<h4 class="title">Pilih Mata Kuliah</h4>
-                                                        	<div class="form-group">
-																<label>Mata Kuliah</label>
-																<select id="idMK" name="idMK" class="form-control">
-																		<option value="">Pilih kode dan nama mata kuliah</option> 
-																	<c:forEach items="${mkList}" var="mk"> 
-																		<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
-																	</c:forEach> 
-																</select>
-																<div id="warning"></div>
-															</div>
-                                                        </div> 
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="tab2">
-                                                    <div class="row m-b-lg"> 
-                                                        <div class="col-md-8 col-md-offset-2">
-		                                                    <h4 class="title" id="titlepokokbahasan">Isian Pokok Bahasan Silabus</h4>
-		                                                    		<input type="hidden" id="idSilabus" name="idSilabus" value=""/>
-		                                                            <table class="table"> 
-		                                                            	<thead>
-		                                                            		<tr>
-			                                                            		<td>Pokok Bahasan</td>
-			                                                            		<td>Aksi</td>
-		                                                            		</tr>
-		                                                            	</thead> 
-		                                                            	<tbody>
-		                                                            		<tr id="rowPokokBahasanNew">
-		                                                            			<td><input type="text" class="form-control col-md-4" placeholder="Berisi pokok bahasan" id="inputPokokBahasan"></td>
-		                                                            			<td><button type="button" class="btn btn-success" onClick="simpanPokokBahasan()"><i class="glyphicon glyphicon-plus"></i></button></td>
-                                                                    		</tr>
-		                                                            	</tbody>
-		                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="tab3">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="form-group col-md-12">
-                                                                <label for="exampleInputCard">Card Number</label>
-                                                                <div class="row">
-                                                                    <div class="col-md-8">
-                                                                        <input type="text" class="form-control" name="exampleInputCard" id="exampleInputCard" placeholder="Card Number">
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <input type="text" class="form-control col-md-4" name="exampleInputSecurity" id="exampleInputSecurity" placeholder="Security Code">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-12">
-                                                                <label for="exampleInputHolder">Card Holders Name</label>
-                                                                <input type="text" class="form-control" name="exampleInputHolder" id="exampleInputHolder" placeholder="Card Holders Name">
-                                                            </div>
-                                                            <div class="form-group col-md-12">
-                                                                <label for="exampleInputExpiration">Expiration</label>
-                                                                <input type="text" class="form-control date-picker" name="exampleInputExpiration" id="exampleInputExpiration" placeholder="Expiration">
-                                                            </div>
-                                                            <div class="form-group col-md-12">
-                                                                <label for="exampleInputCsv">CSV</label>
-                                                                <input type="text" class="form-control" name="exampleInputCsv" id="exampleInputCsv" placeholder="CSV">
-                                                            </div>
-                                                            <div class="form-group col-md-12">
-                                                                <label class="f-s-12">By pressing Next You will Agree to the Payment <a href="#">Terms & Conditions</a></label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="tab4">
-                                                    <h2 class="no-s">Thank You !</h2>
-                                                    <div class="alert alert-info m-t-sm m-b-lg" role="alert">
-                                                        Congratulations ! You got the last step.
-                                                    </div>
-                                                </div>
-                                                <ul class="pager wizard">
-                                                    <li class="previous"><a href="#" class="btn btn-default" id="button-previous" type="button">Previous</a></li>
-                                                    <li class="next"><a href="#" class="btn btn-default" id="button-next" type="button">Next</a></li>
-                                                </ul>
-                                            </div>
-                                        </form>
+	                                        <div class="progress progress-sm m-t-sm">
+	                                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+	                                            </div>
+	                                        </div> 
+	                                        <form id="wizardForm">
+	                                            <div class="tab-content">
+	                                                <div class="tab-pane active fade in" id="tab1">
+	                                                    <div class="row m-b-lg">
+	                                                        <div class="col-md-6 col-md-offset-3"> 
+	                                                    	<h4 class="title">Pilih Mata Kuliah</h4>
+	                                                        	<div class="form-group">
+																	<label>Mata Kuliah</label>
+																	<select id="idMK" name="idMK" class="form-control">
+																			<option value="">Pilih kode dan nama mata kuliah</option> 
+																		<c:forEach items="${mkList}" var="mk"> 
+																			<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
+																		</c:forEach> 
+																	</select>
+																	<div id="warning"></div>
+																</div>
+	                                                        </div> 
+	                                                    </div>
+	                                                </div>
+	                                                <div class="tab-pane fade" id="tab2">
+	                                                    <div class="row m-b-lg"> 
+	                                                        <div class="col-md-8 col-md-offset-2">
+			                                                    <h4 class="title" id="titlepokokbahasan">Isian Pokok Bahasan Silabus</h4>
+			                                                    		<input type="hidden" id="idSilabus" name="idSilabus" value=""/>
+			                                                            <table class="table"> 
+			                                                            	<thead>
+			                                                            		<tr>
+				                                                            		<td>Pokok Bahasan</td>
+				                                                            		<td>Aksi</td>
+			                                                            		</tr>
+			                                                            	</thead> 
+			                                                            	<tbody>
+			                                                            		<tr id="rowPokokBahasanNew">
+			                                                            			<td><input type="text" class="form-control col-md-4" placeholder="Berisi pokok bahasan" id="inputPokokBahasan"></td>
+			                                                            			<td><button type="button" class="btn btn-success" onClick="simpanPokokBahasan()"><i class="glyphicon glyphicon-plus"></i></button></td>
+	                                                                    		</tr>
+			                                                            	</tbody>
+			                                                            </table>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                                <div class="tab-pane fade" id="tab3">
+	                                                    <div class="row">
+	                                                        <div class="col-md-12">
+	                                                            <div class="form-group col-md-12">
+	                                                                <label for="exampleInputCard">Card Number</label>
+	                                                                <div class="row">
+	                                                                    <div class="col-md-8">
+	                                                                        <input type="text" class="form-control" name="exampleInputCard" id="exampleInputCard" placeholder="Card Number">
+	                                                                    </div>
+	                                                                    <div class="col-md-4">
+	                                                                        <input type="text" class="form-control col-md-4" name="exampleInputSecurity" id="exampleInputSecurity" placeholder="Security Code">
+	                                                                    </div>
+	                                                                </div>
+	                                                            </div>
+	                                                            <div class="form-group col-md-12">
+	                                                                <label for="exampleInputHolder">Card Holders Name</label>
+	                                                                <input type="text" class="form-control" name="exampleInputHolder" id="exampleInputHolder" placeholder="Card Holders Name">
+	                                                            </div>
+	                                                            <div class="form-group col-md-12">
+	                                                                <label for="exampleInputExpiration">Expiration</label>
+	                                                                <input type="text" class="form-control date-picker" name="exampleInputExpiration" id="exampleInputExpiration" placeholder="Expiration">
+	                                                            </div>
+	                                                            <div class="form-group col-md-12">
+	                                                                <label for="exampleInputCsv">CSV</label>
+	                                                                <input type="text" class="form-control" name="exampleInputCsv" id="exampleInputCsv" placeholder="CSV">
+	                                                            </div>
+	                                                            <div class="form-group col-md-12">
+	                                                                <label class="f-s-12">By pressing Next You will Agree to the Payment <a href="#">Terms & Conditions</a></label>
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                                <div class="tab-pane fade" id="tab4">
+	                                                    <h2 class="no-s">Thank You !</h2>
+	                                                    <div class="alert alert-info m-t-sm m-b-lg" role="alert">
+	                                                        Congratulations ! You got the last step.
+	                                                    </div>
+	                                                </div>
+	                                                <ul class="pager wizard">
+	                                                    <li class="previous"><a href="#" class="btn btn-default" id="button-previous" type="button">Previous</a></li>
+	                                                    <li class="next"><a href="#" class="btn btn-default" id="button-next" type="button">Next</a></li>
+	                                                </ul>
+	                                            </div>
+	                                        </form>
+	                                        </div>
                                         <div id="myModal" class="modal fade">
 										  <div class="modal-dialog modal-lg">
 										    <div class="modal-content">
@@ -260,14 +264,16 @@
 	                                                   		</tr>
 	                                                   	</thead> 
 	                                                   	<tbody>
-	                                                   		<input type="hidden" id="idDetailSilabus" value="" />
+	                                                   		<input type="hidden" id="idDetailSilabus" />
 	                                                   		<tr id="rowCapaianBaru">
-	                                                   			 <select id="idCapPembMK" name="idCapPembMK" class="form-control">
-																		<option value="">Pilih capaian pembelajaran mata kuliah</option> 
-																			<c:forEach items="${cpmkList}" var="cpmk"> 
-																				<option value="${cpmk.idCapPembMK}">${cpmk.mk.namaMK} - ${cpmk.namaCapPembMK}</option>
-																			</c:forEach> 
-																</select>
+		                                                   		<td>
+		                                                   			 <select id="idCapPembMK" name="idCapPembMK" class="form-control">
+																			<option value="">Pilih capaian pembelajaran mata kuliah</option> 
+																				<c:forEach items="${cpmkList}" var="cpmk"> 
+																					<option value="${cpmk.idCapPembMK}">${cpmk.mk.namaMK} - ${cpmk.namaCapPembMK}</option>
+																				</c:forEach> 
+																	</select>
+																</td>
 	                                                   			<td><button type="button" class="btn btn-success" onclick="simpanCapaian(this)"><i class="glyphicon glyphicon-plus"></i></button></td>
 	                                                        </tr>
 	                                                   	</tbody>
@@ -279,8 +285,8 @@
 										  </div><!-- /.modal-dialog -->
 										</div><!-- /.modal -->
 															
-	                            </div><!-- wizardform -->
-	                         </div>
+	                            </div><!-- panel body -->
+	                         </div> <!-- panel white -->
 	                    </div>
 	             </div>
 				
@@ -304,13 +310,11 @@
 								  "hideMethod": "fadeOut",
 								  "tapToDismiss": true
 								}
-						$('#wizardsilabus')  
+						$('#rootwizard')  
 						.bootstrapWizard({ 
-							onTabClick: function(tab, navigation, index) { 
-				                return validateTab(index);
-				            },
+							onTabClick: false,
 							onNext : function(tab, navigation, index){ 
-								var numTabs = $('#wizardsilabus').find('.tab-pane').length;  
+								var numTabs = $('#rootwizard').find('.tab-pane').length;  
 								isValidTab = validateTab(index - 1);
 								if(!isValidTab){
 									return false;
@@ -342,8 +346,11 @@
 								return true;
 							} 
 						}; 
-						showModal = function showModal(){
+						showModal = function showModal(button){
 							$('#myModal').modal('show');
+							idDetailSilabus = $(button).closest("tr").attr("name");
+							console.log("ini id detail yang mau dipetakan "+idDetailSilabus);
+							$("#idDetailSilabus").val(idDetailSilabus);
 						};
 						simpanPokokBahasan = function simpanPokokBahasan(){
 							var pokokBahasan = $("#inputPokokBahasan").val();
@@ -357,17 +364,16 @@
 									traditional : true, 
 									success : function(data){  
 										toastr["success"]("Data pokok bahasan telah tersimpan");  
-										console.log("ini id yang udah ditambahin "+data.data);
-										console.log(pokokBahasan);
+										//console.log("ini id yang udah ditambahin "+data.data);
+										//console.log(pokokBahasan);
 										$("#rowPokokBahasanNew").before(
 											"<tr class='rowPokokBahasan' name='"+data.data+"'>" +
 												"<td><input type='text' class='form-control col-md-4' value='" + pokokBahasan + "' /></td>" +
 												"<td><button type='button' class='btn btn-danger' name='"+ data.data +"'><i class='glyphicon glyphicon-minus'></i></button>&nbsp;" +
-												"<button type='button' class='btn btn-info'  onclick='showModal()'><i class='glyphicon glyphicon-pencil'></i></button></td>" +
+												"<button type='button' class='btn btn-info'  onclick='showModal(this)'><i class='glyphicon glyphicon-pencil'></i></button></td>" +
 											"</tr>"	
 										);
-										$("#inputPokokBahasan").val("");
-										$("#idDetailSilabus").val(data.data);
+										$("#inputPokokBahasan").val(""); 
 									}  
 								});
 							}
@@ -375,32 +381,33 @@
 								toastr["error"]("Error input", "Salah satu input yang Anda masukkan salah");
 							}
 						};
-						simpanCapaian = function simpanCapaian(button){ 
-							idDetailSilabus = $(this).closest("input").attr("id");
-							console.log("ini id detail silabus "+idDetailSilabus) 
-							console.log("ini id detail silabus "+$("#idDetailSilabus").val())
-							var idCapaian = $("#idCapPembMK").val();
+						simpanCapaian = function simpanCapaian(button){   
+							console.log("ini id cappembmk "+$("#idCapPembMK").val());
+							console.log("ini id detail silabus"+$("#idDetailSilabus").val());
 							if($("#idCapPembMK").val()!=""){
 								$.ajax({
 									type:'POST', 
 									url: context_path+'silabus/kelola/simpanpemetaan', 
 									dataType:"json",
 									data: {'idDetailSilabus' : $("#idDetailSilabus").val(),
-										'idCapaian' : $("#idCapPembMK").val() }, 
+										'idCapaian' : $("#idCapPembMK").val() },
 									traditional:true,
 									success: function(data){
 										toastr["success"]("Data pemetaan capaian telah tersimpan");		
-										console.log("ini id capaian yang udah ditambahin "+data.data);
+										console.log("ini id capaian yang udah ditambahin "+data.data.idPemetaanSilabus);
 										console.log(idCapaian);
 										$("#rowCapaianBaru").before(
-											"<tr class='rowCapaian' name='"+data.data.idPemetaanSilabus+"'">"
-											+"<td><input type='text' class='form-control col-md-4' value='" + data.data.namaCapPembMK + "' />"
-											+"<button type='button' class='btn btn-danger' name='"+data.data.idPemetaanSilabus+"'></td>"
+											"<tr class='rowCapaian'>"
+											+"<td><input type='text' class='form-control col-md-4' value='"+ data.data.capPembMK.namaCapPembMK + "' />&nbsp;"
+											+"<button type='button' class='btn btn-danger' name='"+data.data.idPemetaanSilabus+"'><i class='glyphicon glyphicon-minus'></i></td>"
 											+"</tr>"		
 										);
 										$("#idCapPembMK").val(""); 
 									}
 								});
+							}
+							else{
+								toastr["error"]("Error data input","Salah satu input yang Anda masukkan salah");
 							}
 						}
 					});

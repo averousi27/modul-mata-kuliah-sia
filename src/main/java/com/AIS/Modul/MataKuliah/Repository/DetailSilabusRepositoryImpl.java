@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.Session;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sia.main.domain.DetailSilabus;
+import com.sia.main.domain.RP;
 
 @Repository
 public class DetailSilabusRepositoryImpl implements DetailSilabusRepository{
@@ -27,6 +29,16 @@ public class DetailSilabusRepositoryImpl implements DetailSilabusRepository{
 		session.flush();
 		session.close();
 		return insertId;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public DetailSilabus findById(UUID idDetailSilabus) {
+		// TODO Auto-generated method stub
+		List<DetailSilabus> queryResult = sessionFactory.getCurrentSession().createQuery("select ds from DetailSilabus ds " 
+				+ "where ds.idDetailSilabus = '"+idDetailSilabus.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult.get(0);
 	}
 
 }

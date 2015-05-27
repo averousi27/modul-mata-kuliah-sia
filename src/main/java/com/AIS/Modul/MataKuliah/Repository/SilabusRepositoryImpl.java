@@ -57,7 +57,7 @@ public class SilabusRepositoryImpl implements SilabusRepository {
 	public Silabus findById(UUID idSilabus) {
 		// TODO Auto-generated method stub
 		List<Silabus> queryResult = sessionFactory.getCurrentSession().createQuery("select silabus from Silabus silabus "
-				+ "join silabus.mk where silabus.idSilabus ='"+ idSilabus.toString() +"'").list();
+				+ "join silabus.mk mk where silabus.idSilabus ='"+ idSilabus.toString() +"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
 	}

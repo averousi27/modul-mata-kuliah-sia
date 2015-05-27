@@ -8,4 +8,6 @@ public interface DetailSilabusRepository {
 
 	public UUID insert(DetailSilabus detailSilabus);
 
+	public DetailSilabus findById(UUID idDetailSilabus);
+
 }

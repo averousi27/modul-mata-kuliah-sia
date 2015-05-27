@@ -20,6 +20,7 @@ import com.AIS.Modul.MataKuliah.Service.AjaxResponse;
 import com.AIS.Modul.MataKuliah.Service.CapPembMKService;
 import com.AIS.Modul.MataKuliah.Service.DetailSilabusService;
 import com.AIS.Modul.MataKuliah.Service.MKService;
+import com.AIS.Modul.MataKuliah.Service.PemetaanSilabusService;
 import com.AIS.Modul.MataKuliah.Service.PustakaService;
 import com.AIS.Modul.MataKuliah.Service.SilabusService;
 import com.sia.main.domain.CapPembMK;
@@ -27,6 +28,7 @@ import com.sia.main.domain.DetailPemetaan;
 import com.sia.main.domain.DetailPustaka;
 import com.sia.main.domain.DetailSilabus;
 import com.sia.main.domain.MK;
+import com.sia.main.domain.PemetaanSilabus;
 import com.sia.main.domain.Pustaka;
 import com.sia.main.domain.RumpunMK;
 import com.sia.main.domain.Silabus;
@@ -48,6 +50,9 @@ public class SilabusController {
 	
 	@Autowired
 	private DetailSilabusService detailSilabusServ;
+
+	@Autowired
+	private PemetaanSilabusService pemetaanSilabusServ;
 	
 	private static final Logger logger = LoggerFactory.getLogger(SilabusController.class);
 	
@@ -100,12 +105,13 @@ public class SilabusController {
 	public @ResponseBody AjaxResponse simpanPemetaan(@RequestParam("idDetailSilabus") UUID idDetailSilabus,
 			@RequestParam("idCapPembMK") UUID idCapPembMK) {
 		AjaxResponse response = new AjaxResponse(); 
-		Silabus silabus = silabusServ.findById(idDetailSilabus); 
-		DetailSilabus detailSilabus = new DetailSilabus();
-		detailSilabus.setSilabus(silabus);
-		detailSilabus.setPokokBahasan(pokokBahasan);
-		
-		response.setData(detailSilabusServ.save(detailSilabus));
+		DetailSilabus ds = detailSilabusServ.findById(idDetailSilabus); 
+		CapPembMK cpmk = capPembMKServ.findById(idCapPembMK); 
+		PemetaanSilabus ps = new PemetaanSilabus(); 
+		ps.setCapPembMK(cpmk);
+		ps.setDetailSilabus(ds);
+		pemetaanSilabusServ.save(ps);
+		response.setData(ps);
 		response.setStatus("ok");
 		response.setMessage("Data detail silabus tersimpan");
 		return response;
