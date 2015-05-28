@@ -94,19 +94,53 @@ public class SilabusController {
         return response; 
 	}
 	
+	@RequestMapping(value="/getpokokbahasanlist", method=RequestMethod.GET)
+	public @ResponseBody AjaxResponse getPokokBahasanList(@RequestParam("idSilabus") UUID idSilabus){
+		AjaxResponse response = null;
+		List<DetailSilabus> pokokBahasanList = detailSilabusServ.findBySilabus(idSilabus);
+		if(pokokBahasanList!=null){
+			response = new AjaxResponse("ok", "list pokok bahasan ada", pokokBahasanList);
+		}
+		else response = new AjaxResponse("", "", null);
+		return response; 
+	}
+	
 	@RequestMapping(value="/simpandetail", method = RequestMethod.POST)
 	public @ResponseBody AjaxResponse simpanDetailSilabus(@RequestParam("idSilabus") UUID idSilabus,
 			@RequestParam("pokokBahasan") String pokokBahasan) {
 		AjaxResponse response = new AjaxResponse(); 
 		Silabus silabus = silabusServ.findById(idSilabus); 
 		DetailSilabus detailSilabus = new DetailSilabus();
+		
 		detailSilabus.setSilabus(silabus);
 		detailSilabus.setPokokBahasan(pokokBahasan);
+		detailSilabusServ.save(detailSilabus);
 		
-		response.setData(detailSilabusServ.save(detailSilabus));
+		response.setData(detailSilabus);
 		response.setStatus("ok");
 		response.setMessage("Data detail silabus tersimpan");
 		return response;
+	}
+	@RequestMapping(value="/editdetail", method = RequestMethod.POST)
+	public @ResponseBody AjaxResponse editDetailSilabus(@RequestParam("idDetailSilabus") UUID idDetailSilabus,
+			@RequestParam("pokokBahasan") String pokokBahasan) {
+		AjaxResponse response = null; 
+		DetailSilabus detailSilabus = detailSilabusServ.findById(idDetailSilabus);    
+		detailSilabus.setPokokBahasan(pokokBahasan);  
+		if(detailSilabusServ.save(detailSilabus)==null){
+			response = new AjaxResponse("error", "data pokok bahasan tidak ditemukan", null);
+		}
+		else{
+			response = new AjaxResponse("ok", "data pokok bahasan diperbaharui", detailSilabus); 
+		}
+		return response;
+	}
+	
+	@RequestMapping(value="/hapusdetail", method = RequestMethod.POST)
+	public @ResponseBody AjaxResponse hapusDetailSilabus(@RequestParam("idDetailSilabus") UUID idDetailSilabus) {    
+		detailSilabusServ.delete(idDetailSilabus); 
+		
+		return new AjaxResponse();
 	}
 	
 	@RequestMapping(value="/simpanpemetaan", method = RequestMethod.POST)
@@ -116,9 +150,11 @@ public class SilabusController {
 		DetailSilabus ds = detailSilabusServ.findById(idDetailSilabus); 
 		CapPembMK cpmk = capPembMKServ.findById(idCapPembMK); 
 		PemetaanSilabus ps = new PemetaanSilabus(); 
+		
 		ps.setCapPembMK(cpmk);
 		ps.setDetailSilabus(ds);
 		pemetaanSilabusServ.save(ps);
+		
 		response.setData(ps);
 		response.setStatus("ok");
 		response.setMessage("Data pemetaan tersimpan");
@@ -136,6 +172,7 @@ public class SilabusController {
 		dp.setPustaka(pustaka);
 		dp.setSilabus(silabus);
 		detailPustakaServ.save(dp);
+		
 		response.setData(dp);
 		response.setStatus("ok");
 		response.setMessage("Data detail pustaka tersimpan");

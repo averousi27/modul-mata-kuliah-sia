@@ -348,6 +348,25 @@
 											$("#titlepokokbahasan").html('Isian Pokok Bahasan '+data.data.mk.namaMK); 
 										}  
 									});
+									$.ajax({
+										type:'GET', 
+										url: context_path+'silabus/kelola/getpokokbahasanlist',
+										dataType: 'json',
+										data : {'idSilabus' : $("#idSilabus").val()},
+										traditional : true, 
+										success : function(data){  
+											for(var i=0; i<data.data.length; ++i){
+												$("#rowPokokBahasanNew").before(
+														"<tr class='rowPokokBahasan' name='"+data.data[i].idDetailSilabus+"'>" +
+															"<td><input type='text' id='textPokokBahasan' class='form-control col-md-4' value='" + data.data[i].pokokBahasan + "'/></td>" +
+															"<td><button type='button' class='btn btn-danger' name='"+ data.data[i].idDetailSilabus +"' onclick='deletePokokBahasan(this)'><i class='glyphicon glyphicon-minus'></i></button>&nbsp;" +
+															"<button type='button' class='btn btn-warning' onclick='updatePokokBahasan(this)'><i class='glyphicon glyphicon-floppy-disk'></i></button>&nbsp;" +
+															"<button type='button' class='btn btn-primary'  onclick='showModal(this)'><i class='glyphicon glyphicon-pencil'></i></button></td>" +
+														"</tr>"	
+													);
+											} 
+										}  
+									});
 									/*-------------end memanggil id mata kuliah---------*/
 									return true;
 								}
@@ -400,9 +419,9 @@
 									success : function(data){  
 										toastr["success"]("Data pokok bahasan telah tersimpan");   
 										$("#rowPokokBahasanNew").before(
-											"<tr class='rowPokokBahasan' name='"+data.data+"' id='resultPokokBahasan'>" +
-												"<td><input type='text' id='textPokokBahasan' class='form-control col-md-4' value='" + pokokBahasan + "'/></td>" +
-												"<td><button type='button' class='btn btn-danger' name='"+ data.data +"'><i class='glyphicon glyphicon-minus'></i></button>&nbsp;" +
+											"<tr class='rowPokokBahasan' name='"+data.data.idDetailSilabus+"'>" +
+												"<td><input type='text' id='textPokokBahasan' class='form-control col-md-4' value='" + data.data.pokokBahasan + "'/></td>" +
+												"<td><button type='button' class='btn btn-danger' name='"+ data.data.idDetailSilabus +"' onclick='deletePokokBahasan(this)'><i class='glyphicon glyphicon-minus'></i></button>&nbsp;" +
 												"<button type='button' class='btn btn-warning' onclick='updatePokokBahasan(this)'><i class='glyphicon glyphicon-floppy-disk'></i></button>&nbsp;" +
 												"<button type='button' class='btn btn-primary'  onclick='showModal(this)'><i class='glyphicon glyphicon-pencil'></i></button></td>" +
 											"</tr>"	
@@ -418,20 +437,47 @@
 						};
 						updatePokokBahasan = function updatePokokBahasan(button){
 							var idDetailSilabus = $(button).closest("tr").attr("name");
-							var pokokBahasan = $(button).find("input").attr("id").value();
+							var tr = $(button).closest("tr");
+							var pokokBahasan = $(tr).find("input").val();
 							console.log(pokokBahasan);
 							console.log(idDetailSilabus);
+							/*-------------edit detail silabus--------*/
 							$.ajax({
 								type:'POST',
-								url: context_path+'silabus/kelola/ubahdetail',
+								url: context_path+'silabus/kelola/editdetail',
 								dataType: 'json',
 								data: {'idDetailSilabus' : idDetailSilabus, 'pokokBahasan' : pokokBahasan},
 								traditional: true,
-								success: function(data){
-									toastr["success"]("Data pemetaan capaian telah tersimpan");
+								success: function(data){ 
+									toastr["success"]("Data pokok bahasan sudah diperbaharui");
+								}, 
+								error: function(data){
+									toastr["error"]("Error data input", "Data tidak dapat diperbaharui");
 								}
-							})
+							});
+							/*-------------edit detail silabus--------*/
 						}
+						
+						deletePokokBahasan = function deletePokokBahasan(button){
+							var idDetailSilabus = $(button).attr("name");  
+							console.log(idDetailSilabus);  
+							/*-------------hapus detail--------*/
+							$.ajax({
+								type:'POST',
+								url: context_path+'silabus/kelola/hapusdetail',
+								dataType: 'json',
+								data: {'idDetailSilabus' : idDetailSilabus},
+								traditional: true,
+								success: function(data){ 
+									toastr["success"]("Data pokok bahasan sudah dihapus");
+								}, 
+								error: function(data){
+									toastr["error"]("Error data input", "Data tidak dapat diperbaharui");
+								}
+							});
+							/*-------------end hapus detail--------*/
+						} 
+						
 						simpanCapaian = function simpanCapaian(button){     
 							if($("#idCapPembMK").val()!=""){
 								/*-------------tambah capaian untuk silabus---------*/

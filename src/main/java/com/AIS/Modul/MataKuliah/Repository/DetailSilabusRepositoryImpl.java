@@ -41,4 +41,26 @@ public class DetailSilabusRepositoryImpl implements DetailSilabusRepository{
 		return queryResult.get(0);
 	}
 
+	@Override
+	public void update(DetailSilabus detailSilabus) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.update(detailSilabus);
+		tx.commit();
+		session.flush();
+		session.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DetailSilabus> findBySilabus(UUID idSilabus) {
+		// TODO Auto-generated method stub
+		List<DetailSilabus> queryResult = sessionFactory.getCurrentSession().createQuery("select ds from DetailSilabus ds " 
+				+ "join ds.silabus silabus"
+				+ "where silabus.idSilabus = '"+idSilabus.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
+
 }
