@@ -346,27 +346,28 @@
 										success : function(data){  
 											$("#idSilabus").val(data.data.idSilabus);
 											$("#titlepokokbahasan").html('Isian Pokok Bahasan '+data.data.mk.namaMK); 
+											$.ajax({
+												type:'GET', 
+												url: context_path+'silabus/kelola/getpokokbahasanlist',
+												dataType: 'json',
+												data : {'idSilabus' : data.data.idSilabus},
+												traditional : true, 
+												success : function(data){  
+													for(var i=0; i<data.data.length; ++i){
+														$("#rowPokokBahasanNew").before(
+																"<tr class='rowPokokBahasan' name='"+data.data[i].idDetailSilabus+"'>" +
+																	"<td><input type='text' id='textPokokBahasan' class='form-control col-md-4' value='" + data.data[i].pokokBahasan + "'/></td>" +
+																	"<td><button type='button' class='btn btn-danger' name='"+ data.data[i].idDetailSilabus +"' onclick='deletePokokBahasan(this)'><i class='glyphicon glyphicon-minus'></i></button>&nbsp;" +
+																	"<button type='button' class='btn btn-warning' onclick='updatePokokBahasan(this)'><i class='glyphicon glyphicon-floppy-disk'></i></button>&nbsp;" +
+																	"<button type='button' class='btn btn-primary'  onclick='showModal(this)'><i class='glyphicon glyphicon-pencil'></i></button></td>" +
+																"</tr>"	
+															);
+													} 
+												}  
+											});
 										}  
 									});
-									$.ajax({
-										type:'GET', 
-										url: context_path+'silabus/kelola/getpokokbahasanlist',
-										dataType: 'json',
-										data : {'idSilabus' : $("#idSilabus").val()},
-										traditional : true, 
-										success : function(data){  
-											for(var i=0; i<data.data.length; ++i){
-												$("#rowPokokBahasanNew").before(
-														"<tr class='rowPokokBahasan' name='"+data.data[i].idDetailSilabus+"'>" +
-															"<td><input type='text' id='textPokokBahasan' class='form-control col-md-4' value='" + data.data[i].pokokBahasan + "'/></td>" +
-															"<td><button type='button' class='btn btn-danger' name='"+ data.data[i].idDetailSilabus +"' onclick='deletePokokBahasan(this)'><i class='glyphicon glyphicon-minus'></i></button>&nbsp;" +
-															"<button type='button' class='btn btn-warning' onclick='updatePokokBahasan(this)'><i class='glyphicon glyphicon-floppy-disk'></i></button>&nbsp;" +
-															"<button type='button' class='btn btn-primary'  onclick='showModal(this)'><i class='glyphicon glyphicon-pencil'></i></button></td>" +
-														"</tr>"	
-													);
-											} 
-										}  
-									});
+									
 									/*-------------end memanggil id mata kuliah---------*/
 									return true;
 								}
@@ -459,7 +460,9 @@
 						}
 						
 						deletePokokBahasan = function deletePokokBahasan(button){
-							var idDetailSilabus = $(button).attr("name");  
+							var idDetailSilabus = $(button).closest("tr").attr("name");
+							var tr = $(button).closest("tr");
+							var pokokBahasan = $(tr).find("input").val(); 
 							console.log(idDetailSilabus);  
 							/*-------------hapus detail--------*/
 							$.ajax({
@@ -470,6 +473,7 @@
 								traditional: true,
 								success: function(data){ 
 									toastr["success"]("Data pokok bahasan sudah dihapus");
+									$(button).closest("tr").attr("name").remove();
 								}, 
 								error: function(data){
 									toastr["error"]("Error data input", "Data tidak dapat diperbaharui");

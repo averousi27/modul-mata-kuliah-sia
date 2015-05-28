@@ -57,8 +57,8 @@ public class DetailSilabusRepositoryImpl implements DetailSilabusRepository{
 	public List<DetailSilabus> findBySilabus(UUID idSilabus) {
 		// TODO Auto-generated method stub
 		List<DetailSilabus> queryResult = sessionFactory.getCurrentSession().createQuery("select ds from DetailSilabus ds " 
-				+ "join ds.silabus silabus"
-				+ "where silabus.idSilabus = '"+idSilabus.toString()+"'").list();
+				+ "join ds.silabus silabus "
+				+ "where ds.statusDetailSilabus = false and silabus.idSilabus = '"+idSilabus.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult;
 	}
