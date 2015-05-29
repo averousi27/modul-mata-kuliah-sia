@@ -237,8 +237,7 @@
 	                                                        Congratulations ! You got the last step.
 	                                                    </div>
 	                                                </div>
-	                                                <ul class="pager wizard">
-	                                                    <li class="previous"><a href="#" class="btn btn-default" id="button-previous" type="button">Previous</a></li>
+	                                                <ul class="pager wizard"> 
 	                                                    <li class="next"><a href="#" class="btn btn-default" id="button-next" type="button">Next</a></li>
 	                                                </ul>
 	                                            </div>
@@ -248,7 +247,7 @@
 										  <div class="modal-dialog modal-lg">
 										    <div class="modal-content  ">
 										      <div class="modal-header">
-										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal(this)"><span aria-hidden="true">&times;</span></button>
 										        <h4 class="modal-title">Pemetaan Capaian Pembelajaran Mata Kuliah</h4>
 										      </div>
 										      <div class="modal-body">
@@ -322,11 +321,11 @@
 									return false;
 								} 
 								return true;
-							},
-							onPrevious : function(tab, navigation, index){
-								return true;
 							}
 						});
+						function closeModal(button){
+							$("tr.rowPokokBahasan").each().remove();
+						};
 						function validateTab(index){  
 							/*---------------kondisi untuk tab 1----------------*/
 							if(index==0){ 
@@ -400,9 +399,12 @@
 							
 						}; 
 						showModal = function showModal(button){
-							$('#myModal').modal('show');
+							$('#myModal').modal({
+								backdrop: 'static',
+							    keyboard: false,
+							});
 							idDetailSilabus = $(button).closest("tr").attr("name"); 
-							$("#idDetailSilabus").val(idDetailSilabus);
+							$("#idDetailSilabus").val(idDetailSilabus); 
 							
 						};
 						simpanPokokBahasan = function simpanPokokBahasan(){
