@@ -93,18 +93,6 @@ public class SilabusController {
 		} 
         return response; 
 	}
-	
-	@RequestMapping(value="/getpokokbahasanlist", method=RequestMethod.GET)
-	public @ResponseBody AjaxResponse getPokokBahasanList(@RequestParam("idSilabus") UUID idSilabus){
-		AjaxResponse response = null;
-		List<DetailSilabus> pokokBahasanList = detailSilabusServ.findBySilabus(idSilabus);
-		if(pokokBahasanList!=null){
-			response = new AjaxResponse("ok", "list pokok bahasan ada", pokokBahasanList);
-		}
-		else response = new AjaxResponse("", "", null);
-		return response; 
-	}
-	
 	@RequestMapping(value="/simpandetail", method = RequestMethod.POST)
 	public @ResponseBody AjaxResponse simpanDetailSilabus(@RequestParam("idSilabus") UUID idSilabus,
 			@RequestParam("pokokBahasan") String pokokBahasan) {
@@ -177,5 +165,27 @@ public class SilabusController {
 		response.setStatus("ok");
 		response.setMessage("Data detail pustaka tersimpan");
 		return response;
+	}
+	
+	@RequestMapping(value="/getpokokbahasanlist", method=RequestMethod.GET)
+	public @ResponseBody AjaxResponse getPokokBahasanList(@RequestParam("idSilabus") UUID idSilabus){
+		AjaxResponse response = null;
+		List<DetailSilabus> pokokBahasanList = detailSilabusServ.findBySilabus(idSilabus);
+		if(pokokBahasanList!=null){
+			response = new AjaxResponse("ok", "list pokok bahasan ada", pokokBahasanList);
+		}
+		else response = new AjaxResponse("", "", null);
+		return response; 
+	}
+	
+	@RequestMapping(value="/getpemetaanlist", method=RequestMethod.GET)
+	public @ResponseBody AjaxResponse getPemetaanList(@RequestParam("idDetailSilabus") UUID idDetailSilabus){
+		AjaxResponse response = null;
+		List<PemetaanSilabus> pemetaanSilabusList = pemetaanSilabusServ.findByDetailSilabus(idDetailSilabus);
+		if(pemetaanSilabusList!=null){
+			response = new AjaxResponse("ok", "list pemetaan silabus ada", pemetaanSilabusList);
+		}
+		else response = new AjaxResponse("", "", null);
+		return response; 
 	}
 }

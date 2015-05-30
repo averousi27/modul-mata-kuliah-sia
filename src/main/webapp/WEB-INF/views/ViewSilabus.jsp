@@ -323,7 +323,7 @@
 								return true;
 							}
 						});
-						function closeModal(button){
+						closeModal = function closeModal(button){
 							$("tr.rowPokokBahasan").each().remove();
 						};
 						function validateTab(index){  
@@ -405,7 +405,27 @@
 							});
 							idDetailSilabus = $(button).closest("tr").attr("name"); 
 							$("#idDetailSilabus").val(idDetailSilabus); 
-							
+							/*-------------get pemetaan silabus---------*/
+							$.ajax({
+								type:'GET',
+								url: context_path+'silabus/kelola/getpemetaanlist',
+								dataType: 'json',
+								data : {'idDetailSilabus': idDetailSilabus},
+								success: function(data){ 
+									console.log(data.data);
+									if(data.data!=null){ 
+										for(var i=0; i<data.data.length; ++i){
+											$("#rowCapaianNew").before(
+												"<tr class='rowCapaian'>" 
+												+"<td><input type='text' class='form-control col-md-4' value='"+ data.data[i].capPembMK.namaCapPembMK + "' readonly='readonly'/></td>"
+												+"<td><button type='button' class='btn btn-danger' name='"+data.data[i].idPemetaanSilabus+"'><i class='glyphicon glyphicon-minus'></i></td>"
+												+"</tr>"		
+											); 
+										} 
+									}
+								} 
+							});
+							/*-------------end get pemetaan silabus---------*/
 						};
 						simpanPokokBahasan = function simpanPokokBahasan(){
 							var pokokBahasan = $("#inputPokokBahasan").val();

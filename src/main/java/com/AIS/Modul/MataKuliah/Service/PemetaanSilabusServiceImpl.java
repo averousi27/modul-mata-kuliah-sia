@@ -1,5 +1,8 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,12 @@ public class PemetaanSilabusServiceImpl implements PemetaanSilabusService{
 			//insert
 			return pemetaanSilabusRepo.insert(ps).toString();
 		}
+	}
+
+	@Override
+	public List<PemetaanSilabus> findByDetailSilabus(UUID idDetailSilabus) {
+		// TODO Auto-generated method stub
+		return pemetaanSilabusRepo.findByDetailSilabus(idDetailSilabus.toString());
 	}
 
 }
