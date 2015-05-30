@@ -13,4 +13,6 @@ public interface PemetaanSilabusRepository {
 
 	public List<PemetaanSilabus> findByDetailSilabus(String string);
 
+	public PemetaanSilabus findById(UUID idPemetaanSilabus);
+
 }

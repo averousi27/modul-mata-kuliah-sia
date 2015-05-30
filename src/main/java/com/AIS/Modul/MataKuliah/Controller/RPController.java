@@ -49,12 +49,13 @@ public class RPController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView datatable(Locale locale, Model model) {
-		RPPerTemu rpPerTemu = new RPPerTemu();  
-		List<MK> mkList = mkServ.findAll();
-		ModelAndView mav = new ModelAndView();
+//		RPPerTemu rpPerTemu = new RPPerTemu();  
+		ModelAndView mav = new ModelAndView(); 
+		List<MK> mkList = mkServ.findAll(); 
 		mav.addObject("mkList", mkList);   
-		mav.addObject("rpPerTemu", rpPerTemu);
-		mav.setViewName("ViewRencanaPembelajaran");  
+//		mav.addObject("rpPerTemu", rpPerTemu);
+//		mav.setViewName("ViewRencanaPembelajaran");  
+		mav.setViewName("ViewRencanaPembelajaranNew");
 		return mav;
 	} 
 	

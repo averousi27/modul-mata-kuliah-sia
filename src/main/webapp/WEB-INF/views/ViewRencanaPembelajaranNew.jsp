@@ -22,7 +22,7 @@
 	<link
 		href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600'
 		rel='stylesheet' type='text/css'>
-	<link
+	<link+
 		href="${pageContext.servletContext.contextPath}/resources/plugins/uniform/css/uniform.default.min.css"
 		rel="stylesheet" />
 	<link
@@ -154,9 +154,8 @@
 	                                    <div id="rootwizard">
 	                                        <ul class="nav nav-tabs" role="tablist">
 	                                            <li role="presentation" class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-university m-r-xs"></i>Pilih Mata Kuliah</a></li> 
-	                                            <li role="presentation"><a href="#tab2" data-toggle="tab"><i class="fa fa-bars m-r-xs"></i>Kelola Pokok Bahasan Silabus</a></li>
-	                                            <li role="presentation"><a href="#tab3" data-toggle="tab"><i class="fa fa-book m-r-xs"></i>Kelola Pustaka Silabus</a></li>
-	                                            <li role="presentation"><a href="#tab4" data-toggle="tab"><i class="fa fa-book m-r-xs"></i>Selesai</a></li>
+	                                            <li role="presentation"><a href="#tab2" data-toggle="tab"><i class="fa fa-bars m-r-xs"></i>Isian Rencana Belajar</a></li> 
+	                                            <li role="presentation"><a href="#tab3" data-toggle="tab"><i class="fa fa-book m-r-xs"></i>Selesai</a></li>
 	                                        </ul>
 	                                        <div class="progress progress-sm m-t-sm">
 	                                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
@@ -184,22 +183,16 @@
 	                                                <div class="tab-pane fade" id="tab2">
 	                                                    <div class="row m-b-lg"> 
 	                                                        <div class="col-md-8 col-md-offset-2">
-			                                                    <h4 class="title" id="titlepokokbahasan">Isian Pokok Bahasan Silabus</h4>
-			                                                    		<input type="hidden" id="idSilabus" name="idSilabus" value=""/>
-			                                                            <table class="table"> 
-			                                                            	<thead>
-			                                                            		<tr>
-				                                                            		<td>Pokok Bahasan</td>
-				                                                            		<td>Aksi</td>
-			                                                            		</tr>
-			                                                            	</thead> 
-			                                                            	<tbody>
-			                                                            		<tr id="rowPokokBahasanNew">
-			                                                            			<td><input type="text" class="form-control col-md-4" placeholder="Berisi pokok bahasan" id="inputPokokBahasan"></td>
-			                                                            			<td><button type="button" class="btn btn-success" onClick="simpanPokokBahasan()"><i class="glyphicon glyphicon-plus"></i></button></td>
-	                                                                    		</tr>
-			                                                            	</tbody>
-			                                                            </table>
+			                                                    <h4 class="title" id="titlerp"></h4>
+			                                                    		<input type="hidden" id="idRP" name="idRP" value=""/>
+			                                                    		<div class="form-group">
+																			<label>Minggu pembelajaran ke-</label>
+																			<input type="text" class="form-control col-md-4" placeholder="Berisi pokok bahasan" id="inputPokokBahasan" />
+																		</div> 
+																		<div class="form-group">
+																			<label>Mata Kuliah</label>
+																			<input type="text" class="form-control col-md-4" placeholder="Berisi pokok bahasan" id="inputPokokBahasan" />
+																		</div> 
 	                                                        </div>
 	                                                    </div>
 	                                                </div>

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sia.main.domain.PemetaanSilabus;
+import com.sia.main.domain.Pustaka;
 import com.sia.main.domain.Silabus;
 
 @Repository
@@ -48,9 +49,18 @@ public class PemetaanSilabusRepositoryImpl implements PemetaanSilabusRepository{
 		List<PemetaanSilabus> queryResult = sessionFactory.getCurrentSession().createQuery("select ps from PemetaanSilabus ps "
 				+ "join ps.capPembMK cpmk "
 				+ "join ps.detailSilabus ds "
-				+ "where ds.idDetailSilabus='"+ idDetailSilabus +"'").list();
+				+ "where ds.idDetailSilabus='"+ idDetailSilabus +"' and ps.statusPemetaanSilabus = false").list();
 		if(queryResult.size()==0) return null;
 		return queryResult;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public PemetaanSilabus findById(UUID idPemetaanSilabus) {
+		// TODO Auto-generated method stub
+		List<PemetaanSilabus> queryResult = sessionFactory.getCurrentSession().createQuery("from PemetaanSilabus WHERE idPemetaanSilabus='"+idPemetaanSilabus.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult.get(0);
 	}
 
 }

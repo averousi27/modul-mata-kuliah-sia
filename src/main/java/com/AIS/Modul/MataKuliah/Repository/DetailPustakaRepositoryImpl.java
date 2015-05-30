@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.Session;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sia.main.domain.DetailPustaka;
+import com.sia.main.domain.PemetaanSilabus;
 
 @Repository
 public class DetailPustakaRepositoryImpl implements DetailPustakaRepository {
@@ -37,6 +39,15 @@ public class DetailPustakaRepositoryImpl implements DetailPustakaRepository {
 		session.flush();
 		session.close();
 		return insertId;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public DetailPustaka findById(UUID idDetailPustaka) {
+		// TODO Auto-generated method stub
+		List<DetailPustaka> queryResult = sessionFactory.getCurrentSession().createQuery("from DetailPustaka WHERE idDetailPustaka='"+idDetailPustaka.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult.get(0);
 	}
 
 }

@@ -188,4 +188,17 @@ public class SilabusController {
 		else response = new AjaxResponse("", "", null);
 		return response; 
 	}
+	
+	@RequestMapping(value="/hapuspemetaan", method = RequestMethod.POST)
+	public @ResponseBody AjaxResponse deletePemetaan(@RequestParam("idPemetaanSilabus") UUID idPemetaanSilabus) {    
+		pemetaanSilabusServ.delete(idPemetaanSilabus);  
+		return new AjaxResponse("","Data pemetaan pokok bahasan sudah dihapus",null);
+	}
+	
+	@RequestMapping(value="/hapuspustaka", method = RequestMethod.POST)
+	public @ResponseBody AjaxResponse deletePustaka (@RequestParam("idDetailPustaka") UUID idDetailPustaka) {    
+		detailPustakaServ.delete(idDetailPustaka);  
+		return new AjaxResponse("","Data pemetaan pokok bahasan sudah dihapus",null);
+	}
+	
 }

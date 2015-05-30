@@ -10,4 +10,6 @@ public interface DetailPustakaRepository {
 
 	public UUID insert(DetailPustaka dp);
 
+	public DetailPustaka findById(UUID idDetailPustaka);
+
 }

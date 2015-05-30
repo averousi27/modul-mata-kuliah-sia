@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.AIS.Modul.MataKuliah.Repository.PemetaanSilabusRepository;
 import com.sia.main.domain.PemetaanSilabus;
+import com.sia.main.domain.RumpunMK;
 
 @Service
 public class PemetaanSilabusServiceImpl implements PemetaanSilabusService{
@@ -35,6 +36,18 @@ public class PemetaanSilabusServiceImpl implements PemetaanSilabusService{
 	public List<PemetaanSilabus> findByDetailSilabus(UUID idDetailSilabus) {
 		// TODO Auto-generated method stub
 		return pemetaanSilabusRepo.findByDetailSilabus(idDetailSilabus.toString());
+	}
+
+	@Override
+	public String delete(UUID idPemetaanSilabus) {
+		// TODO Auto-generated method stub
+		PemetaanSilabus ps = pemetaanSilabusRepo.findById(idPemetaanSilabus);
+		if(ps==null) return null;
+		else{
+			ps.setStatusPemetaanSilabus(true);
+			pemetaanSilabusRepo.update(ps);
+			return "Ok";
+		}
 	}
 
 }

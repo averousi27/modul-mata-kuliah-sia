@@ -1,10 +1,13 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.AIS.Modul.MataKuliah.Repository.DetailPustakaRepository;
 import com.sia.main.domain.DetailPustaka;
+import com.sia.main.domain.PemetaanSilabus;
 
 @Service
 public class DetailPustakaServiceImpl implements DetailPustakaService {
@@ -25,6 +28,18 @@ public class DetailPustakaServiceImpl implements DetailPustakaService {
 		{
 			//insert
 			return detailPustakaRepo.insert(dp).toString();
+		}
+	}
+
+	@Override
+	public String delete(UUID idDetailPustaka) {
+		// TODO Auto-generated method stub
+		DetailPustaka dp = detailPustakaRepo.findById(idDetailPustaka);
+		if(dp==null) return null;
+		else{
+			dp.setStatusPustaka(true);
+			detailPustakaRepo.update(dp);
+			return "Ok";
 		}
 	}
 
