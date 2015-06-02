@@ -153,9 +153,10 @@
 								<div class="panel-body">
 	                                    <div id="rootwizard">
 	                                        <ul class="nav nav-tabs" role="tablist">
-	                                            <li role="presentation" class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-university m-r-xs"></i>Pilih Mata Kuliah</a></li> 
+	                                            <li role="presentation" class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-university m-r-xs"></i>Isian Bahan Kajian</a></li> 
 	                                            <li role="presentation"><a href="#tab2" data-toggle="tab"><i class="fa fa-bars m-r-xs"></i>Isian Rencana Belajar</a></li> 
-	                                            <li role="presentation"><a href="#tab3" data-toggle="tab"><i class="fa fa-book m-r-xs"></i>Selesai</a></li>
+	                                            <li role="presentation"><a href="#tab3" data-toggle="tab"><i class="fa fa-book m-r-xs"></i>Isian Materi Belajar</a></li>
+	                                            <li role="presentation"><a href="#tab4" data-toggle="tab"><i class="fa fa-book m-r-xs"></i>Selesai</a></li>
 	                                        </ul>
 	                                        <div class="progress progress-sm m-t-sm">
 	                                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
@@ -166,7 +167,7 @@
 	                                                <div class="tab-pane active fade in" id="tab1">
 	                                                    <div class="row m-b-lg">
 	                                                        <div class="col-md-6 col-md-offset-3"> 
-	                                                    	<h4 class="title">Pilih Mata Kuliah</h4>
+	                                                    	<h4 class="title">Isian Bahan Kajian</h4>
 	                                                        	<div class="form-group">
 																	<label>Mata Kuliah</label>
 																	<select id="idMK" name="idMK" class="form-control">
@@ -177,6 +178,10 @@
 																	</select>
 																	<div id="warning"></div>
 																</div>
+																<div class="form-group">
+																	<label>Bahan Kajian</label>
+																	<input type="text" class="form-control col-md-4" placeholder="Berisi bahan kajian (keyword) rencana pembelajaran" id="bahanKajian" /> 
+																</div> 
 	                                                        </div> 
 	                                                    </div>
 	                                                </div>
@@ -186,12 +191,38 @@
 			                                                    <h4 class="title" id="titlerp"></h4>
 			                                                    		<input type="hidden" id="idRP" name="idRP" value=""/>
 			                                                    		<div class="form-group">
-																			<label>Minggu pembelajaran ke-</label>
-																			<input type="text" class="form-control col-md-4" placeholder="Berisi pokok bahasan" id="inputPokokBahasan" />
+																			<label>Minggu Pembelajaran Ke-</label>
+																			<input type="text" class="form-control col-md-4" placeholder="Berisi angka minggu pembelajaran" id="mingguPemb" />
 																		</div> 
 																		<div class="form-group">
-																			<label>Mata Kuliah</label>
-																			<input type="text" class="form-control col-md-4" placeholder="Berisi pokok bahasan" id="inputPokokBahasan" />
+																			<label>Waktu Pembelajaran</label>
+																			<input type="text" class="form-control col-md-4" placeholder="Berisi angka waktu pembelajaran" id="waktuPemb" />
+																		</div>
+																		<div class="form-group">
+																			<label>Metode Pembelajaran</label>
+																			<select id="idMetodePemb" name="idMetodePemb" class="form-control">
+																					<option value="">Pilih metode pembelajaran</option> 
+																				<c:forEach items="${metodePembList}" var="metodePemb"> 
+																					<option value="${metodePemb.idMetodePemb}">${metodePemb.namaMetodePemb}</option>
+																				</c:forEach> 
+																			</select> 
+																		</div>
+																		<div class="form-group">
+																			<label>Indikator Penilaian</label>
+																			<input type="text" class="form-control col-md-4" placeholder="Berisi isian indikator penilaian" id="indikatorPenilaian" />
+																		</div>  
+																		<div class="form-group">
+																			<label>Bentuk Penilaian</label>
+																			<select id="idBentuk" name="idBentuk" class="form-control">
+																					<option value="">Pilih bentuk penilaian</option> 
+																				<c:forEach items="${bentukList}" var="bentuk"> 
+																					<option value="${bentuk.idBentuk}">${bentuk.namaBentuk}</option>
+																				</c:forEach> 
+																			</select> 
+																		</div>
+																		<div class="form-group">
+																			<label>Bobot Penilaian</label>
+																			<input type="text" class="form-control col-md-4" placeholder="Berisi angka bobot penilaian" id="bobotPenilaian" />
 																		</div> 
 	                                                        </div>
 	                                                    </div>
@@ -199,26 +230,25 @@
 	                                                <div class="tab-pane fade" id="tab3">
 	                                                    <div class="row m-b-lg"> 
 	                                                        <div class="col-md-8 col-md-offset-2">
-			                                                    <h4 class="title">Isian Pustaka Silabus</h4>
-			                                                    		<input type="hidden" id="idSilabus" name="idSilabus" value=""/>
+			                                                    <h4 class="title" id="titleMateriBelajar" name="idRPPerTemu"></h4> 
 			                                                            <table class="table"> 
 			                                                            	<thead>
 			                                                            		<tr>
-				                                                            		<td>Pokok Bahasan</td>
+				                                                            		<td>Materi Pembelajaran</td>
 				                                                            		<td>Aksi</td>
 			                                                            		</tr>
 			                                                            	</thead> 
 			                                                            	<tbody>
-			                                                            		<tr id="rowPustakaNew">
+			                                                            		<tr id="rowMateriPembNew">
 			                                                            			<td>
-							                                                   			 <select id="idPustaka" name="idPustaka" class="form-control">
-																								<option value="">Pilih pustaka untuk mata kuliah</option> 
-																									<c:forEach items="${pustakaList}" var="pustaka"> 
-																										<option value="${pustaka.idPustaka}">${pustaka.namaPustaka}</option>
+							                                                   			 <select id="idMateriPemb" name="idMateriPemb" class="form-control">
+																								<option value="">Pilih materi pembelajaran untuk mata kuliah</option> 
+																									<c:forEach items="${materiSilabusList}" var="materiSilabus"> 
+																										<option value="${materiSilabus.idMateriSilabus}">${materiSilabus.detailSilabus.pokokBahasan}</option>
 																									</c:forEach> 
 																						</select>
 																					</td>
-																					<td><button type="button" class="btn btn-success" onClick="simpanPustaka()"><i class="glyphicon glyphicon-plus"></i></button></td>
+																					<td><button type="button" class="btn btn-success" onClick="simpanMateri()"><i class="glyphicon glyphicon-plus"></i></button></td>
 	                                                                    		</tr>
 			                                                            	</tbody>
 			                                                            </table>
@@ -227,8 +257,7 @@
 	                                                </div> 
 	                                                <div class="tab-pane fade" id="tab4">
 	                                                    <h2 class="no-s">Selesai</h2>
-	                                                    <div class="alert alert-info m-t-sm m-b-lg" role="alert">
-	                                                        Pengisian silabus selesai dilakukan !
+	                                                    <div class="alert alert-info m-t-sm m-b-lg" role="alert" id="goodbyeWizard"> 
 	                                                    </div>
 	                                                </div>
 	                                                <ul class="pager wizard"> 
@@ -236,47 +265,7 @@
 	                                                </ul>
 	                                            </div>
 	                                        </form>
-	                                        </div>
-                                        <div id="myModal" class="modal fade">
-										  <div class="modal-dialog modal-lg">
-										    <div class="modal-content  ">
-										      <div class="modal-header">
-										        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal(this)"><span aria-hidden="true">&times;</span></button>
-										        <h4 class="modal-title">Pemetaan Capaian Pembelajaran Mata Kuliah</h4>
-										      </div>
-										      <div class="modal-body">
-										      	<div class="row">
-										      	<div class="col-md-8 col-md-offset-2">
-										      	  <table class="table"> 
-	                                                   	<thead>
-	                                                   		<tr>
-	                                                    		<td>Capaian Pembelajaran Mata Kuliah</td>
-	                                                    		<td>Aksi</td>
-	                                                   		</tr>
-	                                                   	</thead> 
-	                                                   	<tbody>
-	                                                   		<input type="hidden" id="idDetailSilabus" value=""/>
-	                                                   		<tr id="rowCapaianNew">
-		                                                   		<td>
-		                                                   			 <select id="idCapPembMK" name="idCapPembMK" class="form-control">
-																			<option value="">Pilih capaian pembelajaran mata kuliah</option> 
-																				<c:forEach items="${cpmkList}" var="cpmk"> 
-																					<option value="${cpmk.idCapPembMK}">${cpmk.mk.namaMK} - ${cpmk.namaCapPembMK}</option>
-																				</c:forEach> 
-																	</select>
-																</td>
-	                                                   			<td><button type="button" class="btn btn-success" onclick="simpanCapaian(this)" id="btnSimpanCapaian"><i class="glyphicon glyphicon-plus"></i></button></td>
-	                                                        </tr>
-	                                                   	</tbody>
-                                                   </table>
-                                                   </div>
-                                                   </div>
-										      </div>
-										      <div class="modal-footer">
-										      </div>
-										    </div><!-- /.modal-content -->
-										  </div><!-- /.modal-dialog -->
-										</div><!-- /.modal -->
+	                                        </div> 
 															
 	                            </div><!-- panel body -->
 	                         </div> <!-- panel white -->
@@ -286,8 +275,6 @@
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script>
 					$(document).ready(function(){
-						var idPemetaanSilabus="";
-						var idPustaka="";
 						toastr.options = {
 								  "closeButton": true,
 								  "debug": false,
@@ -318,31 +305,24 @@
 								return true;
 							}
 						});
-						closeModal = function closeModal(button){ 
-							$("#rowCapaianNew").val(""); 
-							$("tr.rowCapaian").each(function(index, element) {
-								$(element).remove();
-							});
-						};
 						function validateTab(index){  
 							/*---------------kondisi untuk tab 1----------------*/
-							if(index==0){ 
-								var idMKString = $("#idMK").val();  
-								if(idMKString==""){
+							if(index==0){   
+								if($("#idMK").val()  == ""){
 									toastr["error"]("Error input", "Salah satu input yang Anda masukkan salah");  
 									return false;
 								}
-								else if(idMKString!=""){
+								else if($("#idMK").val()!=""){
 									/*-------------memanggil id mata kuliah---------*/
 									$.ajax({
 										type:'POST', 
 										url: context_path+'silabus/kelola/simpan',
 										dataType: 'json',
-										data : {'idMK' : $("#idMK").val()},
+										data : {'idMK' : $("#idMK").val(), 'bahanKajian': $("#bahanKajian").val()},
 										traditional : true, 
 										success : function(data){  
-											$("#idSilabus").val(data.data.idSilabus);
-											$("#titlepokokbahasan").html('Isian Pokok Bahasan '+data.data.mk.namaMK); 
+											$("#idRP").val(data.data);
+											$("#titleRP").html('Isian Rencana Belajar '+data.data.idSilabus); 
 											$.ajax({
 												type:'GET', 
 												url: context_path+'silabus/kelola/getpokokbahasanlist',
@@ -407,219 +387,7 @@
 							}
 							/*---------------end kondisi untuk tab 4----------------*/  
 							
-						}; 
-						showModal = function showModal(button){
-							$('#myModal').modal({
-								backdrop: 'static',
-							    keyboard: false,
-							});
-							idDetailSilabus = $(button).closest("tr").attr("name"); 
-							$("#idDetailSilabus").val(idDetailSilabus); 
-							/*-------------get pemetaan silabus---------*/
-							$.ajax({
-								type:'GET',
-								url: context_path+'silabus/kelola/getpemetaanlist',
-								dataType: 'json',
-								data : {'idDetailSilabus': idDetailSilabus},
-								success: function(data){ 
-									console.log(data);
-									if(data.data!=null){ 
-										for(var i=0; i<data.data.length; ++i){
-											$("#rowCapaianNew").before(
-												"<tr class='rowCapaian'>" 
-												+"<td><input type='text' class='form-control col-md-4' value='"+ data.data[i].capPembMK.namaCapPembMK + "' readonly='readonly'/></td>"
-												+"<td><button type='button' class='btn btn-danger' name='"+data.data[i].idPemetaanSilabus+"' onclick='deletePemetaan(this)'><i class='glyphicon glyphicon-minus'></i></td>"
-												+"</tr>"		
-											);
-											idPemetaanSilabus = data.data.idPemetaanSilabus;
-										} 
-									}
-								} 
-							});
-							/*-------------end get pemetaan silabus---------*/
-						};
-						simpanPokokBahasan = function simpanPokokBahasan(){
-							var pokokBahasan = $("#inputPokokBahasan").val();
-							
-							if($('#inputPokokBahasan').val()!=""){ 
-								/*-------------tambah pokok bahasan---------*/
-								$.ajax({
-									type:'POST', 
-									url: context_path+'silabus/kelola/simpandetail',
-									dataType: 'json',
-									data : {'idSilabus' : $("#idSilabus").val(), 
-										'pokokBahasan' : $('#inputPokokBahasan').val()},
-									traditional : true, 
-									success : function(data){  
-										toastr["success"]("Data pokok bahasan telah tersimpan");   
-										$("#rowPokokBahasanNew").before(
-											"<tr class='rowPokokBahasan' name='"+data.data.idDetailSilabus+"'>" +
-												"<td><input type='text' id='textPokokBahasan' class='form-control col-md-4' value='" + data.data.pokokBahasan + "'/></td>" +
-												"<td><button type='button' class='btn btn-danger' name='"+ data.data.idDetailSilabus +"' onclick='deletePokokBahasan(this)'><i class='glyphicon glyphicon-minus'></i></button>&nbsp;" +
-												"<button type='button' class='btn btn-warning' onclick='updatePokokBahasan(this)'><i class='glyphicon glyphicon-floppy-disk'></i></button>&nbsp;" +
-												"<button type='button' class='btn btn-primary'  onclick='showModal(this)'><i class='glyphicon glyphicon-pencil'></i></button></td>" +
-											"</tr>"	
-										);
-										$("#inputPokokBahasan").val(""); 
-									}  
-								});
-								/*-------------end tambah pokok bahasan---------*/
-							}
-							else{
-								toastr["error"]("Error input", "Salah satu input yang Anda masukkan salah");
-							}
-						};
-						updatePokokBahasan = function updatePokokBahasan(button){
-							var idDetailSilabus = $(button).closest("tr").attr("name");
-							var tr = $(button).closest("tr");
-							var pokokBahasan = $(tr).find("input").val();
-							console.log(pokokBahasan);
-							console.log(idDetailSilabus);
-							/*-------------edit detail silabus--------*/
-							$.ajax({
-								type:'POST',
-								url: context_path+'silabus/kelola/editdetail',
-								dataType: 'json',
-								data: {'idDetailSilabus' : idDetailSilabus, 'pokokBahasan' : pokokBahasan},
-								traditional: true,
-								success: function(data){ 
-									toastr["success"]("Data pokok bahasan sudah diperbaharui");
-								}, 
-								error: function(data){
-									toastr["error"]("Error data input", "Data tidak dapat diperbaharui");
-								}
-							});
-							/*-------------edit detail silabus--------*/
-						}
-						
-						deletePokokBahasan = function deletePokokBahasan(button){
-							var idDetailSilabus = $(button).closest("tr").attr("name");
-							var tr = $(button).closest("tr");
-							var pokokBahasan = $(tr).find("input").val(); 
-							console.log(idDetailSilabus);  
-							/*-------------hapus detail--------*/
-							$.ajax({
-								type:'POST',
-								url: context_path+'silabus/kelola/hapusdetail',
-								dataType: 'json',
-								data: {'idDetailSilabus' : idDetailSilabus},
-								traditional: true,
-								success: function(data){ 
-									toastr["success"]("Data pokok bahasan sudah dihapus");
-									$(button).closest("tr").attr("name").remove();
-								}, 
-								error: function(data){
-									toastr["error"]("Error data input", "Data tidak dapat diperbaharui");
-								}
-							});
-							/*-------------end hapus detail--------*/
-						} 
-						
-						simpanCapaian = function simpanCapaian(button){     
-							if($("#idCapPembMK").val()!=""){
-								/*-------------tambah capaian untuk silabus---------*/
-								$.ajax({
-									type:'POST', 
-									url: context_path+'silabus/kelola/simpanpemetaan', 
-									dataType:"json",	
-									data: {'idDetailSilabus' : $("#idDetailSilabus").val(),
-										'idCapPembMK' : $("#idCapPembMK").val() },
-									traditional:true,
-									success: function(data){ 
-										toastr["success"]("Data pemetaan capaian telah tersimpan");		 
-										$("#rowCapaianNew").before(
-											"<tr class='rowCapaian'>" 
-											+"<td><input type='text' class='form-control col-md-4' value='"+ data.data.capPembMK.namaCapPembMK + "' readonly='readonly'/></td>"
-											+"<td><button type='button' class='btn btn-danger' name='"+data.data.idPemetaanSilabus+"' onclick='deletePemetaan(this)'><i class='glyphicon glyphicon-minus'></i></td>"
-											+"</tr>"		
-										);
-										$("#idCapPembMK").val(""); 
-										idPemetaanSilabus = data.data.idPemetaanSilabus;
-									},
-									error: function(e){
-										toastr["error"]("Error input", "Capaian pembelajaran MK harus dipilih");		 
-									}
-								});
-
-								/*-------------end tambah capaian untuk silabus---------*/ 
-							}
-							else{
-								toastr["error"]("Error data input","Salah satu input yang Anda masukkan salah");
-							}
-							
-						}
-						
-						deletePemetaan = function deletePemetaan(button){  
-								var idPemetaan = $(button).attr("name");
-								console.log(idPemetaan);
-								/*-------------tambah capaian untuk silabus---------*/
-								$.ajax({
-									type:'POST', 
-									url: context_path+'silabus/kelola/hapuspemetaan', 
-									dataType:"json",	
-									data: {'idPemetaanSilabus' : idPemetaan},
-									traditional:true,
-									success: function(data){  
-										$(button).closest("tr").remove();
-										toastr["success"](data.message);
-									}
-								});
-
-								/*-------------end tambah capaian untuk silabus---------*/  
-						}
-						
-						simpanPustaka = function simpanPustaka(){     
-							if($("#idPustaka").val()!=""){
-								/*-------------tambah pustaka untuk silabus---------*/
-								$.ajax({
-									type:'POST', 
-									url: context_path+'silabus/kelola/simpanpustaka', 
-									dataType:"json",	
-									data: {'idPustaka' : $("#idPustaka").val(),
-										'idSilabus' : $("#idSilabus").val() },
-									traditional:true,
-									success: function(data){ 
-										toastr["success"]("Data detail pustaka telah tersimpan");		 
-										$("#rowPustakaNew").before(
-											"<tr class='rowPustaka'>" 
-											+"<td><input type='text' class='form-control col-md-4' value='"+ data.data.pustaka.namaPustaka + "'/></td>"
-											+"<td><button type='button' class='btn btn-danger' onclick='deleteDetailPustaka(this)' name='"+data.data.idDetailPustaka+"'><i class='glyphicon glyphicon-minus'></i></td>"
-											+"</tr>"		
-										);
-										$("#idPustaka").val("");  
-										idPustaka = data.data.idPustaka;
-									},
-									error: function(e){
-										toastr["error"]("Error input", "Pustaka mata kuliah harus dipilih");		 
-									}
-								});
-
-								/*-------------end tambah pustaka untuk silabus---------*/ 
-							}
-							else{
-								toastr["error"]("Error data input","Salah satu input yang Anda masukkan salah");
-							}
-							
-						}
-						
-						deleteDetailPustaka = function deleteDetailPustaka(button){    
-							var idDetailPustaka = $(button).attr("name");
-							console.log(idDetailPustaka);
-								/*-------------tambah pustaka untuk silabus---------*/
-								$.ajax({
-									type:'POST', 
-									url: context_path+'silabus/kelola/hapuspustaka', 
-									dataType:"json",	
-									data: {'idDetailPustaka' : idDetailPustaka},
-									traditional:true,
-									success: function(data){ 
-										toastr["success"]("Data detail pustaka telah dihapus");	 
-										$(button).closest("tr").remove();
-									}
-								});
-
-								/*-------------end tambah pustaka untuk silabus---------*/  
-						}
+						};  
 						
 					});
 				</script>
