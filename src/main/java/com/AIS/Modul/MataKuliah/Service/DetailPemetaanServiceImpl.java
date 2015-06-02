@@ -40,39 +40,40 @@ public class DetailPemetaanServiceImpl implements DetailPemetaanService {
 			int iDisplayStart, int iSortCol_0, String sSortDir_0,
 			String sSearch, String filter) {
 		// TODO Auto-generated method stub
-		DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column, this.searchable, iSortCol_0, sSortDir_0);
-		Datatable detailPemetaanDatatable= new Datatable();
-		detailPemetaanDatatable.setsEcho(sEcho);
-		String dbFilter = "";
-		if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter; 
-		List<DetailPemetaan> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
-		List<String[]> aData = new ArrayList<String[]>();
-		for (DetailPemetaan detailPemetaan : queryResult) {
-			String[] detailPemetaanString = new String[14]; 
-			detailPemetaanString[0] = detailPemetaan.getRpPerTemu().getIdRPPerTemu().toString();
-			detailPemetaanString[1] = String.valueOf(detailPemetaan.getCapPembMK().getMk().getNamaMK());
-//			detailPemetaanString[1] = String.valueOf(mkObj.getNamaMK());
-			detailPemetaanString[2] = String.valueOf(detailPemetaan.getRpPerTemu().getMingguPembKe());
-			detailPemetaanString[3] = String.valueOf(detailPemetaan.getRpPerTemu().getMateriPemb());
-			detailPemetaanString[4] = String.valueOf(detailPemetaan.getRpPerTemu().getTarget());
-			if(detailPemetaan.getCapPembMK()!=null){
-				detailPemetaanString[5] = String.valueOf(detailPemetaan.getCapPembMK().getNamaCapPembMK());
-			} 
-			detailPemetaanString[6] = String.valueOf(detailPemetaan.getRpPerTemu().getBahanKajian());
-			detailPemetaanString[7] = String.valueOf(detailPemetaan.getRpPerTemu().getMetodePemb()); 
-			detailPemetaanString[8] = String.valueOf(detailPemetaan.getRpPerTemu().getWaktuPemb());
-			detailPemetaanString[9] = String.valueOf(detailPemetaan.getRpPerTemu().getBentukPenilaian());
-			detailPemetaanString[10] = String.valueOf(detailPemetaan.getRpPerTemu().getBobotPenilaian());
-			detailPemetaanString[11] = String.valueOf(detailPemetaan.getRpPerTemu().getReferensiPemb());
-			detailPemetaanString[12] = String.valueOf(detailPemetaan.getRpPerTemu().isStatusRPPerTemu());
-			detailPemetaanString[13] = String.valueOf(detailPemetaan.getRpPerTemu().isStatusRPPerTemu());
-			aData.add(detailPemetaanString);
-		}
-		detailPemetaanDatatable.setAaData(aData);
-		detailPemetaanDatatable.setiTotalRecords(detailPemetaanRepo.count(""));
-		detailPemetaanDatatable.setiTotalDisplayRecords(detailPemetaanRepo.count("("+parameter.getWhere()+") AND "+filter));
+//		DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column, this.searchable, iSortCol_0, sSortDir_0);
+//		Datatable detailPemetaanDatatable= new Datatable();
+//		detailPemetaanDatatable.setsEcho(sEcho);
+//		String dbFilter = "";
+//		if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter; 
+//		List<DetailPemetaan> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
+//		List<String[]> aData = new ArrayList<String[]>();
+//		for (DetailPemetaan detailPemetaan : queryResult) {
+//			String[] detailPemetaanString = new String[14]; 
+//			detailPemetaanString[0] = detailPemetaan.getRpPerTemu().getIdRPPerTemu().toString();
+//			detailPemetaanString[1] = String.valueOf(detailPemetaan.getCapPembMK().getMk().getNamaMK());
+////			detailPemetaanString[1] = String.valueOf(mkObj.getNamaMK());
+//			detailPemetaanString[2] = String.valueOf(detailPemetaan.getRpPerTemu().getMingguPembKe());
+//			detailPemetaanString[3] = String.valueOf(detailPemetaan.getRpPerTemu().getMateriPemb());
+//			detailPemetaanString[4] = String.valueOf(detailPemetaan.getRpPerTemu().getTarget());
+//			if(detailPemetaan.getCapPembMK()!=null){
+//				detailPemetaanString[5] = String.valueOf(detailPemetaan.getCapPembMK().getNamaCapPembMK());
+//			} 
+//			detailPemetaanString[6] = String.valueOf(detailPemetaan.getRpPerTemu().getBahanKajian());
+//			detailPemetaanString[7] = String.valueOf(detailPemetaan.getRpPerTemu().getMetodePemb()); 
+//			detailPemetaanString[8] = String.valueOf(detailPemetaan.getRpPerTemu().getWaktuPemb());
+//			detailPemetaanString[9] = String.valueOf(detailPemetaan.getRpPerTemu().getBentukPenilaian());
+//			detailPemetaanString[10] = String.valueOf(detailPemetaan.getRpPerTemu().getBobotPenilaian());
+//			detailPemetaanString[11] = String.valueOf(detailPemetaan.getRpPerTemu().getReferensiPemb());
+//			detailPemetaanString[12] = String.valueOf(detailPemetaan.getRpPerTemu().isStatusRPPerTemu());
+//			detailPemetaanString[13] = String.valueOf(detailPemetaan.getRpPerTemu().isStatusRPPerTemu());
+//			aData.add(detailPemetaanString);
+//		}
+//		detailPemetaanDatatable.setAaData(aData);
+//		detailPemetaanDatatable.setiTotalRecords(detailPemetaanRepo.count(""));
+//		detailPemetaanDatatable.setiTotalDisplayRecords(detailPemetaanRepo.count("("+parameter.getWhere()+") AND "+filter));
 
-		return detailPemetaanDatatable;
+//		return detailPemetaanDatatable;
+		return null;
 	}
 
 	private List<DetailPemetaan> get(String where, String order,
