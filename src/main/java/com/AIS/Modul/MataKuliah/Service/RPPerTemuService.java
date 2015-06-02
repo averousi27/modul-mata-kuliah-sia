@@ -10,4 +10,6 @@ public interface RPPerTemuService {
 
 	public String delete(UUID uuid);
 
+	public RPPerTemu findByRP(UUID idRP);
+
 }

@@ -43,4 +43,10 @@ public class RPPerTemuServiceImpl implements RPPerTemuService {
 		}
 	}
 
+	@Override
+	public RPPerTemu findByRP(UUID idRP) {
+		// TODO Auto-generated method stub
+		return rpPerTemuRepo.findByRP(idRP);
+	}
+
 }

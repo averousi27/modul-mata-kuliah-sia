@@ -33,13 +33,13 @@ public class EkuivalensiMKServiceImpl implements EkuivalensiMKService {
 		List<String[]> aData = new ArrayList<String[]>();
 		for (EkuivalensiMK ekuivalensiMK : queryResult) {
 			String[] ekuivalensiMKString = new String[7];
-			ekuivalensiMKString[0] = ekuivalensiMK.getIdEkuivalensiMK().toString();
-			ekuivalensiMKString[1] = String.valueOf(ekuivalensiMK.getChildMK().getKodeMK());
-			ekuivalensiMKString[2] = String.valueOf(ekuivalensiMK.getChildMK().getNamaMK());
-			ekuivalensiMKString[3] = String.valueOf(ekuivalensiMK.getParentMK().getKodeMK());
-			ekuivalensiMKString[4] = String.valueOf(ekuivalensiMK.getParentMK().getNamaMK());
-			ekuivalensiMKString[5] = String.valueOf(ekuivalensiMK.getStatusEkuivalensi());
-			ekuivalensiMKString[6] = String.valueOf(ekuivalensiMK.getStatusEkuivalensi());
+//			ekuivalensiMKString[0] = ekuivalensiMK.getIdEkuivalensiMK().toString();
+//			ekuivalensiMKString[1] = String.valueOf(ekuivalensiMK.getChildMK().getKodeMK());
+//			ekuivalensiMKString[2] = String.valueOf(ekuivalensiMK.getChildMK().getNamaMK());
+//			ekuivalensiMKString[3] = String.valueOf(ekuivalensiMK.getParentMK().getKodeMK());
+//			ekuivalensiMKString[4] = String.valueOf(ekuivalensiMK.getParentMK().getNamaMK());
+//			ekuivalensiMKString[5] = String.valueOf(ekuivalensiMK.getStatusEkuivalensi());
+//			ekuivalensiMKString[6] = String.valueOf(ekuivalensiMK.getStatusEkuivalensi());
 			aData.add(ekuivalensiMKString);
 		}
 		ekuivalensiMKDatatable.setAaData(aData);
@@ -97,7 +97,7 @@ public class EkuivalensiMKServiceImpl implements EkuivalensiMKService {
 		EkuivalensiMK ekuivalensiMK = ekuivalensiMKRepo.findById(idEkuivalensiMK);
 		if(ekuivalensiMK==null) return null;
 		else{
-			ekuivalensiMK.setStatusEkuivalensi(true);
+			//ekuivalensiMK.setStatusEkuivalensi(true);
 			ekuivalensiMKRepo.update(ekuivalensiMK);
 			return "Ok";
 		}

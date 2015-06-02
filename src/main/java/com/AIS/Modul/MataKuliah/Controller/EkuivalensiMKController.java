@@ -78,8 +78,8 @@ public class EkuivalensiMKController {
 		System.out.println("lalallla");
 		MK childMK = mkServ.findById(idMK);
 		MK parentMK = mkServ.findById(mkIdMK);
-		ekuivalensiMK.setChildMK(childMK);
-		ekuivalensiMK.setParentMK(parentMK);
+		//ekuivalensiMK.setChildMK(childMK);
+		//ekuivalensiMK.setParentMK(parentMK);
 		AjaxResponse response = new AjaxResponse();   
         if (result.hasErrors()) {
         	response.setStatus("error");

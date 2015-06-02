@@ -12,4 +12,6 @@ public interface RPPerTemuRepository {
 
 	public RPPerTemu findById(UUID idRPPerTemu);
 
+	public RPPerTemu findByRP(UUID idRP);
+
 }

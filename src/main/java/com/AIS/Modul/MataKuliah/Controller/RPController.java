@@ -190,23 +190,46 @@ public class RPController {
         return response;
     } 
 	
+	@RequestMapping(value="/getrp", method=RequestMethod.GET)
+	public @ResponseBody AjaxResponse getRP(@RequestParam("idMK") UUID idMK){
+		AjaxResponse response = new AjaxResponse(); 
+		Silabus silabus = silabusServ.findByMK(idMK);
+		RP rp = rpServ.findBySilabus(silabus.getIdSilabus());
+		if(rp!=null){
+			response.setData(rp);
+		}
+		return response;
+	}
+	
 	@RequestMapping(value = "/simpanrp", method = RequestMethod.POST)
     public @ResponseBody AjaxResponse simpan(@RequestParam("idMK") UUID idMK, 
     		@RequestParam("bahanKajian") String bahanKajian) {
 		AjaxResponse response = new AjaxResponse(); 
 		Silabus silabus = silabusServ.findByMK(idMK);
 		RP rp = rpServ.findBySilabus(silabus.getIdSilabus());
-		if(rp==null){  
+		if(rp == null){  
 			RP rpNew = new RP();
 			rpNew.setSilabus(silabus); 
 			rpNew.setBahanKajian(bahanKajian);
-			response.setData(rpServ.save(rpNew));
+			rpServ.save(rpNew);
+			response.setData(rpNew);
 			response.setMessage("Data berhasil disimpan"); 
 		}   
-		else{
-			response.setData(rp); 
+		else{ 
+			response.setData(rp);
 			response.setMessage("RP ditampilkan yang sudah ada"); 
 		} 
         return response; 
     } 
+	
+	@RequestMapping(value="/getrppertemu", method=RequestMethod.GET)
+	public @ResponseBody AjaxResponse getRPPerTemu(@RequestParam("idRP") UUID idRP){
+		AjaxResponse response = new AjaxResponse(); 
+		RPPerTemu rppt = rpPerTemuServ.findByRP(idRP);  
+		if(rppt!=null){
+			response.setData(rppt);
+		}
+		return response;
+	}
+	
 }

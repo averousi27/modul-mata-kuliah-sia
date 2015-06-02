@@ -192,11 +192,11 @@
 			                                                    		<input type="hidden" id="idRP" name="idRP" value=""/>
 			                                                    		<div class="form-group">
 																			<label>Minggu Pembelajaran Ke-</label>
-																			<input type="text" class="form-control col-md-4" placeholder="Berisi angka minggu pembelajaran" id="mingguPemb" />
+																			<input type="number" min="1" max="16" class="form-control col-md-4" placeholder="Berisi angka minggu pembelajaran" id="mingguPemb" />
 																		</div> 
 																		<div class="form-group">
 																			<label>Waktu Pembelajaran</label>
-																			<input type="text" class="form-control col-md-4" placeholder="Berisi angka waktu pembelajaran" id="waktuPemb" />
+																			<input type="number" min="50" max="150" class="form-control col-md-4" placeholder="Berisi angka menit waktu pembelajaran" id="waktuPemb" />
 																		</div>
 																		<div class="form-group">
 																			<label>Metode Pembelajaran</label>
@@ -222,7 +222,7 @@
 																		</div>
 																		<div class="form-group">
 																			<label>Bobot Penilaian</label>
-																			<input type="text" class="form-control col-md-4" placeholder="Berisi angka bobot penilaian" id="bobotPenilaian" />
+																			<input type="number" min="10" max="100" class="form-control col-md-4" placeholder="Berisi angka skala pukuhan bobot penilaian" id="bobotPenilaian" />
 																		</div> 
 	                                                        </div>
 	                                                    </div>
@@ -313,39 +313,54 @@
 									return false;
 								}
 								else if($("#idMK").val()!=""){
-									/*-------------memanggil id mata kuliah---------*/
+									/*-------------memanggil rp lewat mata kuliah---------*/
 									$.ajax({
-										type:'POST', 
-										url: context_path+'rencanapembelajaran/kelola/simpan',
-										dataType: 'json',
-										data : {'idMK' : $("#idMK").val(), 'bahanKajian': $("#bahanKajian").val()},
-										traditional : true, 
-										success : function(data){  
-											$("#idRP").val(data.data);
-											$("#titleRP").html('Isian Rencana Belajar '+data.data.idSilabus); 
-											$.ajax({
-												type:'GET', 
-												url: context_path+'silabus/kelola/edit',
-												dataType: 'json',
-												data : {'idSilabus' : data.data.idSilabus},
-												traditional : true, 
-												success : function(data){  
-													for(var i=0; i<data.data.length; ++i){
-														$("#rowPokokBahasanNew").before(
-																"<tr class='rowPokokBahasan' name='"+data.data[i].idDetailSilabus+"'>" +
-																	"<td><input type='text' id='textPokokBahasan' class='form-control col-md-4' value='" + data.data[i].pokokBahasan + "'/></td>" +
-																	"<td><button type='button' class='btn btn-danger' name='"+ data.data[i].idDetailSilabus +"' onclick='deletePokokBahasan(this)'><i class='glyphicon glyphicon-minus'></i></button>&nbsp;" +
-																	"<button type='button' class='btn btn-warning' onclick='updatePokokBahasan(this)'><i class='glyphicon glyphicon-floppy-disk'></i></button>&nbsp;" +
-																	"<button type='button' class='btn btn-primary'  onclick='showModal(this)'><i class='glyphicon glyphicon-pencil'></i></button></td>" +
-																"</tr>"	
-															);
-													} 
-												}  
-											});
-										}  
-									});
-									
-									/*-------------end memanggil id mata kuliah---------*/
+										type:'GET',
+										url: context_path+'rencanapembelajaran/kelola/getrp',
+										dataType:'json',
+										data: {'idMK' : $("#idMK").val()},
+										traditional:true,
+										success:function(data){
+											console.log();
+											if(data.data!=null){
+												$("#idMK").val(data.data.silabus.mk.idMK);
+												$("#bahanKajian").val(data.data.bahanKajian);  
+											}
+											else{
+												/*-------------menyimpan rp---------*/
+												$.ajax({
+													type:'POST', 
+													url: context_path+'rencanapembelajaran/kelola/simpanrp',
+													dataType: 'json',
+													data : {'idMK' : $("#idMK").val(), 'bahanKajian': $("#bahanKajian").val()},
+													traditional : true, 
+													success : function(data){  
+														$("#idRP").val(data.data.idRP);
+														$("#titleRP").html('Isian Rencana Belajar '+data.data.silabus.mk.namaMK); 
+														/*-------------get rp per temu jika ada---------*/
+														$.ajax({
+															type:'GET', 
+															url: context_path+'rencanapembelajaran/kelola/getrppertemu',
+															dataType: 'json',
+															data : {'idRP' : data.data.idRP},
+															traditional : true, 
+															success : function(data){
+																$("#mingguPemb").val(data.data.mingguPemb);
+																$("#waktuPemb").val(data.data.waktuPemb);
+																$("#idMetodePemb").val(data.data.metodePemb.idMetodePemb);
+																$("#indikatorPenilaian").val(data.data.indikatorPenilaian);
+																$("#idBentuk").val(data.data.bentukPenilaian.idBentuk);
+																$("#bobotPenilaian").val(data.data.bobotPenilaian);
+															}  
+														});
+														/*-------------get rp per temu jika ada---------*/
+													}  
+												}); 
+												/*-------------end of menyimpan rp---------*/
+											}
+										}
+									}); 
+									/*-------------end memanggil rp lewat mata kuliah---------*/ 
 									return true;
 								}
 							}
@@ -353,12 +368,14 @@
 							
 							/*---------------kondisi untuk tab 2----------------*/
 							else if(index==1){ 
-								if(idPemetaanSilabus==""){ 
-									toastr["warning"]("Anda harus mengisi form");  
-									return false;
-								}
-								else if(idPemetaanSilabus!=""){ 
+								if($("#mingguPemb").val()!="" && $("#waktuPemb").val()!="" && 
+										$("#idMetodePemb").val()!="" && $("#indikatorPenilaian").val()!="" && 
+										$("#idBentuk").val()!="" && $("#bobotPenilaian").val()!=""){ 
 									return true;
+								}
+								else { 
+									toastr["error"]("Input yang diberikan salah");  
+									return false;
 								}
 							}
 							/*---------------end kondisi untuk tab 2----------------*/   
