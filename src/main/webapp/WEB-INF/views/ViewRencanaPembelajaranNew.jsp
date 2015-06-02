@@ -242,10 +242,10 @@
 			                                                            		<tr id="rowMateriPembNew">
 			                                                            			<td>
 							                                                   			 <select id="idMateriPemb" name="idMateriPemb" class="form-control">
-																								<option value="">Pilih materi pembelajaran untuk mata kuliah</option> 
-																									<c:forEach items="${materiSilabusList}" var="materiSilabus"> 
-																										<option value="${materiSilabus.idMateriSilabus}">${materiSilabus.detailSilabus.pokokBahasan}</option>
-																									</c:forEach> 
+																							<option value="">Pilih materi pembelajaran untuk mata kuliah</option> 
+																								<c:forEach items="${materiSilabusList}" var="materiSilabus"> 
+																									<option value="${materiSilabus.idMateriSilabus}">${materiSilabus.detailSilabus.pokokBahasan}</option>
+																								</c:forEach> 
 																						</select>
 																					</td>
 																					<td><button type="button" class="btn btn-success" onClick="simpanMateri()"><i class="glyphicon glyphicon-plus"></i></button></td>
@@ -316,7 +316,7 @@
 									/*-------------memanggil id mata kuliah---------*/
 									$.ajax({
 										type:'POST', 
-										url: context_path+'silabus/kelola/simpan',
+										url: context_path+'rencanapembelajaran/kelola/simpan',
 										dataType: 'json',
 										data : {'idMK' : $("#idMK").val(), 'bahanKajian': $("#bahanKajian").val()},
 										traditional : true, 
@@ -325,7 +325,7 @@
 											$("#titleRP").html('Isian Rencana Belajar '+data.data.idSilabus); 
 											$.ajax({
 												type:'GET', 
-												url: context_path+'silabus/kelola/getpokokbahasanlist',
+												url: context_path+'silabus/kelola/edit',
 												dataType: 'json',
 												data : {'idSilabus' : data.data.idSilabus},
 												traditional : true, 

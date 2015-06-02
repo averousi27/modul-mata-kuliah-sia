@@ -79,7 +79,7 @@ public class SilabusController {
 	@RequestMapping(value="/simpan", method = RequestMethod.POST)
 	public @ResponseBody AjaxResponse simpanSilabus(@RequestParam("idMK") UUID idMK) {  
 		AjaxResponse response = new AjaxResponse(); 
-		Silabus cekSilabus = silabusServ.findMK(idMK);
+		Silabus cekSilabus = silabusServ.findByMK(idMK);
 		if(cekSilabus==null){
 			MK mk = mkServ.findById(idMK); 
 			Silabus silabusNew = new Silabus();

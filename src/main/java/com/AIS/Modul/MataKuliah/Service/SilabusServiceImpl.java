@@ -16,12 +16,12 @@ public class SilabusServiceImpl implements SilabusService {
 	
 	@Override
 	public String save(Silabus silabus) { 
-			return silabusRepo.insert(silabus).toString(); 
+		return silabusRepo.insert(silabus).toString(); 
 	}
 
 	@Override
-	public Silabus findMK(UUID idMK) {
-		return silabusRepo.findMK(idMK);
+	public Silabus findByMK(UUID idMK) {
+		return silabusRepo.findByMK(idMK);
 		// TODO Auto-generated method stub
 		
 	}

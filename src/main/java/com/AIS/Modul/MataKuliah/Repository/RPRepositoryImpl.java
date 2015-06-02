@@ -1,6 +1,7 @@
 package com.AIS.Modul.MataKuliah.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,16 +27,29 @@ public class RPRepositoryImpl implements RPRepository{
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
 	}
+ 
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public RP findBySilabus(UUID idSilabus) {
+		// TODO Auto-generated method stub
+		List<RP> queryResult = sessionFactory.getCurrentSession().createQuery("select rp from RP rp "
+				+ "join rp.silabus silabus "
+				+ "where silabus.idSilabus = '"+idSilabus.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return null;
+	}
 
 	@Override
-	public void save(RP rp) {
+	public UUID insert(RP rp) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.save(rp);
+		UUID insertId= (UUID)session.save(rp);
 		tx.commit();
 		session.flush();
 		session.close();
+		return insertId;
 	}
 
 }

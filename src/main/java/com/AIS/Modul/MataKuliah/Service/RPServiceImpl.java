@@ -1,5 +1,7 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.UUID;
+
 import javax.transaction.Transaction;
 
 import org.hibernate.Session;
@@ -28,9 +30,15 @@ public class RPServiceImpl implements RPService {
 	}
 
 	@Override
-	public void save(RP rp) {
+	public String save(RP rp) {
 		// TODO Auto-generated method stub
-		rpRepo.save(rp);
+		return rpRepo.insert(rp).toString(); 
+	}
+
+	@Override
+	public RP findBySilabus(UUID idSilabus) {
+		// TODO Auto-generated method stub
+		return rpRepo.findBySilabus(idSilabus);
 	}
 
 }

@@ -10,7 +10,7 @@ public interface SilabusRepository {
 
 	public UUID insert(Silabus silabus);
 
-	public Silabus findMK(UUID idMK);
+	public Silabus findByMK(UUID idMK);
 
 	public Silabus findById(UUID idSilabus);
 

@@ -43,7 +43,7 @@ public class SilabusRepositoryImpl implements SilabusRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Silabus findMK(UUID idMK) {
+	public Silabus findByMK(UUID idMK) {
 		// TODO Auto-generated method stub
 		List<Silabus> queryResult = sessionFactory.getCurrentSession().createQuery("select silabus from Silabus silabus "
 				+ "join silabus.mk mk "

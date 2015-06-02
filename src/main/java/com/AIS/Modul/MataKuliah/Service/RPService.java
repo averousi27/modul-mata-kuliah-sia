@@ -8,7 +8,7 @@ public interface RPService {
 
 	public RP findRP(String string);
 
-	public void save(RP rp);
- 
+	public String save(RP rp);
 
+	public RP findBySilabus(UUID idSilabus); 
 }

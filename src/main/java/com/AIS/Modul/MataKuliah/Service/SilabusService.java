@@ -8,7 +8,7 @@ public interface SilabusService {
 	
 	public String save(Silabus silabus);
 
-	public Silabus findMK(UUID idMK);
+	public Silabus findByMK(UUID idMK);
 
 	public Silabus findById(UUID idSilabus);
 }
