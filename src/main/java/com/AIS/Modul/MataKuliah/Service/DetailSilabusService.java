@@ -15,4 +15,6 @@ public interface DetailSilabusService {
 
 	public String delete(UUID idDetailSilabus);
 
+	public List<DetailSilabus> findAll();
+
 }

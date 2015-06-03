@@ -18,4 +18,6 @@ public interface BentukPenilaianRepository {
 
 	public BentukPenilaian findById(UUID idBentuk);
 
+	public List<BentukPenilaian> findAll();
+
 }

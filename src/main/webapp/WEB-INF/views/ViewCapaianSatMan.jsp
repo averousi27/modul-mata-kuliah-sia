@@ -334,7 +334,7 @@
 								/* nama capaian utama */
 								{ "bVisible":    true },
 								/* deskripsi capaian */
-								{ "bVisible":    false },
+								{ "bVisible":    true },
 								/*status hapus*/
 								{ 
 									"bVisible":    false, 
@@ -354,7 +354,7 @@
 									}
 								}
 							],
-							validationRules: {idKurikulum:{required: true}, idSatMan:{required: true}, namaCapPemb:{required: true}},
+							validationRules: {idKurikulum:{required: true}, idSatMan:{required: true}, namaCapPemb:{required: true}, deskripsiCapPemb:{required:true}},
 							filters: [{id:'#filter', name:'statusCapPemb'}],
 							callOnFillForm : function(response,options){  
 								$("#idCapPemb").val(response.data.idCapPemb);
@@ -437,13 +437,13 @@
 								/* tahun kurikulum */
 								{ "bVisible":    false },
 								/* nama kurikulum  */
-								{ "bVisible":    true },
-								/* nama satuan manajemen */
 								{ "bVisible":    false },
+								/* nama satuan manajemen */
+								{ "bVisible":    true },
 								/* nama capaian */
 								{ "bVisible":    true }, 
 								/* deskripsi */
-								{ "bVisible":    false }, 
+								{ "bVisible":    true }, 
 							],
 							callOnSelect : function(aData, options){
 								console.log(aData);  

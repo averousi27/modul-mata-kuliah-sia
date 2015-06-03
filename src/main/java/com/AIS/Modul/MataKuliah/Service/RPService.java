@@ -10,5 +10,7 @@ public interface RPService {
 
 	public String save(RP rp);
 
-	public RP findBySilabus(UUID idSilabus); 
+	public RP findBySilabus(UUID idSilabus);
+
+	public RP findById(UUID idRP); 
 }

@@ -37,7 +37,7 @@ public class RPRepositoryImpl implements RPRepository{
 				+ "join rp.silabus silabus "
 				+ "where silabus.idSilabus = '"+idSilabus.toString()+"'").list();
 		if(queryResult.size()==0) return null;
-		return null;
+		return queryResult.get(0);
 	}
 
 	@Override
@@ -50,6 +50,29 @@ public class RPRepositoryImpl implements RPRepository{
 		session.flush();
 		session.close();
 		return insertId;
+	}
+
+
+	@Override
+	public void update(RP rpNew) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.update(rpNew);
+		tx.commit();
+		session.flush();
+		session.close();
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public RP findById(UUID idRP) {
+		// TODO Auto-generated method stub
+		List<RP> queryResult = sessionFactory.getCurrentSession().createQuery("from RP "
+				+ "where idRP= '"+idRP.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult.get(0);
 	}
 
 }

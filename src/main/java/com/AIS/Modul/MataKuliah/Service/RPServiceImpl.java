@@ -30,15 +30,31 @@ public class RPServiceImpl implements RPService {
 	}
 
 	@Override
-	public String save(RP rp) {
+	public String save(RP rpNew) {
 		// TODO Auto-generated method stub
-		return rpRepo.insert(rp).toString(); 
+		if(rpNew.getIdRP() != null)
+		{
+			//update
+			rpRepo.update(rpNew);
+			return rpNew.getIdRP().toString();
+		}
+		else
+		{
+			//insert 
+			return rpRepo.insert(rpNew).toString();
+		}
 	}
 
 	@Override
 	public RP findBySilabus(UUID idSilabus) {
 		// TODO Auto-generated method stub
 		return rpRepo.findBySilabus(idSilabus);
+	}
+
+	@Override
+	public RP findById(UUID idRP) {
+		// TODO Auto-generated method stub
+		return rpRepo.findById(idRP);
 	}
 
 }

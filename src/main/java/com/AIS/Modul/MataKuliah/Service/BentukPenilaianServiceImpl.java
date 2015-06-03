@@ -89,4 +89,10 @@ public class BentukPenilaianServiceImpl implements BentukPenilaianService {
 		}
 	}
 
+	@Override
+	public List<BentukPenilaian> findAll() {
+		// TODO Auto-generated method stub
+		return bentukPenilaianRepo.findAll();
+	}
+
 }

@@ -12,4 +12,8 @@ public interface RPRepository {
 
 	public UUID insert(RP rp);
 
+	public void update(RP rpNew);
+
+	public RP findById(UUID idRP);
+
 }

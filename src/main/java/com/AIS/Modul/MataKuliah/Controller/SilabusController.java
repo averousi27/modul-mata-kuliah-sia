@@ -84,7 +84,8 @@ public class SilabusController {
 			MK mk = mkServ.findById(idMK); 
 			Silabus silabusNew = new Silabus();
 			silabusNew.setMk(mk); 
-			response.setData(silabusServ.save(silabusNew));
+			silabusServ.save(silabusNew);
+			response.setData(silabusNew);
 			response.setMessage("Data berhasil disimpan"); 
 		}   
 		else{

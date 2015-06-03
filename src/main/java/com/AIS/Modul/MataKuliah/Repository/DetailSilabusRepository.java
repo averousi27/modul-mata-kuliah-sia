@@ -15,4 +15,6 @@ public interface DetailSilabusRepository {
 
 	public List<DetailSilabus> findBySilabus(UUID idSilabus);
 
+	public List<DetailSilabus> findAll();
+
 }

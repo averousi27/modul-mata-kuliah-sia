@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.sia.main.domain.BentukPenilaian;
@@ -14,6 +15,8 @@ public interface BentukPenilaianService {
 
 	public BentukPenilaian findById(UUID idBentuk);
 
-	public String delete(UUID uuid); 
+	public String delete(UUID uuid);
+
+	public List<BentukPenilaian> findAll(); 
 
 }

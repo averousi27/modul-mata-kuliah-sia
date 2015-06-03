@@ -84,4 +84,14 @@ public class BentukPenilaianRepositoryImpl implements BentukPenilaianRepository 
 		return queryResult.get(0);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BentukPenilaian> findAll() {
+		// TODO Auto-generated method stub
+		List<BentukPenilaian> queryResult = sessionFactory.getCurrentSession().createQuery("from BentukPenilaian "
+				+ "WHERE statusBentuk=false").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
+
 }

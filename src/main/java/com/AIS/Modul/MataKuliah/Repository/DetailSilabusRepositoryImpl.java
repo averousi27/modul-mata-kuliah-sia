@@ -63,4 +63,11 @@ public class DetailSilabusRepositoryImpl implements DetailSilabusRepository{
 		return queryResult;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DetailSilabus> findAll() {
+		// TODO Auto-generated method stub
+		return sessionFactory.getCurrentSession().createQuery("from DetailSilabus where statusDetailSilabus = false").list();
+	}
+
 }

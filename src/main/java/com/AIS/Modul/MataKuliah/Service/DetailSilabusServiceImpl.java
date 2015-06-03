@@ -56,4 +56,10 @@ public class DetailSilabusServiceImpl implements DetailSilabusService {
 		}
 	}
 
+	@Override
+	public List<DetailSilabus> findAll() {
+		// TODO Auto-generated method stub
+		return detailSilabusRepo.findAll();
+	}
+
 }
