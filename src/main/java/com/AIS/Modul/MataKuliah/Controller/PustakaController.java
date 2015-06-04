@@ -62,10 +62,9 @@ public class PustakaController {
 	
 	@RequestMapping(value = "/simpan", method = RequestMethod.POST)
     public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("pustaka") Pustaka pustaka,
-    		@RequestParam("sifatPustaka") String statusPustaka, BindingResult result, 
+    		@RequestParam("sifatPustaka") String sifatPustaka, BindingResult result, 
     		Map<String, Object> model) {
-		AjaxResponse response = new AjaxResponse();   
-		System.out.println(statusPustaka);
+		AjaxResponse response = new AjaxResponse();    
         if (result.hasErrors()) {
         	response.setStatus("error");
         	List<FieldError> fieldError = result.getFieldErrors();
@@ -80,9 +79,13 @@ public class PustakaController {
         	response.setMessage(message);
         	response.setData(fieldError);
             return response;
+        }  
+        if(sifatPustaka.contentEquals("U")){
+        	pustaka.setSifatPustaka("U");  
         }
-        if(statusPustaka=="U") pustaka.setSifatPustaka("U"); 
-        else pustaka.setSifatPustaka("P");
+        else{
+        	pustaka.setSifatPustaka("P"); 
+        }
         
         response.setData(pustakaServ.save(pustaka));
         if(response.getData()!=null) response.setMessage("Data berhasil disimpan");

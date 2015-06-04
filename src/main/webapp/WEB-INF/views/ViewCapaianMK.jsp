@@ -176,8 +176,7 @@
 														<input class="checkbox-all" type="checkbox" id="flat-checkbox-1"> 
 												</td>   
 												<td>Mata Kuliah</td>
-												<td>Capaian Utama</td> 
-												<td>Satuan Manajemen</td>
+												<td>Capaian Utama</td>  
 												<td>Capaian Induk</td>
 												<td>Deskripsi Capaian</td>
 												<td>Status Hapus</td>
@@ -317,17 +316,15 @@
 								{ "bVisible":    true }, 
 								/* nama capaian utama */
 								{ "bVisible":    true }, 
-								/* Nama satuan manajemen */
-								{ "bVisible":    true }, 
 								/* nama capaian induk */
 								{ "bVisible":    true }, 
 								/* deskripsi capaian */
-								{ "bVisible":    false },
+								{ "bVisible":    true },
 								/*status hapus*/
 								{ 
 									"bVisible":    false, 
 									mRender: function(data,type,full){ 
-										if(full[6]=='false') return "Aktif";
+										if(full[5]=='false') return "Aktif";
 										return "Terhapus";
 									}
 								},
@@ -337,7 +334,7 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[6]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
+										if(full[5]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
 										return action;
 									}
 								}
@@ -425,7 +422,7 @@
 								/* nama capaian */
 								{ "bVisible":    true }, 
 								/* deskripsi */
-								{ "bVisible":    false }, 
+								{ "bVisible":    true }, 
 							],
 							callOnSelect : function(aData, options){
 								console.log(aData);

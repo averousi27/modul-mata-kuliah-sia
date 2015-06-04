@@ -67,7 +67,11 @@ public class DetailSilabusRepositoryImpl implements DetailSilabusRepository{
 	@Override
 	public List<DetailSilabus> findAll() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("from DetailSilabus where statusDetailSilabus = false").list();
+		List<DetailSilabus> queryResult = sessionFactory.getCurrentSession().createQuery("select ds from DetailSilabus ds " 
+				+ "join ds.silabus silabus "
+				+ "where ds.statusDetailSilabus = false").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
 	}
 
 }

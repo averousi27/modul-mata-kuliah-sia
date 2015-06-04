@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.sia.main.domain.RPPerTemu;
@@ -12,6 +13,6 @@ public interface RPPerTemuRepository {
 
 	public RPPerTemu findById(UUID idRPPerTemu);
 
-	public RPPerTemu findByRP(UUID idRP);
+	public List<RPPerTemu> findByRP(UUID idRP);
 
 }

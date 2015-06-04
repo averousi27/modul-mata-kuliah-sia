@@ -9,32 +9,32 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.sia.main.domain.RPPerTemu;
-import com.sia.main.domain.RumpunMK;
+import com.sia.main.domain.MateriSilabus;
+import com.sia.main.domain.Pustaka;
 
 @Repository
-public class RPPerTemuRepositoryImpl implements RPPerTemuRepository {
+public class MateriSilabusRepositoryImpl implements MateriSilabusRepository{
 
 	@Autowired
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public void update(RPPerTemu rpPerTemu) {
+	public void update(MateriSilabus mp) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.update(rpPerTemu);
+		session.update(mp);
 		tx.commit();
 		session.flush();
 		session.close();
 	}
 
 	@Override
-	public UUID insert(RPPerTemu rpPerTemu) {
+	public UUID insert(MateriSilabus mp) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		UUID insertId= (UUID)session.save(rpPerTemu);
+		UUID insertId= (UUID)session.save(mp);
 		tx.commit();
 		session.flush();
 		session.close();
@@ -43,22 +43,12 @@ public class RPPerTemuRepositoryImpl implements RPPerTemuRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public RPPerTemu findById(UUID idRPPerTemu) {
+	public MateriSilabus findById(UUID idMateriSilabus) {
 		// TODO Auto-generated method stub
-		List<RPPerTemu> queryResult = sessionFactory.getCurrentSession().createQuery("from RPPerTemu WHERE idRPPerTemu='"+idRPPerTemu.toString()+"'").list();
+		List<MateriSilabus> queryResult = sessionFactory.getCurrentSession().createQuery("from MateriSilabus "
+				+ "WHERE idMateriSilabus='"+idMateriSilabus.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<RPPerTemu> findByRP(UUID idRP) {
-		// TODO Auto-generated method stub
-		List<RPPerTemu> queryResult = sessionFactory.getCurrentSession().createQuery("from RPPerTemu rppt "
-				+ "join rppt.rp rp "
-				+ "WHERE rp.idRP='"+idRP.toString()+"'").list();
-		if(queryResult.size()==0) return null;
-		return queryResult;
 	}
 
 }

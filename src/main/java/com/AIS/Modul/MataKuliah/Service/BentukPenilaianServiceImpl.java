@@ -16,7 +16,7 @@ import com.sia.main.domain.MetodePemb;
 public class BentukPenilaianServiceImpl implements BentukPenilaianService {
 
 	private String [] column = {"idBentuk","namaBentuk", "deskripsiBentuk", "statusBentuk"};
-	private Boolean[] searchable = {false,true,false,false};
+	private Boolean[] searchable = {false,true,true,false};
 	
 	@Autowired
 	public BentukPenilaianRepository bentukPenilaianRepo;

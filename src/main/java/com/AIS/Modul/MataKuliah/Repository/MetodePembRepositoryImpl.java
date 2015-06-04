@@ -88,6 +88,6 @@ public class MetodePembRepositoryImpl implements MetodePembRepository {
 	@Override
 	public List<MetodePemb> findAll() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("from MetodePemb").list();
+		return sessionFactory.getCurrentSession().createQuery("from MetodePemb where statusMetodePemb=false order by namaMetodePemb").list();
 	}
 }

@@ -27,6 +27,7 @@ import com.AIS.Modul.MataKuliah.Service.DetailPemetaanService;
 import com.AIS.Modul.MataKuliah.Service.Datatable;
 import com.AIS.Modul.MataKuliah.Service.DetailSilabusService;
 import com.AIS.Modul.MataKuliah.Service.MKService;
+import com.AIS.Modul.MataKuliah.Service.MateriSilabusService;
 import com.AIS.Modul.MataKuliah.Service.MetodePembService;
 import com.AIS.Modul.MataKuliah.Service.RPPerTemuService;
 import com.AIS.Modul.MataKuliah.Service.RPService;
@@ -63,18 +64,21 @@ public class RPController {
 	
 	@Autowired
 	private DetailSilabusService detailSilabusServ;
+	 
+	@Autowired
+	private MateriSilabusService materiSilabusServ;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView datatable(Locale locale, Model model) {
-//		RPPerTemu rpPerTemu = new RPPerTemu();  
+	public ModelAndView datatable(Locale locale, Model model) { 
 		ModelAndView mav = new ModelAndView(); 
 		List<MK> mkList = mkServ.findAll(); 
+		List<MetodePemb> metodePembList = metodePembServ.findAll();
+		List<BentukPenilaian> bentukList = bentukServ.findAll();
 		List<DetailSilabus> dsList = detailSilabusServ.findAll();
-		List<BentukPenilaian> bpList = bentukServ.findAll();
 		mav.addObject("mkList", mkList);   
-		mav.addObject("dsList", dsList);
-//		mav.addObject("rpPerTemu", rpPerTemu);
-//		mav.setViewName("ViewRencanaPembelajaran");  
+		mav.addObject("metodePembList", metodePembList); 
+		mav.addObject("bentukList", bentukList); 
+		mav.addObject("dsList", dsList); 
 		mav.setViewName("ViewRencana"); 
 		return mav;
 	} 
@@ -233,6 +237,24 @@ public class RPController {
 		return response;
 	}
 	
+	@RequestMapping(value="/editrp", method = RequestMethod.POST)
+	public @ResponseBody AjaxResponse editRP(@RequestParam("idRP") UUID idRP,
+			@RequestParam("idSilabus") UUID idSilabus,
+			@RequestParam("bahanKajian") String bahanKajian) {
+		AjaxResponse response = null; 
+		RP rp = rpServ.findById(idRP); 
+		Silabus silabus = silabusServ.findById(idSilabus);
+		rp.setBahanKajian(bahanKajian);  
+		rp.setSilabus(silabus);
+		if(rpServ.save(rp)==null){
+			response = new AjaxResponse("error", "RP tidak ditemukan", null);
+		}
+		else{
+			response = new AjaxResponse("ok", "RP diperbaharui", rp); 
+		}
+		return response;
+	}
+	
 	@RequestMapping(value = "/simpanrp", method = RequestMethod.POST)
     public @ResponseBody AjaxResponse simpan(@RequestParam("idSilabus") UUID idSilabus, 
     		@RequestParam("bahanKajian") String bahanKajian) {
@@ -249,15 +271,27 @@ public class RPController {
 	@RequestMapping(value="/getrppertemu", method=RequestMethod.GET)
 	public @ResponseBody AjaxResponse getRPPerTemu(@RequestParam("idRP") UUID idRP){
 		AjaxResponse response = new AjaxResponse(); 
-		RPPerTemu rppt = rpPerTemuServ.findByRP(idRP);  
+		List<RPPerTemu> rpptList = rpPerTemuServ.findByRP(idRP);  
+		if(rpptList!=null){
+			response.setMessage("rpPerTemu");
+			response.setData(rpptList);
+		} 
+		return response;
+	}
+	
+	@RequestMapping(value="/editrppertemu", method=RequestMethod.GET)
+	public @ResponseBody AjaxResponse editRPPerTemu(@RequestParam("idRPPerTemu") UUID idRPPerTemu){
+		AjaxResponse response = new AjaxResponse(); 
+		RPPerTemu rppt = rpPerTemuServ.findById(idRPPerTemu);  
 		if(rppt!=null){
+			response.setMessage("rpPerTemu");
 			response.setData(rppt);
 		} 
 		return response;
 	}
 	
 	@RequestMapping(value="/simpanrppertemu", method=RequestMethod.POST)
-	public @ResponseBody AjaxResponse simpanRPPerTemu(@RequestParam("idRP") UUID idRP,
+	public @ResponseBody AjaxResponse simpanRPPerTemu(@RequestParam("idRPPerTemu") UUID idRPPerTemu, @RequestParam("idRP") UUID idRP,
 			@RequestParam("mingguPemb") int mingguPemb, @RequestParam("waktuPemb") int waktuPemb,
 			@RequestParam("idMetodePemb") UUID idMetodePemb, @RequestParam("indikatorPenilaian") String indikatorPenilaian,
 			@RequestParam("idBentuk") UUID idBentuk, @RequestParam("bobotPenilaian") double bobotPenilaian){
@@ -265,8 +299,13 @@ public class RPController {
 		RP rp = rpServ.findById(idRP);
 		MetodePemb metodePemb = metodePembServ.findById(idMetodePemb);
 		BentukPenilaian bp = bentukServ.findById(idBentuk);
-		RPPerTemu rppt = new RPPerTemu();
-		
+		RPPerTemu rppt=null;
+		if(idRPPerTemu==null){
+			rppt = new RPPerTemu();
+		}
+		else{
+			rppt = rpPerTemuServ.findById(idRPPerTemu);
+		}
 		rppt.setBentukPenilaian(bp);
 		rppt.setBobotPenilaian(bobotPenilaian);
 		rppt.setMetodePemb(metodePemb);
@@ -280,5 +319,25 @@ public class RPController {
 		response.setData(rppt);
 		return response;
 		
+	} 
+	
+	@RequestMapping(value="/simpanmateri", method=RequestMethod.POST)
+	public @ResponseBody AjaxResponse simpanMateri(@RequestParam("idRPPerTemu") UUID idRPPerTemu,
+			@RequestParam("idDetailSilabus") UUID idDetailSilabus){
+		AjaxResponse response = new AjaxResponse(); 
+		DetailSilabus detailSilabus = detailSilabusServ.findById(idDetailSilabus);
+		RPPerTemu rppt = rpPerTemuServ.findById(idRPPerTemu);
+		MateriSilabus mp = new MateriSilabus();
+		mp.setRpPerTemu(rppt);
+		mp.setDetailSilabus(detailSilabus);
+		materiSilabusServ.save(mp);
+		return response;
+	}
+	
+	@RequestMapping(value="/deletemateri", method=RequestMethod.GET)
+	public @ResponseBody AjaxResponse hapusMateri(@RequestParam("idMateriSilabus") UUID idMateriSilabus){
+		AjaxResponse response = new AjaxResponse();  
+		materiSilabusServ.delete(idMateriSilabus);
+		return response;
 	}
 }

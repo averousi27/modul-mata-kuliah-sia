@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.sia.main.domain.RPPerTemu;
@@ -10,6 +11,8 @@ public interface RPPerTemuService {
 
 	public String delete(UUID uuid);
 
-	public RPPerTemu findByRP(UUID idRP);
+	public List<RPPerTemu> findByRP(UUID idRP);
+
+	public RPPerTemu findById(UUID idRPPerTemu);
 
 }

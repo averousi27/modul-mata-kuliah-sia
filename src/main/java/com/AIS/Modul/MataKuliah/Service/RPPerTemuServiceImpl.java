@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,15 @@ public class RPPerTemuServiceImpl implements RPPerTemuService {
 	}
 
 	@Override
-	public RPPerTemu findByRP(UUID idRP) {
+	public List<RPPerTemu> findByRP(UUID idRP) {
 		// TODO Auto-generated method stub
 		return rpPerTemuRepo.findByRP(idRP);
+	}
+
+	@Override
+	public RPPerTemu findById(UUID idRPPerTemu) {
+		// TODO Auto-generated method stub
+		return rpPerTemuRepo.findById(idRPPerTemu);
 	}
 
 }

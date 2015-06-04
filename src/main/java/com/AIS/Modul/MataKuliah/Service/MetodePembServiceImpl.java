@@ -16,7 +16,7 @@ import com.sia.main.domain.RumpunMK;
 public class MetodePembServiceImpl implements MetodePembService{
 
 	private String [] column = {"idMetodePemb","namaMetodePemb", "deskripsiMetodePemb"};
-	private Boolean[] searchable = {false,true,false};
+	private Boolean[] searchable = {false,true,true};
 	
 	@Autowired
 	private MetodePembRepository metodePembRepo;
@@ -87,5 +87,11 @@ public class MetodePembServiceImpl implements MetodePembService{
 			metodePembRepo.update(metodePemb);
 			return "Ok";
 		}
+	}
+
+	@Override
+	public List<MetodePemb> findAll() {
+		// TODO Auto-generated method stub
+		return metodePembRepo.findAll();
 	}
 }

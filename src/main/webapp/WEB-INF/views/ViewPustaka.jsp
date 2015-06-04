@@ -257,8 +257,9 @@
 								{ 
 									"bVisible":    true, 
 									mRender: function(data,type,full){
-										if(full[3] == 'U') return "Utama";
-										else if(full[3] == 'P') return "Pendukung";
+										console.log(full[3]);
+										if(full[3] == "U") return "Utama";
+										else if(full[3] == "P") return "Pendukung";
 									}  
 								},
 								/*status kurikulum*/
@@ -284,7 +285,7 @@
 							filters: [{id:'#filter', name:'statusPustaka'}],
 							callOnFillForm : function(response,options){ 
 								$("#idPustaka").val(response.data.idPustaka);
-								$("#sifatPustaka").val(response.data.statusPustaka);
+								$("#sifatPustaka").val(response.data.sifatPustaka);
 							}
 						});
 					});

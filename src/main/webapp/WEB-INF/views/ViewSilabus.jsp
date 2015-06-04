@@ -515,7 +515,7 @@
 								traditional: true,
 								success: function(data){ 
 									toastr["success"]("Data pokok bahasan sudah dihapus");
-									$(button).closest("tr").attr("name").remove();
+									$(button).closest("tr").remove();
 								}, 
 								error: function(data){
 									toastr["error"]("Error data input", "Data tidak dapat diperbaharui");

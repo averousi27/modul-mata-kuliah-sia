@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.sia.main.domain.MetodePemb;
@@ -14,5 +15,7 @@ public interface MetodePembService {
 	public MetodePemb findById(UUID idRumpunMK);
 
 	public String delete(UUID uuid);
+
+	public List<MetodePemb> findAll();
 
 }

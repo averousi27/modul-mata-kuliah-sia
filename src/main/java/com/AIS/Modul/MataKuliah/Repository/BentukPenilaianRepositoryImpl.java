@@ -89,7 +89,7 @@ public class BentukPenilaianRepositoryImpl implements BentukPenilaianRepository 
 	public List<BentukPenilaian> findAll() {
 		// TODO Auto-generated method stub
 		List<BentukPenilaian> queryResult = sessionFactory.getCurrentSession().createQuery("from BentukPenilaian "
-				+ "WHERE statusBentuk=false").list();
+				+ "WHERE statusBentuk=false order by namaBentuk").list();
 		if(queryResult.size()==0) return null;
 		return queryResult;
 	}

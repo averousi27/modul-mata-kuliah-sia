@@ -38,8 +38,7 @@ public class PustakaServiceImpl implements PustakaService {
 			pustakaString[2] = String.valueOf(pustaka.getDeskripsiPustaka());
 			pustakaString[3] = String.valueOf(pustaka.getSifatPustaka());
 			pustakaString[4] = String.valueOf(pustaka.isStatusPustaka());
-			pustakaString[5] = String.valueOf(pustaka.isStatusPustaka());
-			System.out.println(pustakaString[3]);
+			pustakaString[5] = String.valueOf(pustaka.isStatusPustaka()); 
 			aData.add(pustakaString);
 		}
 		pustakaDatatable.setAaData(aData);
@@ -61,7 +60,7 @@ public class PustakaServiceImpl implements PustakaService {
 		// TODO Auto-generated method stub
 		if(pustaka.getIdPustaka() != null)
 		{
-			//update
+			//update 
 			pustakaRepo.update(pustaka);
 			return pustaka.getIdPustaka().toString();
 		}
