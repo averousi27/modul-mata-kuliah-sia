@@ -87,6 +87,17 @@ public class PrasyaratMKRepositoryImpl implements PrasyaratMKRepository {
 	public List<PrasyaratMK> findAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PrasyaratMK> findParent(UUID idMK) {
+		// TODO Auto-generated method stub
+		List<PrasyaratMK> queryResult = sessionFactory.getCurrentSession().createQuery("select pMK from PrasyaratMK pMK "
+				+ "join pMK.parentMK parent "
+				+ "join pMK.childMK child WHERE child.idMK='"+idMK.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
 	} 
 	
 }

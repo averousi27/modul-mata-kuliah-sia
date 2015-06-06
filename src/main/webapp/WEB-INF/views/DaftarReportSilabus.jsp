@@ -154,46 +154,21 @@
 								</div>
 								<div class="panel-body">  
 									 <div class="row">
-									 	<div class="col-md-8 col-md-offset-2">  
-									 			<p>Kode MK : ${mk2.kodeMK}</p>
-									 			<p>Nama MK : ${mk2.namaMK}</p>
-									 			<p>Kredit : ${mk2.jumlahSKS} sks</p>
-									 			<p>Semester : ${mk2.tingkatPemb}</p>
-									 			<p>Deskripsi : ${mk2.deskripsiMK}</p>
-								 			<br /> 
-								 			<p>Capaian Prodi yang didukung</p>
-									 		<c:forEach items="${scpmkAllList}" var="listOfListSCPMK">
-									 			<ul>
-									 			<c:forEach items="${listOfListScpmk}" var="scpmkList">
-									 				<li>${scpmkList.capPemb.deskripsiCapPemb}</li>
-									 			</c:forEach>
-									 			</ul>
-									 		</c:forEach>
-									 		<br />
-									 		<p>Capaian MK</p>
-									 		<c:forEach items="${psAllList}" var="listOfListPS">
-									 			<ul>
-									 			<c:forEach items="${listOfListPS}" var="psList">
-									 				<li>${psList.capPembMK.deskripsiCapPembMK}</li>
-									 			</c:forEach>
-									 			</ul>
-									 		</c:forEach>
-									 		<p>Pokok bahasan</p>
-									 		<ul>
-									 		<c:forEach items="${dsList}" var="dsList"> 
-									 			<li>${dsList.pokokBahasan}</li> 
-									 		</c:forEach>
-									 		</ul>
-									 		<br />
-									 		<p>Prasyarat</p>
-									 		<c:forEach items="${prasyaratList}" var="prasyaratList"> 
-									 			<p>${prasyaratList.parent.namaMK}</p>
-									 		</c:forEach>
-									 		<br />
-									 		<p>Pustaka</p>
-									 		<c:forEach items="${dpList}" var="dpList"> 
-									 			<p>${dpList.pustaka.namaPustaka} | ${dpList.pustaka.sifatPustaka}</p> 
-									 		</c:forEach>
+									 	<div class="col-md-8 col-md-offset-2"> 
+									 		<form action="" method="POST">
+										 		<div class="form-group">
+													<label>Pilih mata kuliah</label>
+													<select id="idMK" name="idMK" class="form-control">
+															<option value="">Pilih kode dan nama mata kuliah</option> 
+														<c:forEach items="${mkList}" var="mk"> 
+															<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
+														</c:forEach> 
+													</select> 
+												</div>
+												<div class="form-group">
+													<button type="submit" class="btn btn-primary">Tampilkan</button>
+												</div>	
+											</form> 
 										</div>
 									 </div>
 								</div>

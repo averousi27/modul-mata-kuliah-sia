@@ -27,4 +27,6 @@ public interface PrasyaratMKService {
 
 	List<PrasyaratMK> findAll();
 
+	List<PrasyaratMK> findParentMK(UUID idMK);
+
 }

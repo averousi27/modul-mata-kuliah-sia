@@ -1,9 +1,13 @@
 package com.AIS.Modul.MataKuliah.Controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
+
+import javax.validation.constraints.Max;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,18 +26,22 @@ import com.AIS.Modul.MataKuliah.Service.DetailPustakaService;
 import com.AIS.Modul.MataKuliah.Service.DetailSilabusService;
 import com.AIS.Modul.MataKuliah.Service.MKService;
 import com.AIS.Modul.MataKuliah.Service.PemetaanSilabusService;
+import com.AIS.Modul.MataKuliah.Service.PrasyaratMKService;
 import com.AIS.Modul.MataKuliah.Service.PustakaService;
 import com.AIS.Modul.MataKuliah.Service.SilabusService;
+import com.AIS.Modul.MataKuliah.Service.SubCapPembMKService;
 import com.sia.main.domain.CapPembMK;
 import com.sia.main.domain.DetailPemetaan;
 import com.sia.main.domain.DetailPustaka;
 import com.sia.main.domain.DetailSilabus;
 import com.sia.main.domain.MK;
 import com.sia.main.domain.PemetaanSilabus;
+import com.sia.main.domain.PrasyaratMK;
 import com.sia.main.domain.Pustaka;
 import com.sia.main.domain.RumpunMK;
 import com.sia.main.domain.Silabus;
 import com.sia.main.domain.SubCapPemb;
+import com.sia.main.domain.SubCapPembMK;
 
 @Controller
 @RequestMapping(value = "/silabus/kelola")
@@ -60,6 +68,12 @@ public class SilabusController {
 	
 	@Autowired
 	private DetailPustakaService detailPustakaServ;
+	
+	@Autowired
+	private SubCapPembMKService subCapPembMKServ;
+	
+	@Autowired
+	private PrasyaratMKService prasyaratMKServ;
 	
 	private static final Logger logger = LoggerFactory.getLogger(SilabusController.class);
 	
@@ -201,14 +215,48 @@ public class SilabusController {
 		detailPustakaServ.delete(idDetailPustaka);  
 		return new AjaxResponse("","Data pemetaan pokok bahasan sudah dihapus",null);
 	}
-	
+	 
 	@RequestMapping(value="/laporan", method = RequestMethod.GET)
-	public ModelAndView laporan(Locale locale, Model model) { 
+	public ModelAndView showSilabus(Locale locale, Model model) {  
+		ModelAndView mav = new ModelAndView();
 		List<MK> mkList = mkServ.findAll(); 
-		ModelAndView mav = new ModelAndView();  
-		mav.addObject("mkList", mkList); 
+		mav.addObject("mkList", mkList);
+		mav.setViewName("DaftarReportSilabus");
+		return mav;
+	}
+	
+	@RequestMapping(value="/laporan", method = RequestMethod.POST)
+	public ModelAndView getSilabusElement(Locale locale, Model model, @RequestParam("idMK") UUID idMK) {  
+		ModelAndView mav = new ModelAndView();   
+		MK mk2 = mkServ.findById(idMK); 
+		Silabus silabus = silabusServ.findByMK(idMK);//dapat silabusnya
+		List<DetailSilabus> dsList = detailSilabusServ.findBySilabus(silabus.getIdSilabus());//dapat pokok bahasannya
+		List<DetailPustaka> dpList = detailPustakaServ.findBySilabus(silabus.getIdSilabus()); //dapat pustakanya    
+		List< List<PemetaanSilabus> > psAllList = new ArrayList< List<PemetaanSilabus> >();
+		List< List<SubCapPembMK> > scpmkAllList = new ArrayList< List<SubCapPembMK> >();
+		for(DetailSilabus ds : dsList){
+			List<PemetaanSilabus> psList = pemetaanSilabusServ.findByDetailSilabus(ds.getIdDetailSilabus());//dapat capaian pembelajaran mata kuliah
+			psAllList.add(psList);
+		}
+		for(List<PemetaanSilabus> psList : psAllList){
+			for(PemetaanSilabus ps : psList){ 
+				List<SubCapPembMK> scpmkList = subCapPembMKServ.findByCapPembMKList(ps.getCapPembMK().getIdCapPembMK()); //dapat capaian pembelajaran satuan manajemen
+				scpmkAllList.add(scpmkList);
+			} 
+		} 
+		List<PrasyaratMK> prasyaratList = prasyaratMKServ.findParentMK(idMK); 
+		
+		mav.addObject("mk2", mk2);
+		mav.addObject("silabus", silabus);
+		mav.addObject("dsList", dsList);
+		mav.addObject("dpList", dpList);
+		mav.addObject("psAllList", psAllList);
+		mav.addObject("scpmkAllList", scpmkAllList);
+		mav.addObject("prasyaratList", prasyaratList); 
 		mav.setViewName("ReportSilabus");
 		return mav;
 	}
+	
+	
 	
 }

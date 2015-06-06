@@ -21,5 +21,7 @@ public interface SubCapPembMKService {
 	public List<SubCapPembMK> findCapPemb(String idCapPembMK);
 
 	public void delete(UUID idSubCapPembMK);
+  
+	public List<SubCapPembMK> findByCapPembMKList(UUID idCapPembMK);
 
 }

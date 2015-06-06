@@ -217,10 +217,11 @@ public class RPController {
 		return response;
 	}
 	
-	@RequestMapping(value="/deletemateri", method=RequestMethod.GET)
+	@RequestMapping(value="/deletemateri", method=RequestMethod.POST)
 	public @ResponseBody AjaxResponse hapusMateri(@RequestParam("idMateriSilabus") UUID idMateriSilabus){
 		AjaxResponse response = new AjaxResponse();  
 		materiSilabusServ.delete(idMateriSilabus);
+		response.setMessage("Data sudah dihapus");
 		return response;
 	}
 	

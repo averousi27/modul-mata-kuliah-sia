@@ -23,6 +23,7 @@ public interface SubCapPembMKRepository {
 	public void delete(UUID idSubCapPembMK);
 
 	public SubCapPembMK findById(UUID idSubCapPembMK);
- 
 
+ 
+	public List<SubCapPembMK> findByCapPembMKList(UUID idCapPembMK);
 }

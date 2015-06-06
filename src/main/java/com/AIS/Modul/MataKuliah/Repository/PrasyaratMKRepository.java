@@ -16,5 +16,7 @@ public interface PrasyaratMKRepository {
 
 	public PrasyaratMK findById(UUID idPrasyaratMK);
 
-	public List<PrasyaratMK> findAll(); 
+	public List<PrasyaratMK> findAll();
+
+	public List<PrasyaratMK> findParent(UUID idMK); 
 }

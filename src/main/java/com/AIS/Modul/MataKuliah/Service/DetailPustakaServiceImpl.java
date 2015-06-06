@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,12 @@ public class DetailPustakaServiceImpl implements DetailPustakaService {
 			detailPustakaRepo.update(dp);
 			return "Ok";
 		}
+	}
+
+	@Override
+	public List<DetailPustaka> findBySilabus(UUID idSilabus) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

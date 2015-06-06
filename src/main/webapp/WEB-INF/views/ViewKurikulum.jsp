@@ -150,7 +150,7 @@
 						<div class="col-md-12 style="margin-bottom:10px;"> 
 							<div class="panel panel-white">
 								<div class="panel-heading clearfix">
-									<h4 class="panel-title">Mata Kuliah</h4>
+									<h4 class="panel-title">Kurikulum</h4>
 								</div>
 								<div class="panel-body">  
 								<p>Tabel menampilkan kurikulum</p>
@@ -206,10 +206,10 @@
 						<div class="col-md-6 col-md-offset-3">
 							<div class="panel panel-white">
 								<div class="panel-heading clearfix">
-										<h4 class="panel-title">Mata Kuliah</h4>
+										<h4 class="panel-title">Kurikulum</h4>
 								</div>
 								<div class="panel-body">
-										<h4 id="title">Prasyarat Mata Kuliah</h4>
+										<h4 id="title">Kelola Kurikulum</h4>
 										<form:form role="form" action="login" commandName="kurikulum" class="formdetail">
 											<div class="form-group">
 												<label>Nama Kurikulum</label>

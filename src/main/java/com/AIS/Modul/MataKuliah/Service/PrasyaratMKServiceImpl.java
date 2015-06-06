@@ -108,5 +108,12 @@ public class PrasyaratMKServiceImpl implements PrasyaratMKService {
 		// TODO Auto-generated method stub
 		return prasyaratMKRepo.findAll();
 	}
+
+
+	@Override
+	public List<PrasyaratMK> findParentMK(UUID idMK) {
+		// TODO Auto-generated method stub
+		return prasyaratMKRepo.findParent(idMK);
+	}
 	
 }

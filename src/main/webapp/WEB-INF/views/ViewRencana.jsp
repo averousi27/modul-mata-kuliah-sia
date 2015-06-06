@@ -414,12 +414,12 @@
 									'waktuPemb': $("#waktuPemb").val(), 'idMetodePemb' : $("#idMetodePemb").val(),
 									'indikatorPenilaian' : $("#indikatorPenilaian").val(), 'idBentuk' : $("#idBentuk").val(),
 									'bobotPenilaian': $("#bobotPenilaian").val()},
-								traditional:true,
+								traditional:true, 
 								success:function(data){    
 									if(data.data!=null){
 										$("#idRPPerTemu").val(data.data.idRPPerTemu);
 										//for(var i=0; i<data.data.length;++i){
-											$("rowRPPerTemuNew").before(
+											$("#rowRPPerTemuNew").before(
 													'<tr class="rowRPPerTemu">'
 		                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="Minggu ke-'+data.data.mingguPembKe+'"></td>'
 		                                    		+	'<td><button type="button" class="btn btn-success" name="'+data.data.idRPPerTemu+'" onClick="showModal(this)"><i class="glyphicon glyphicon-pencil"></i></button></td>'
@@ -429,7 +429,11 @@
 										$("inputRPPerTemu").val("");
 										$("#tambahRPBaru, #tambahMateriPembBaru").toggleClass("hide");
 									}
+								},
+								error: function(data){
+									toastr["error"]("Error input", "Salah satu input yang Anda masukkan salah");  
 								}
+								
 							}); 
 							/*---------------end simpan RP per pertemuan----------------*/ 
 							/*---------------ambil materi per pertemuan----------------*/
@@ -445,12 +449,12 @@
 									if(data.data!=null){  
 										for(var i=0; i<data.data.length;++i){
 											console.log(data.data[i].detailSilabus.pokokBahasan);
-											$("rowMateriPembNew").before(
+											$("#rowMateriPembNew").before(
 													'<tr class="rowMateriPemb">' 
 		                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="'+data.data[i].detailSilabus.pokokBahasan+'"></td>'
-		                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteMateriSilabus(this)" name="'+data.data[i].idMateriSilabus+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
+		                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteMateri(this)" name="'+data.data[i].idMateriSilabus+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
 		                                    		+'</tr>'
-												); 
+											); 
 										}  
 									}	
 								}
@@ -466,11 +470,12 @@
 								data: {'idDetailSilabus' : $("#idDetailSilabus").val(), 'idRPPerTemu': $("#idRPPerTemu").val()},
 								traditional:true,
 								success:function(data){  
+									toastr["success"]("Rencana pembelajaran sudah tersimpan");  
 									if(data.data!=null){     
-										$("rowMateriPembNew").before(
+										$("#rowMateriPembNew").before(
 												'<tr class="rowMateriPemb">' 
 	                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="'+data.data.detailSilabus.pokokBahasan+'"></td>'
-	                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteMateriSilabus(this)" name="'+data.idMateriSilabus+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
+	                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteMateri(this)" name="'+data.idMateriSilabus+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
 	                                    		+'</tr>'
 											); 
 										$("idDetailSilabus").val(""); 
@@ -482,6 +487,7 @@
 						deleteMateri = function deleteMateri(button){
 							/*---------------simpan materi per pertemuan----------------*/
 							var idMateriSilabus = $(button).attr("name");
+							console.log(idMateriSilabus);
 							$.ajax({
 								type:'POST',
 								url: context_path+'rencanapembelajaran/kelola/deletemateri',
@@ -489,7 +495,8 @@
 								data: {'idMateriSilabus' : idMateriSilabus},
 								traditional:true,
 								success:function(data){  
-									if(data.data!=null){    
+									if(data.message!=null){    
+										toastr["success"]("Materi pembelajaran sudah dihapus");
 										$(button).closest("tr").remove();
 									}
 								}
@@ -511,8 +518,9 @@
 										dataType:'json',
 										data: {'idMK' : $("#idMK").val()},
 										traditional:true,
+										async:false,
 										success:function(data){  
-											console.log(data.data);
+											//console.log(data.data);
 											if(data.data!=null){     
 												$("#idSilabus").val(data.data.idSilabus); 
 												/*-------------memanggil rp lewat silabus---------*/
@@ -530,13 +538,15 @@
 													}
 												});
 												/*-------------end memanggil rp lewat silabus---------*/ 
+												//return true;
 											} 
+											//return false;
 										}
 									});   
 									/*-------------end memanggil silabus lewat mata kuliah---------*/
-									console.log($("#idSilabus").val());
+									//console.log($("#idSilabus").val());
 									if($("#idSilabus").val()!=""){ 
-										console.log("ini setelah masuk kondisi if : "+$("#idSilabus").val());
+										//console.log("ini setelah masuk kondisi if : "+$("#idSilabus").val());
 										return true;
 									}
 									else{
@@ -584,7 +594,7 @@
 									dataType: 'json',
 									data : {'idRP': $("#idRP").val()},
 									success: function(data){  
-										console.log(data.data);
+										//console.log(data.data);
 										if(data.data!=null){  
 											for(var i=0; i<data.data.length; ++i){ 
 												$("#rowRPPerTemuNew").before(
