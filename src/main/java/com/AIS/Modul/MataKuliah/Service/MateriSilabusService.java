@@ -1,6 +1,9 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.List;
 import java.util.UUID;
+ 
+
 
 import com.sia.main.domain.MateriSilabus;
 
@@ -11,5 +14,7 @@ public interface MateriSilabusService {
 	public MateriSilabus findById(UUID idMateriSilabus);
 
 	public String delete(UUID idMateriSilabus);
+
+	public List<MateriSilabus> findByRPPerTemu(UUID idRPPerTemu);
 
 }

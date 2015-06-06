@@ -235,7 +235,7 @@
 	                                                <div class="tab-pane fade" id="tab4">
 	                                                    <h2 class="no-s">Selesai</h2>
 	                                                    <div class="alert alert-info m-t-sm m-b-lg" role="alert">
-	                                                        Pengisian silabus selesai dilakukan !
+	                                                        Pengisian silabus selesai dilakukan
 	                                                    </div>
 	                                                </div>
 	                                                <ul class="pager wizard"> 
@@ -340,7 +340,7 @@
 									return false;
 								}
 								else if(idMKString!=""){
-									/*-------------memanggil id mata kuliah---------*/
+									/*-------------menyimpan silabus---------*/
 									$.ajax({
 										type:'POST', 
 										url: context_path+'silabus/kelola/simpan',
@@ -350,6 +350,7 @@
 										success : function(data){  
 											$("#idSilabus").val(data.data.idSilabus);
 											$("#titlepokokbahasan").html('Isian Pokok Bahasan '+data.data.mk.namaMK); 
+											/*-------------mengambil list pokok bahasan---------*/
 											$.ajax({
 												type:'GET', 
 												url: context_path+'silabus/kelola/getpokokbahasanlist',
@@ -371,10 +372,11 @@
 													} 
 												}  
 											});
+											/*-------------end mengambil list pokok bahasan---------*/
 										}  
 									});
 									
-									/*-------------end memanggil id mata kuliah---------*/
+									/*-------------end menyimpan silabus---------*/
 									return true;
 								}
 							}

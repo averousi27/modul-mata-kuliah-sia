@@ -202,4 +202,13 @@ public class SilabusController {
 		return new AjaxResponse("","Data pemetaan pokok bahasan sudah dihapus",null);
 	}
 	
+	@RequestMapping(value="/laporan", method = RequestMethod.GET)
+	public ModelAndView laporan(Locale locale, Model model) { 
+		List<MK> mkList = mkServ.findAll(); 
+		ModelAndView mav = new ModelAndView();  
+		mav.addObject("mkList", mkList); 
+		mav.setViewName("ReportSilabus");
+		return mav;
+	}
+	
 }

@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon"
 		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Kelola Silabus</title>
+	<title>Kelola Rencana Pembelajaran</title>
 	
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<meta charset="UTF-8">
@@ -216,6 +216,7 @@
 	                                                <div class="tab-pane fade" id="tab4">
 	                                                    <h2 class="no-s">Selesai</h2>
 	                                                    <div class="alert alert-info m-t-sm m-b-lg" role="alert" id="goodbyeWizard"> 
+	                                                    	Pengisian rencana pembelajaran selesai dilakukan
 	                                                    </div>
 	                                                </div>  
 	                                                <ul class="pager wizard"> 
@@ -283,7 +284,7 @@
 													   <div class="hide" id="tambahMateriPembBaru">	
 													      <div class="modal-body">
 														      	<div class="row">
-															      	<div class="col-md-8 col-md-offset-2"> 
+															      	<div class="col-md-12"> 
 															      		<input type="hidden" id="idRPPerTemu" name="idRPPerTemu" value=""/>
 															      		<table class="table"> 
 			                                                            	<thead>
@@ -310,9 +311,8 @@
 				                                              </div>
 													      </div><!-- modal-body  --> 
 													      <div class="modal-footer">
-													      	<button type="button" class="btn btn-primary pull-right" onclick="closeModal(this)">Selesai &gt;</button>
 													      </div>
-													   </div><!-- end tambahMateriPembBaru -->
+													   </div><!-- end tambahMateriPembBaru --> 
 											    </div><!-- /.modal-content -->
 											  </div><!-- /.modal-dialog -->
 											</div><!-- /.modal --> 
@@ -360,6 +360,7 @@
 							    keyboard: false,
 							});
 							var idRPPerTemu = $(button).attr("name"); //diambil dari halaman ketiga saat melakukan edit RP per pertemuan 
+							//console.log("idRPPerTemu : "+idRPPerTemu);
 							if(idRPPerTemu!=""){
 								$("#idRPPerTemu").val(idRPPerTemu);
 								/*---------------memanggil data RP Per Pertemuan----------------*/
@@ -371,7 +372,7 @@
 									traditional:true,
 									success:function(data){  
 										if(data.data!=null){    
-											$("#mingguPemb").val(data.data.mingguPemb);
+											$("#mingguPemb").val(data.data.mingguPembKe);
 											$("#waktuPemb").val(data.data.waktuPemb);
 											$("#idMetodePemb").val(data.data.metodePemb.idMetodePemb);
 											$("#indikatorPenilaian").val(data.data.indikatorPenilaian);
@@ -389,7 +390,19 @@
 							 }
 							 if($("#tambahMateriPembBaru").hasClass("hide")==false){
 								 $("#tambahMateriPembBaru").toggleClass("hide");
-							 } 
+							 }  
+							 $("#mingguPemb").val("");
+							 $("#waktuPemb").val("");
+							 $("#idMetodePemb").val("");
+							 $("#indikatorPenilaian").val("");
+							 $("#idBentuk").val("");
+							 $("#bobotPenilaian").val(""); 
+							 $("#idDetailSilabus").val("");
+							 
+							 $("tr.rowMateriPemb").each(function(index, element) {
+									$(element).remove();
+								});
+							 $("#idRPPerTemu").val("");
 						}; 
 						simpanRPPerTemu = function simpanRPPerTemu(button){ 
 							/*---------------simpan RP per pertemuan----------------*/
@@ -402,22 +415,47 @@
 									'indikatorPenilaian' : $("#indikatorPenilaian").val(), 'idBentuk' : $("#idBentuk").val(),
 									'bobotPenilaian': $("#bobotPenilaian").val()},
 								traditional:true,
-								success:function(data){   
-									if(data.data!=null){   
-										for(var i=0; i<data.data.length;++i){
+								success:function(data){    
+									if(data.data!=null){
+										$("#idRPPerTemu").val(data.data.idRPPerTemu);
+										//for(var i=0; i<data.data.length;++i){
 											$("rowRPPerTemuNew").before(
-													'<tr id="rowRPPerTemu">'
-		                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="Minggu ke-'+data.data[i].mingguPembKe+'"></td>'
-		                                    		+	'<td><button type="button" class="btn btn-success" name="'+data.data[i].idRPPerTemu+'" onClick="showModal(this)"><i class="glyphicon glyphicon-pencil"></i></button></td>'
+													'<tr class="rowRPPerTemu">'
+		                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="Minggu ke-'+data.data.mingguPembKe+'"></td>'
+		                                    		+	'<td><button type="button" class="btn btn-success" name="'+data.data.idRPPerTemu+'" onClick="showModal(this)"><i class="glyphicon glyphicon-pencil"></i></button></td>'
 		                                    		+'</tr>'
 												);
-										} 
+										//} 
 										$("inputRPPerTemu").val("");
 										$("#tambahRPBaru, #tambahMateriPembBaru").toggleClass("hide");
 									}
 								}
 							}); 
 							/*---------------end simpan RP per pertemuan----------------*/ 
+							/*---------------ambil materi per pertemuan----------------*/
+							
+							//console.log("idRPPerTemu : "+$("#idRPPerTemu").val());
+							$.ajax({
+								type:'GET',
+								url: context_path+'rencanapembelajaran/kelola/getmateri',
+								dataType:'json',
+								data: {'idRPPerTemu': $("#idRPPerTemu").val()},
+								traditional:true,
+								success:function(data){    
+									if(data.data!=null){  
+										for(var i=0; i<data.data.length;++i){
+											console.log(data.data[i].detailSilabus.pokokBahasan);
+											$("rowMateriPembNew").before(
+													'<tr class="rowMateriPemb">' 
+		                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="'+data.data[i].detailSilabus.pokokBahasan+'"></td>'
+		                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteMateriSilabus(this)" name="'+data.data[i].idMateriSilabus+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
+		                                    		+'</tr>'
+												); 
+										}  
+									}	
+								}
+							});
+							/*---------------end ambil materi per pertemuan----------------*/
 						}
 						simpanMateri = function simpanMateri(button){
 							/*---------------simpan materi per pertemuan----------------*/
@@ -428,18 +466,15 @@
 								data: {'idDetailSilabus' : $("#idDetailSilabus").val(), 'idRPPerTemu': $("#idRPPerTemu").val()},
 								traditional:true,
 								success:function(data){  
-									if(data.data!=null){    
-										for(var i=0; i<data.data.length;i++){
-											$("rowMateriPembNew").before(
-													'<tr id="rowMateriPemb">' 
-		                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="'+data.data[i].detailSilabus.pokokBahasan+'"></td>'
-		                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteMateriSilabus(this)" name="'+data.data[i].idMateriSilabus+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
-		                                    		+'</tr>'
-												);
-										} 
-										$("idDetailSilabus").val("");
-										$("#myModal").modal('hide');
-									}
+									if(data.data!=null){     
+										$("rowMateriPembNew").before(
+												'<tr class="rowMateriPemb">' 
+	                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="'+data.data.detailSilabus.pokokBahasan+'"></td>'
+	                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteMateriSilabus(this)" name="'+data.idMateriSilabus+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
+	                                    		+'</tr>'
+											); 
+										$("idDetailSilabus").val(""); 
+									}	
 								}
 							});
 							/*---------------end materi per pertemuan----------------*/
@@ -469,8 +504,7 @@
 									return false;
 								}
 								else if($("#idMK").val()!=""){
-									/*-------------memanggil silabus lewat mata kuliah---------*/
-									idMK = $("idMK").val();
+									/*-------------memanggil silabus lewat mata kuliah---------*/ 
 									$.ajax({
 										type:'GET',
 										url: context_path+'rencanapembelajaran/kelola/getsilabus',
@@ -478,6 +512,7 @@
 										data: {'idMK' : $("#idMK").val()},
 										traditional:true,
 										success:function(data){  
+											console.log(data.data);
 											if(data.data!=null){     
 												$("#idSilabus").val(data.data.idSilabus); 
 												/*-------------memanggil rp lewat silabus---------*/
@@ -495,11 +530,13 @@
 													}
 												});
 												/*-------------end memanggil rp lewat silabus---------*/ 
-											}
+											} 
 										}
 									});   
 									/*-------------end memanggil silabus lewat mata kuliah---------*/
-									if($("#idSilabus").val()!=null){ 
+									console.log($("#idSilabus").val());
+									if($("#idSilabus").val()!=""){ 
+										console.log("ini setelah masuk kondisi if : "+$("#idSilabus").val());
 										return true;
 									}
 									else{
@@ -567,6 +604,9 @@
 							
 							/*---------------kondisi untuk tab 3----------------*/
 							else if(index==2){  
+								$("#idRP").val("");
+								$("#idSilabus").val("");
+								return true;
 							}
 							/*---------------end kondisi untuk tab 3----------------*/  
 							

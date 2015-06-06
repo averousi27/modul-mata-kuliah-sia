@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,12 @@ public class MateriSilabusServiceImpl implements MateriSilabusService{
 			materiSilabusRepo.update(mp);
 			return "Ok";
 		}
+	}
+
+	@Override
+	public List<MateriSilabus> findByRPPerTemu(UUID idRPPerTemu) {
+		// TODO Auto-generated method stub
+		return materiSilabusRepo.findByRPPerTemu(idRPPerTemu);
 	}
 
 }

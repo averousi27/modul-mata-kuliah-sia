@@ -51,4 +51,17 @@ public class MateriSilabusRepositoryImpl implements MateriSilabusRepository{
 		return queryResult.get(0);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MateriSilabus> findByRPPerTemu(UUID idRPPerTemu) {
+		// TODO Auto-generated method stub
+		List<MateriSilabus> queryResult = sessionFactory.getCurrentSession().createQuery("select ms "
+				+ "from MateriSilabus ms "
+				+ "join ms.rpPerTemu rppt "
+				+ "join ms.detailSilabus ds "
+				+ "WHERE rppt.idRPPerTemu='"+idRPPerTemu.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
+
 }
