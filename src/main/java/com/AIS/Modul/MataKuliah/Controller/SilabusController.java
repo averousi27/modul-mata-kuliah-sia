@@ -240,6 +240,7 @@ public class SilabusController {
 		}
 		for(List<PemetaanSilabus> psList : psAllList){
 			for(PemetaanSilabus ps : psList){ 
+				//System.out.println(ps.getCapPembMK().getIdCapPembMK());
 				List<SubCapPembMK> scpmkList = subCapPembMKServ.findByCapPembMKList(ps.getCapPembMK().getIdCapPembMK()); //dapat capaian pembelajaran satuan manajemen
 				scpmkAllList.add(scpmkList);
 			} 

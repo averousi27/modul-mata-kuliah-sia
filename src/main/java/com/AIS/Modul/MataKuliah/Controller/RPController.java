@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -231,5 +232,48 @@ public class RPController {
 		List<MateriSilabus> msList = materiSilabusServ.findByRPPerTemu(idRPPerTemu);  
 		response.setData(msList);
 		return response;
+	}
+	 
+	@RequestMapping(value="/laporan", method = RequestMethod.GET)
+	public ModelAndView showSilabus(Locale locale, Model model) {  
+		ModelAndView mav = new ModelAndView();
+		List<MK> mkList = mkServ.findAll(); 
+		mav.addObject("mkList", mkList);
+		mav.setViewName("DaftarReportRencanaPembelajaran");
+		return mav;
+	}
+	
+	@RequestMapping(value="/laporan", method = RequestMethod.POST)
+	public ModelAndView getSilabusElement(Locale locale, Model model, @RequestParam("idMK") UUID idMK) {  
+		ModelAndView mav = new ModelAndView();   
+		System.out.println(idMK.toString());
+//		MK mk2 = mkServ.findById(idMK); 
+//		Silabus silabus = silabusServ.findByMK(idMK);//dapat silabusnya
+//		List<DetailSilabus> dsList = detailSilabusServ.findBySilabus(silabus.getIdSilabus());//dapat pokok bahasannya
+//		List<DetailPustaka> dpList = detailPustakaServ.findBySilabus(silabus.getIdSilabus()); //dapat pustakanya    
+//		List< List<PemetaanSilabus> > psAllList = new ArrayList< List<PemetaanSilabus> >();
+//		List< List<SubCapPembMK> > scpmkAllList = new ArrayList< List<SubCapPembMK> >();
+//		for(DetailSilabus ds : dsList){
+//			List<PemetaanSilabus> psList = pemetaanSilabusServ.findByDetailSilabus(ds.getIdDetailSilabus());//dapat capaian pembelajaran mata kuliah
+//			psAllList.add(psList);
+//		}
+//		for(List<PemetaanSilabus> psList : psAllList){
+//			for(PemetaanSilabus ps : psList){ 
+//				//System.out.println(ps.getCapPembMK().getIdCapPembMK());
+//				List<SubCapPembMK> scpmkList = subCapPembMKServ.findByCapPembMKList(ps.getCapPembMK().getIdCapPembMK()); //dapat capaian pembelajaran satuan manajemen
+//				scpmkAllList.add(scpmkList);
+//			} 
+//		} 
+//		List<PrasyaratMK> prasyaratList = prasyaratMKServ.findParentMK(idMK); 
+//		
+//		mav.addObject("mk2", mk2);
+//		mav.addObject("silabus", silabus);
+//		mav.addObject("dsList", dsList);
+//		mav.addObject("dpList", dpList);
+//		mav.addObject("psAllList", psAllList);
+//		mav.addObject("scpmkAllList", scpmkAllList);
+//		mav.addObject("prasyaratList", prasyaratList); 
+		mav.setViewName("ReportSilabus");
+		return mav;
 	}
 }

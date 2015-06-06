@@ -146,11 +146,9 @@ public class SubCapPembMKRepositoryImpl implements SubCapPembMKRepository {
 	@Override
 	public List<SubCapPembMK> findByCapPembMKList(UUID idCapPembMK) {
 		// TODO Auto-generated method stub
-		List<SubCapPembMK> queryResult = sessionFactory.getCurrentSession().createQuery("select scpmk from SubCapPembMK scpmk "
-				+ "join scpmk.capPemb cp "
-				+ "join scpmk.capPembMK cpmk "
-				+ "join cpmk.mk mk " 
-		        + "join cp.satMan satman WHERE cpmk.idCapPembMK='"+ idCapPembMK.toString() +"'").list();
+		List<SubCapPembMK> queryResult = sessionFactory.getCurrentSession().createQuery("select scpmk from SubCapPembMK scpmk " 
+				+ "join scpmk.capPembMK cpmk WHERE cpmk.idCapPembMK='"+ idCapPembMK.toString() +"' "
+						+ "AND scpmk.statusSubCapPembMK = false").list();
 		if(queryResult.size()==0) return null;
 		return queryResult;
 	}

@@ -99,7 +99,7 @@ public class SubCapPembMKServiceImpl implements SubCapPembMKService {
 	@Override
 	public List<SubCapPembMK> findByCapPembMKList(UUID idCapPembMK) {
 		// TODO Auto-generated method stub
-		return subCapPembMKRepo.findByCapPembMKList(idCapPembMK);
+		return subCapPembMKRepo.findCapPemb(idCapPembMK.toString());
 	}
  
 }
