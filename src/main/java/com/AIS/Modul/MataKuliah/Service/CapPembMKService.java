@@ -23,5 +23,7 @@ public interface CapPembMKService {
 			int iDisplayStart, int iSortCol_0, String sSortDir_0, String sSearch);
 
 	public List<CapPembMK> findAll();
+
+	public List<CapPembMK> findByMK(UUID idMK);
  
 }

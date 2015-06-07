@@ -11,6 +11,6 @@ public interface DetailPustakaService {
 
 	public String delete(UUID idDetailPustaka);
 
-	public List<DetailPustaka> findBySilabus(UUID idSilabus);
+	public List<DetailPustaka> findBySilabus(UUID idSilabus); 
 
 }

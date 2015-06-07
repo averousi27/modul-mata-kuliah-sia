@@ -22,4 +22,8 @@ public interface CapPembRepository {
 	public CapPemb findById(UUID idCapPemb);
 
 	public List<CapPemb> findAll();
+
+	public List<CapPemb> findByKurikulum(UUID idKurikulum);
+
+	public List<CapPemb> findByParent(UUID idCapPemb);
 }

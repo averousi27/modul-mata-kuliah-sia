@@ -57,9 +57,7 @@ public class MateriSilabusRepositoryImpl implements MateriSilabusRepository{
 		// TODO Auto-generated method stub
 		List<MateriSilabus> queryResult = sessionFactory.getCurrentSession().createQuery("select ms "
 				+ "from MateriSilabus ms "
-				+ "join ms.rpPerTemu rppt "
-				+ "join ms.detailSilabus ds "
-				+ "WHERE rppt.idRPPerTemu='"+idRPPerTemu.toString()+"'").list();
+				+ "WHERE ms.rpPerTemu.idRPPerTemu='"+idRPPerTemu.toString()+"' AND ms.statusMateriSilabus=false").list();
 		if(queryResult.size()==0) return null;
 		return queryResult;
 	}

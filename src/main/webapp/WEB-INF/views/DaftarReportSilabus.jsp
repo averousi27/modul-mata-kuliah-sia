@@ -155,7 +155,7 @@
 								<div class="panel-body">  
 									 <div class="row">
 									 	<div class="col-md-8 col-md-offset-2"> 
-									 		<form action="" method="POST">
+									 		<form action="" method="POST" id="showSilabus">
 										 		<div class="form-group">
 													<label>Pilih mata kuliah</label>
 													<select id="idMK" name="idMK" class="form-control">
@@ -178,6 +178,7 @@
 				</div> 
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script> 
+				
 				</script>
 				<!-- akhir script custom pada halaman -->
 				

@@ -50,4 +50,14 @@ public class DetailPustakaRepositoryImpl implements DetailPustakaRepository {
 		return queryResult.get(0);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DetailPustaka> findBySilabus(UUID idSilabus) {
+		// TODO Auto-generated method stub
+		List<DetailPustaka> queryResult = sessionFactory.getCurrentSession().createQuery("from DetailPustaka "
+				+ "WHERE silabus.idSilabus='"+idSilabus.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
+
 }

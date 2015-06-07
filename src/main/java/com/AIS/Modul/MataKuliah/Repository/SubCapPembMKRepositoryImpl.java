@@ -113,7 +113,6 @@ public class SubCapPembMKRepositoryImpl implements SubCapPembMKRepository {
 		
 		if(queryResult.size()==0) return null;
 		else {
-			System.out.println(queryResult.get(0).getCapPemb().getNamaCapPemb());
 			return queryResult;
 		}
 	}
@@ -149,6 +148,21 @@ public class SubCapPembMKRepositoryImpl implements SubCapPembMKRepository {
 		List<SubCapPembMK> queryResult = sessionFactory.getCurrentSession().createQuery("select scpmk from SubCapPembMK scpmk " 
 				+ "join scpmk.capPembMK cpmk WHERE cpmk.idCapPembMK='"+ idCapPembMK.toString() +"' "
 						+ "AND scpmk.statusSubCapPembMK = false").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CapPemb> findByMK(UUID idMK) {
+		// TODO Auto-generated method stub
+		List<CapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select distinct scpmk.capPemb "
+				+ "from SubCapPembMK scpmk "  
+				+ "WHERE scpmk.capPembMK.mk.idMK='"+ idMK.toString() +"' "
+				+ "AND scpmk.statusSubCapPembMK = false").list();
+		for(CapPemb cp : queryResult){
+			System.out.println(cp.getDeskripsiCapPemb());
+		}
 		if(queryResult.size()==0) return null;
 		return queryResult;
 	}

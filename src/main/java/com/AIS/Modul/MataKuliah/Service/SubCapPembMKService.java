@@ -24,4 +24,6 @@ public interface SubCapPembMKService {
   
 	public List<SubCapPembMK> findByCapPembMKList(UUID idCapPembMK);
 
+	public List<CapPemb> findByMK(UUID idMK);
+
 }

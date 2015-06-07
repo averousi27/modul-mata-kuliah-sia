@@ -47,7 +47,7 @@ public class DetailPustakaServiceImpl implements DetailPustakaService {
 	@Override
 	public List<DetailPustaka> findBySilabus(UUID idSilabus) {
 		// TODO Auto-generated method stub
-		return null;
+		return detailPustakaRepo.findBySilabus(idSilabus);
 	}
 
 }

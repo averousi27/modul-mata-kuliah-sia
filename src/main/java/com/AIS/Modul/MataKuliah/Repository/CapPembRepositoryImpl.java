@@ -98,4 +98,23 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CapPemb> findByKurikulum(UUID idKurikulum) {
+		// TODO Auto-generated method stub
+		List<CapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp "
+				+ "WHERE  cp.kurikulum.idKurikulum='"+idKurikulum.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
+
+	@Override
+	public List<CapPemb> findByParent(UUID idCapPemb) {
+		// TODO Auto-generated method stub
+		List<CapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select scp.childCapPemb from SubCapPemb scp "
+				+ "WHERE  scp.parentCapPemb.idCapPemb='"+idCapPemb.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
+
 }

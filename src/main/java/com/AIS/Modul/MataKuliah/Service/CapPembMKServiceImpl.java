@@ -111,5 +111,11 @@ public class CapPembMKServiceImpl implements CapPembMKService {
 	public List<CapPembMK> findAll() {
 		// TODO Auto-generated method stub
 		return capPembMKRepo.findAll();
+	}
+
+	@Override
+	public List<CapPembMK> findByMK(UUID idMK) {
+		// TODO Auto-generated method stub
+		return capPembMKRepo.findByMK(idMK);
 	}  
 }

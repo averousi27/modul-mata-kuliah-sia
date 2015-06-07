@@ -101,5 +101,11 @@ public class SubCapPembMKServiceImpl implements SubCapPembMKService {
 		// TODO Auto-generated method stub
 		return subCapPembMKRepo.findCapPemb(idCapPembMK.toString());
 	}
+
+	@Override
+	public List<CapPemb> findByMK(UUID idMK) {
+		// TODO Auto-generated method stub
+		return subCapPembMKRepo.findByMK(idMK);
+	}
  
 }

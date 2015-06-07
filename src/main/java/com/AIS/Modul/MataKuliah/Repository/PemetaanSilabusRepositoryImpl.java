@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sia.main.domain.MateriSilabus;
 import com.sia.main.domain.PemetaanSilabus;
 import com.sia.main.domain.Pustaka;
 import com.sia.main.domain.Silabus;
@@ -47,9 +48,7 @@ public class PemetaanSilabusRepositoryImpl implements PemetaanSilabusRepository{
 	public List<PemetaanSilabus> findByDetailSilabus(String idDetailSilabus) {
 		// TODO Auto-generated method stub
 		List<PemetaanSilabus> queryResult = sessionFactory.getCurrentSession().createQuery("select ps from PemetaanSilabus ps "
-				+ "join ps.capPembMK cpmk "
-				+ "join ps.detailSilabus ds "
-				+ "where ds.idDetailSilabus='"+ idDetailSilabus +"' and ps.statusPemetaanSilabus = false").list();
+				+ "where ps.detailSilabus.idDetailSilabus='"+ idDetailSilabus +"' and ps.statusPemetaanSilabus = false").list();
 		if(queryResult.size()==0) return null;
 		return queryResult;
 	}
@@ -62,5 +61,12 @@ public class PemetaanSilabusRepositoryImpl implements PemetaanSilabusRepository{
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
 	}
+
+	@Override
+	public List<PemetaanSilabus> findByMateriSilabus(UUID idMateriSilabus) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+ 
 
 }

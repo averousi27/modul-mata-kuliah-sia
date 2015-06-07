@@ -1,7 +1,9 @@
 package com.AIS.Modul.MataKuliah.Controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -11,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -194,4 +197,61 @@ public class CapPembController {
 		}  
 		return respongan;
 	}
+	
+	@RequestMapping(value = "/laporan", method = RequestMethod.POST)
+    public ModelAndView getCapPembReport(@RequestParam("idKurikulum") UUID idKurikulum) {
+		ModelAndView mav = new ModelAndView(); 
+		Kurikulum kurikulum = kurikulumServ.findById(idKurikulum); 
+		List<CapPemb> cpList = capPembServ.findByKurikulum(idKurikulum); 
+		List < List<CapPemb> > matrixCapPemb = new ArrayList< List<CapPemb> >();
+		for(CapPemb cp : cpList){
+			List<CapPemb> listSementara = new ArrayList<CapPemb>();
+			listSementara.add(cp);
+			
+			List<CapPemb> cpChild = capPembServ.findByParent(cp.getIdCapPemb());
+			if(cpChild != null)
+				listSementara.addAll(cpChild);
+			
+			matrixCapPemb.add(listSementara);
+		}
+		
+		HashMap<CapPemb, Boolean> isChild = new HashMap<CapPemb, Boolean>();
+		for (List<CapPemb> list : matrixCapPemb) {
+			if(list.size() > 1) {
+				for(int i=1; i<list.size(); i++) {
+					if(!isChild.containsKey(list.get(i))) {
+						isChild.put(list.get(i), true);
+					}
+				}
+			}
+		}
+		
+		List<CapPemb> roots = new ArrayList<CapPemb>();
+		HashMap<CapPemb, Boolean> isRoot = new HashMap<CapPemb, Boolean>();
+		for (CapPemb cp : cpList) {
+			if(!isChild.containsKey(cp)) {
+				roots.add(cp);
+				isRoot.put(cp, true);
+			}
+		}
+		
+		System.out.println("Parents: ");
+		for (CapPemb capPemb : roots) {
+			for (List<CapPemb> list : matrixCapPemb) {
+				if(isRoot.containsKey(list.get(0))) {
+					System.out.println("Parent " + list.get(0) + ": ");
+				}
+			}
+		}
+		
+        return mav;
+    } 
+	@RequestMapping(value = "/laporan", method = RequestMethod.GET)
+    public ModelAndView showParent(Locale locale, Model model) {
+		ModelAndView mav = new ModelAndView();  
+		List<Kurikulum> kurikulum = kurikulumServ.findAll();
+		mav.addObject(kurikulum);
+		mav.setViewName("DaftarReportCapaianPembelajaran");
+        return mav;
+    } 
 }

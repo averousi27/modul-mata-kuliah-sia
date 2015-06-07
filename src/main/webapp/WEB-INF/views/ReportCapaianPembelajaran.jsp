@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon"
 		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Laporan Rencana Pembelajaran</title>
+	<title>Laporan Silabus</title>
 	
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<meta charset="UTF-8">
@@ -150,27 +150,11 @@
 						<div class="col-md-12" style="margin-bottom:10px;"> 
 							<div class="panel panel-white">
 								<div class="panel-heading clearfix">
-									<h4 class="panel-title">Laporan Silabus</h4>
+									<h4 class="panel-title">Learning Outcomes (Capaian Pembelajaran)</h4>
+									<h4 class="panel-title">${kurikulum.satMan.nmSatMan}</h4>
 								</div>
-								<div class="panel-body">  
-									 <div class="row">
-									 	<div class="col-md-8 col-md-offset-2"> 
-									 		<form action="" method="POST">
-										 		<div class="form-group">
-													<label>Pilih mata kuliah</label>
-													<select id="idMK" name="idMK" class="form-control">
-															<option value="">Pilih kode dan nama mata kuliah</option> 
-														<c:forEach items="${mkList}" var="mk"> 
-															<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
-														</c:forEach> 
-													</select> 
-												</div>
-												<div class="form-group">
-													<button type="submit" id="showSilabus" class="btn btn-primary" onclick="cekSilabus(this)">Tampilkan</button>
-												</div>	
-											</form> 
-										</div>
-									 </div>
+								<div class="panel-body">   
+									 
 								</div>
 							 </div>
 						</div>
@@ -178,23 +162,6 @@
 				</div> 
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script> 
-				$(document).ready(function(){
-					cekSilabus = function cekSilabus(button){
-						$.ajax({
-							type:'GET', 
-							url: context_path+'silabus/kelola/getsilabus', 
-							dataType:"json",	
-							data: {'idMK' : $("idMK").val()},
-							traditional:true,
-							success: function(data){ 
-								if(data.data==null){
-									toastr["success"]("Data silabus tidak ditemukan");	 
-									$("showSilabus").html("<button type='button' class='btn btn-default disabled' >Tampilkan</button>")
-								} 
-							}
-						});
-					};
-				})
 				</script>
 				<!-- akhir script custom pada halaman -->
 				

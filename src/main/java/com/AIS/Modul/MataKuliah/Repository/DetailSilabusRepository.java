@@ -17,4 +17,6 @@ public interface DetailSilabusRepository {
 
 	public List<DetailSilabus> findAll();
 
+	public List<DetailSilabus> findByMK(UUID idMK);
+
 }

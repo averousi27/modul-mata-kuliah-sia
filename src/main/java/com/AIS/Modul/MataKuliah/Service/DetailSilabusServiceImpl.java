@@ -62,4 +62,10 @@ public class DetailSilabusServiceImpl implements DetailSilabusService {
 		return detailSilabusRepo.findAll();
 	}
 
+	@Override
+	public List<DetailSilabus> findByMK(UUID idMK) {
+		// TODO Auto-generated method stub
+		return detailSilabusRepo.findByMK(idMK);
+	}
+
 }

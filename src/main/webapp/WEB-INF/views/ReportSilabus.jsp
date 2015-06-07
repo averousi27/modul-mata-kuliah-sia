@@ -155,29 +155,27 @@
 								<div class="panel-body">  
 									 <div class="row">
 									 	<div class="col-md-8 col-md-offset-2">  
-									 			<p>Kode MK : ${mk2.kodeMK}</p>
-									 			<p>Nama MK : ${mk2.namaMK}</p>
+									 			<p>Kode Mata Kuliah : ${mk2.kodeMK}</p>
+									 			<p>Nama Mata Kuliah : ${mk2.namaMK}</p>
+									 			<p>Rumpun Mata Kuliah : ${mk2.rumpunMK.namaRumpunMK}</p>
 									 			<p>Kredit : ${mk2.jumlahSKS} sks</p>
 									 			<p>Semester : ${mk2.tingkatPemb}</p>
 									 			<p>Deskripsi : ${mk2.deskripsiMK}</p>
 								 			<br /> 
-								 			<p>Capaian Prodi yang didukung</p>
-									 		<c:forEach items="${scpmkAllList}" var="listOfListSCPMK">
-									 			<ul>
-									 			<c:forEach items="${listOfListSCPMK}" var="scpmkList">
-									 				<li>${scpmkList.capPemb.deskripsiCapPemb}</li>
+								 			<p>Capaian Satuan Manajemen yang Didukung</p>
+											<ul>
+									 			<c:forEach items="${cpList}" var="cpList">
+									 			 	<li>${cpList.satMan.nmSatMan} | ${cpList.deskripsiCapPemb}</li>
 									 			</c:forEach>
-									 			</ul>
-									 		</c:forEach>
+									 		</ul>
 									 		<br />
-									 		<p>Capaian MK</p>
-									 		<c:forEach items="${psAllList}" var="listOfListPS">
-									 			<ul>
-									 			<c:forEach items="${listOfListPS}" var="psList">
-									 				<li>${psList.capPembMK.deskripsiCapPembMK}</li>
+									 		<p>Capaian MK</p> 
+											<ul>
+									 			<c:forEach items="${cpmkList}" var="cpmkList">
+									 			 	<li>${cpmkList.deskripsiCapPembMK}</li>
 									 			</c:forEach>
-									 			</ul>
-									 		</c:forEach>
+									 		</ul>
+									 		<br />
 									 		<p>Pokok bahasan</p>
 									 		<ul>
 									 		<c:forEach items="${dsList}" var="dsList"> 
@@ -191,9 +189,11 @@
 									 		</c:forEach>
 									 		<br />
 									 		<p>Pustaka</p>
+									 		<ul>
 									 		<c:forEach items="${dpList}" var="dpList"> 
-									 			<p>${dpList.pustaka.namaPustaka} | ${dpList.pustaka.sifatPustaka}</p> 
+									 			<li>${dpList.pustaka.namaPustaka}</li> 
 									 		</c:forEach>
+									 		</ul>
 										</div>
 									 </div>
 								</div>

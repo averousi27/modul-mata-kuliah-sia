@@ -118,5 +118,16 @@ public class CapPembServiceImpl implements CapPembService {
 		capPembDatatable.setiTotalDisplayRecords(capPembRepo.count(parameter.getWhere()));
 
 		return capPembDatatable;
+	}
+	@Override
+	public List<CapPemb> findByKurikulum(UUID idKurikulum) {
+		// TODO Auto-generated method stub
+		return capPembRepo.findByKurikulum(idKurikulum);
+	}
+	@Override
+	public List<CapPemb> findByParent(UUID idCapPemb) {
+		//return null;
+		// TODO Auto-generated method stub
+		return capPembRepo.findByParent(idCapPemb);
 	} 
 }

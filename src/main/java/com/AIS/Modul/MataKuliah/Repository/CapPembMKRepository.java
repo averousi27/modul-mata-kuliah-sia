@@ -22,4 +22,6 @@ public interface CapPembMKRepository {
 	public List<CapPemb> findParent(CapPembMK capPembMK);
 
 	public List<CapPembMK> findAll();
+
+	public List<CapPembMK> findByMK(UUID idMK);
 }

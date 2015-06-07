@@ -13,4 +13,6 @@ public interface PemetaanSilabusService {
 
 	public String delete(UUID idPemetaanSilabus);
 
+	public List<PemetaanSilabus> findByMateriSilabus(UUID idMateriSilabus);
+
 }

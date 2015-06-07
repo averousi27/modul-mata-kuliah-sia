@@ -50,4 +50,10 @@ public class PemetaanSilabusServiceImpl implements PemetaanSilabusService{
 		}
 	}
 
+	@Override
+	public List<PemetaanSilabus> findByMateriSilabus(UUID idMateriSilabus) {
+		// TODO Auto-generated method stub
+		return pemetaanSilabusRepo.findByMateriSilabus(idMateriSilabus);
+	}
+
 }

@@ -100,4 +100,15 @@ public class CapPembMKRepositoryImpl implements CapPembMKRepository{
 
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CapPembMK> findByMK(UUID idMK) {
+		// TODO Auto-generated method stub
+		List<CapPembMK> queryResult = sessionFactory.getCurrentSession().createQuery("select cpmk from CapPembMK cpmk "
+				+ "join cpmk.mk mk "
+				+ "WHERE mk.idMK='"+idMK.toString()+"' AND cpmk.statusCapPembMK=false").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
+
 }

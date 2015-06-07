@@ -403,6 +403,27 @@
 									$(element).remove();
 								});
 							 $("#idRPPerTemu").val("");
+							 /*-------------get rp per temu---------*/
+// 								$.ajax({
+// 									type:'GET',
+// 									url: context_path+'rencanapembelajaran/kelola/getrppertemu',
+// 									dataType: 'json',
+// 									data : {'idRP': $("#idRP").val()},
+// 									success: function(data){  
+// 										//console.log(data.data);
+// 										if(data.data!=null){  
+// 											for(var i=0; i<data.data.length; ++i){ 
+// 												$("#rowRPPerTemuNew").before(
+// 													"<tr class='rowRPPerTemu'>" 
+// 													+"<td><input type='text' class='form-control col-md-4' value='RP minggu ke-"+ data.data[i].mingguPembKe + "' readonly='readonly'/></td>"
+// 													+"<td><button type='button' class='btn btn-primary'  onclick='showModal(this)' name='"+data.data[i].idRPPerTemu+"'><i class='glyphicon glyphicon-pencil'></i></button></td>" 
+// 													+"</tr>"		
+// 												); 
+// 											}  
+// 										}
+// 									} 
+// 								});
+							 	/*-------------end get rp per temu---------*/ 
 						}; 
 						simpanRPPerTemu = function simpanRPPerTemu(button){ 
 							/*---------------simpan RP per pertemuan----------------*/
@@ -417,17 +438,15 @@
 								traditional:true, 
 								success:function(data){    
 									if(data.data!=null){
-										$("#idRPPerTemu").val(data.data.idRPPerTemu);
-										//for(var i=0; i<data.data.length;++i){
-											$("#rowRPPerTemuNew").before(
-													'<tr class="rowRPPerTemu">'
-		                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="Minggu ke-'+data.data.mingguPembKe+'"></td>'
-		                                    		+	'<td><button type="button" class="btn btn-success" name="'+data.data.idRPPerTemu+'" onClick="showModal(this)"><i class="glyphicon glyphicon-pencil"></i></button></td>'
-		                                    		+'</tr>'
-												);
-										//} 
+										$("#idRPPerTemu").val(data.data.idRPPerTemu); 
 										$("inputRPPerTemu").val("");
 										$("#tambahRPBaru, #tambahMateriPembBaru").toggleClass("hide");
+										$("#rowRPPerTemuNew").before(
+											"<tr class='rowRPPerTemu'>" 
+											+"<td><input type='text' class='form-control col-md-4' value='RP minggu ke-"+ data.data.mingguPembKe + "' readonly='readonly'/></td>"
+											+"<td><button type='button' class='btn btn-primary'  onclick='showModal(this)' name='"+data.data.idRPPerTemu+"'><i class='glyphicon glyphicon-pencil'></i></button></td>" 
+											+"</tr>"		
+										); 
 									}
 								},
 								error: function(data){
@@ -599,8 +618,8 @@
 											for(var i=0; i<data.data.length; ++i){ 
 												$("#rowRPPerTemuNew").before(
 													"<tr class='rowRPPerTemu'>" 
-													+"<td><input type='text' class='form-control col-md-4' value='RP minggu ke-"+ data.data[i][0].mingguPembKe + "' readonly='readonly'/></td>"
-													+"<td><button type='button' class='btn btn-primary'  onclick='showModal(this)' name='"+data.data[i][0].idRPPerTemu+"'><i class='glyphicon glyphicon-pencil'></i></button></td>" 
+													+"<td><input type='text' class='form-control col-md-4' value='RP minggu ke-"+ data.data[i].mingguPembKe + "' readonly='readonly'/></td>"
+													+"<td><button type='button' class='btn btn-primary'  onclick='showModal(this)' name='"+data.data[i].idRPPerTemu+"'><i class='glyphicon glyphicon-pencil'></i></button></td>" 
 													+"</tr>"		
 												); 
 											}  

@@ -54,9 +54,9 @@ public class RPPerTemuRepositoryImpl implements RPPerTemuRepository {
 	@Override
 	public List<RPPerTemu> findByRP(UUID idRP) {
 		// TODO Auto-generated method stub
-		List<RPPerTemu> queryResult = sessionFactory.getCurrentSession().createQuery("from RPPerTemu rppt "
+		List<RPPerTemu> queryResult = sessionFactory.getCurrentSession().createQuery("SELECT rppt from RPPerTemu rppt "
 				+ "join rppt.rp rp "
-				+ "WHERE rp.idRP='"+idRP.toString()+"'").list();
+				+ "WHERE rp.idRP='"+idRP.toString()+"' AND rppt.statusRPPerTemu= false order by rppt.mingguPembKe asc").list();
 		if(queryResult.size()==0) return null;
 		return queryResult;
 	}

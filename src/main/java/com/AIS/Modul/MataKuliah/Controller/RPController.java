@@ -1,6 +1,7 @@
 package com.AIS.Modul.MataKuliah.Controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -26,13 +27,17 @@ import com.AIS.Modul.MataKuliah.Service.BentukPenilaianService;
 import com.AIS.Modul.MataKuliah.Service.CapPembMKService;
 import com.AIS.Modul.MataKuliah.Service.DetailPemetaanService;
 import com.AIS.Modul.MataKuliah.Service.Datatable;
+import com.AIS.Modul.MataKuliah.Service.DetailPustakaService;
 import com.AIS.Modul.MataKuliah.Service.DetailSilabusService;
 import com.AIS.Modul.MataKuliah.Service.MKService;
 import com.AIS.Modul.MataKuliah.Service.MateriSilabusService;
 import com.AIS.Modul.MataKuliah.Service.MetodePembService;
+import com.AIS.Modul.MataKuliah.Service.PemetaanSilabusService;
+import com.AIS.Modul.MataKuliah.Service.PrasyaratMKService;
 import com.AIS.Modul.MataKuliah.Service.RPPerTemuService;
 import com.AIS.Modul.MataKuliah.Service.RPService;
 import com.AIS.Modul.MataKuliah.Service.SilabusService;
+import com.AIS.Modul.MataKuliah.Service.SubCapPembMKService;
 import com.sia.main.domain.*;
 
 @Controller
@@ -68,6 +73,18 @@ public class RPController {
 	 
 	@Autowired
 	private MateriSilabusService materiSilabusServ;
+	
+	@Autowired
+	private DetailPustakaService detailPustakaServ;
+	
+	@Autowired
+	private SubCapPembMKService subCapPembMKServ;
+	
+	@Autowired
+	private PrasyaratMKService prasyaratMKServ;
+	
+	@Autowired
+	private PemetaanSilabusService pemetaanSilabusServ;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView datatable(Locale locale, Model model) { 
@@ -192,6 +209,7 @@ public class RPController {
 		}
 		rppt.setBentukPenilaian(bp);
 		rppt.setBobotPenilaian(bobotPenilaian);
+		rppt.setIndikatorPenilaian(indikatorPenilaian);
 		rppt.setMetodePemb(metodePemb);
 		rppt.setMingguPembKe(mingguPemb);
 		rppt.setWaktuPemb(waktuPemb);
@@ -244,36 +262,81 @@ public class RPController {
 	}
 	
 	@RequestMapping(value="/laporan", method = RequestMethod.POST)
-	public ModelAndView getSilabusElement(Locale locale, Model model, @RequestParam("idMK") UUID idMK) {  
+	public ModelAndView getRPElement(Locale locale, Model model, @RequestParam("idMK") UUID idMK) {  
 		ModelAndView mav = new ModelAndView();   
-		System.out.println(idMK.toString());
-//		MK mk2 = mkServ.findById(idMK); 
-//		Silabus silabus = silabusServ.findByMK(idMK);//dapat silabusnya
-//		List<DetailSilabus> dsList = detailSilabusServ.findBySilabus(silabus.getIdSilabus());//dapat pokok bahasannya
-//		List<DetailPustaka> dpList = detailPustakaServ.findBySilabus(silabus.getIdSilabus()); //dapat pustakanya    
-//		List< List<PemetaanSilabus> > psAllList = new ArrayList< List<PemetaanSilabus> >();
-//		List< List<SubCapPembMK> > scpmkAllList = new ArrayList< List<SubCapPembMK> >();
-//		for(DetailSilabus ds : dsList){
-//			List<PemetaanSilabus> psList = pemetaanSilabusServ.findByDetailSilabus(ds.getIdDetailSilabus());//dapat capaian pembelajaran mata kuliah
-//			psAllList.add(psList);
-//		}
-//		for(List<PemetaanSilabus> psList : psAllList){
-//			for(PemetaanSilabus ps : psList){ 
-//				//System.out.println(ps.getCapPembMK().getIdCapPembMK());
-//				List<SubCapPembMK> scpmkList = subCapPembMKServ.findByCapPembMKList(ps.getCapPembMK().getIdCapPembMK()); //dapat capaian pembelajaran satuan manajemen
-//				scpmkAllList.add(scpmkList);
-//			} 
-//		} 
-//		List<PrasyaratMK> prasyaratList = prasyaratMKServ.findParentMK(idMK); 
-//		
-//		mav.addObject("mk2", mk2);
-//		mav.addObject("silabus", silabus);
-//		mav.addObject("dsList", dsList);
-//		mav.addObject("dpList", dpList);
-//		mav.addObject("psAllList", psAllList);
-//		mav.addObject("scpmkAllList", scpmkAllList);
-//		mav.addObject("prasyaratList", prasyaratList); 
-		mav.setViewName("ReportSilabus");
-		return mav;
+		MK mk2 = mkServ.findById(idMK); //dapat objek MK
+		Silabus silabus = silabusServ.findByMK(idMK);//dapat silabusnya
+		if(silabus == null){
+			mav.setViewName("DaftarReportRencanaPembelajaran");
+			return mav;
+		}
+		else {
+			RP rp = rpServ.findBySilabus(silabus.getIdSilabus());//dapat bahan kajian
+			List<DetailSilabus> dsList = detailSilabusServ.findByMK(idMK);//dapat pokok bahasannya
+			List<DetailPustaka> dpList = detailPustakaServ.findBySilabus(silabus.getIdSilabus()); //dapat pustakanya     
+			List<CapPembMK> cpmkList = capPembMKServ.findByMK(idMK); //dapat capaian mata kuliah
+			List<CapPemb> cpList = subCapPembMKServ.findByMK(idMK); //dapat capaian prodi   
+			List<PrasyaratMK> prasyaratList = prasyaratMKServ.findParentMK(idMK); //dapat MK prasyarat
+			List<RPPerTemu> rpPerTemuList = rpPerTemuServ.findByRP(rp.getIdRP());//dapat RP Per Temu 
+			List<MateriSilabus> msNewList = new ArrayList<MateriSilabus>();
+			List<PemetaanSilabus> psNewList = new ArrayList<PemetaanSilabus>();
+			
+			HashMap<UUID, Boolean> hashMsList = new HashMap<UUID, Boolean>();
+			HashMap<UUID, Boolean> hashPsList = new HashMap<UUID, Boolean>();
+			for(RPPerTemu rppt : rpPerTemuList){
+				List<MateriSilabus> msList = materiSilabusServ.findByRPPerTemu(rppt.getIdRPPerTemu());//dapat materi pembelajaran
+				for (MateriSilabus ms : msList) {
+					if(!hashMsList.containsKey(ms.getIdMateriSilabus())) {					
+						hashMsList.put(ms.getIdMateriSilabus(), true);
+						msNewList.add(ms);
+					}
+				}
+			}
+			
+			for(MateriSilabus ms : msNewList){
+				List<PemetaanSilabus> psList = pemetaanSilabusServ.findByDetailSilabus(ms.getDetailSilabus().getIdDetailSilabus());//dapat capaian pembelajaran mata kuliah
+				for (PemetaanSilabus ps : psList) {
+					if(!hashPsList.containsKey(ps.getIdPemetaanSilabus())) {
+						hashPsList.put(ps.getIdPemetaanSilabus(), true);
+						psNewList.add(ps);
+					}
+				}
+			}
+			
+			HashMap<UUID, List<CapPembMK>> hashCPMKPerTemu = new HashMap<UUID, List<CapPembMK>>();
+			
+			for (RPPerTemu rppt : rpPerTemuList) {
+				HashMap<UUID, Boolean> hashCPMKSementara = new HashMap<UUID, Boolean>();
+				List<CapPembMK> listCPMKSementara = new ArrayList<CapPembMK>();
+				for (PemetaanSilabus ps : psNewList) {
+					for (MateriSilabus ms : msNewList) {
+						if(ms.getRpPerTemu().getIdRPPerTemu() == rppt.getIdRPPerTemu() 
+								&& ms.getDetailSilabus().getIdDetailSilabus() == ps.getDetailSilabus().getIdDetailSilabus()) {
+							if(!hashCPMKSementara.containsKey(ps.getCapPembMK().getIdCapPembMK())) {
+								hashCPMKSementara.put(ps.getCapPembMK().getIdCapPembMK(), true);
+								listCPMKSementara.add(ps.getCapPembMK());
+							}
+						}
+					}
+				}
+				hashCPMKPerTemu.put(rppt.getIdRPPerTemu(), listCPMKSementara);
+				System.out.println(hashCPMKPerTemu.get(rppt.getIdRPPerTemu()));
+			}
+			
+			mav.addObject("mk2", mk2);
+			mav.addObject("rp", rp);
+			mav.addObject("silabus", silabus);
+			mav.addObject("dsList", dsList);
+			mav.addObject("dpList", dpList);  
+			mav.addObject("cpmkList", cpmkList); 
+			mav.addObject("cpList", cpList); 
+			mav.addObject("prasyaratList", prasyaratList);
+			mav.addObject("msNewList", msNewList);
+			mav.addObject("psNewList", psNewList);
+			mav.addObject("rpPerTemuList", rpPerTemuList);
+			mav.addObject("hashCPMKPerTemu", hashCPMKPerTemu);
+			mav.setViewName("ReportRencanaPembelajaran");
+			return mav;
+		}   
 	}
 }

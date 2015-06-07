@@ -30,5 +30,9 @@ public interface CapPembService {
 
 	public Datatable getdatatable1(String sEcho, int iDisplayLength,
 			int iDisplayStart, int iSortCol_0, String sSortDir_0,
-			String sSearch); 
+			String sSearch);
+
+	public List<CapPemb> findByKurikulum(UUID idKurikulum);
+
+	public List<CapPemb> findByParent(UUID idCapPemb);
 }

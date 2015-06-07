@@ -74,4 +74,16 @@ public class DetailSilabusRepositoryImpl implements DetailSilabusRepository{
 		return queryResult;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DetailSilabus> findByMK(UUID idMK) {
+		// TODO Auto-generated method stub
+		List<DetailSilabus> queryResult = sessionFactory.getCurrentSession().createQuery("select ds from DetailSilabus ds " 
+				+ "join ds.silabus silabus "
+				+ "join silabus.mk mk "
+				+ "where mk.idMK = '"+ idMK.toString() +"' AND ds.statusDetailSilabus = false").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
+
 }
