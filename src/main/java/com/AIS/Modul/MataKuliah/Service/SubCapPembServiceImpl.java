@@ -34,8 +34,8 @@ public class SubCapPembServiceImpl implements SubCapPembService {
 		}
 	}
 	
-	private String [] column = {"child.idCapPemb","kur.thnMulai", "kur.namaKurikulum", "satman.nmSatMan", 
-			"child.namaCapPemb", "parent.namaCapPemb", "child.deskripsiCapPemb", "child.statusCapPemb"};
+	private String [] column = {"child.idCapPemb","kur.thnMulai", "kur.namaKurikulum", 
+			"child.namaCapPemb", "child.deskripsiCapPemb", "parent.namaCapPemb", "parent.deskripsiCapPemb", "child.statusCapPemb"};
 	private Boolean[] searchable = {false,true,true,true,true,true,true,false};
 	@Override
 	public Datatable getdatatable(String sEcho, int iDisplayLength,
@@ -53,15 +53,14 @@ public class SubCapPembServiceImpl implements SubCapPembService {
 			String[] subCapPembString = new String[9]; 
 			subCapPembString[0] = subCapPemb.getChildCapPemb().getIdCapPemb().toString();
 			subCapPembString[1] = String.valueOf(subCapPemb.getChildCapPemb().getKurikulum().getThnMulai());
-			subCapPembString[2] = String.valueOf(subCapPemb.getChildCapPemb().getKurikulum().getNamaKurikulum());
-			subCapPembString[3] = String.valueOf(subCapPemb.getChildCapPemb().getSatMan().getNmSatMan());
-			subCapPembString[4] = String.valueOf(subCapPemb.getChildCapPemb().getNamaCapPemb());
+			subCapPembString[2] = String.valueOf(subCapPemb.getChildCapPemb().getKurikulum().getNamaKurikulum()); 
+			subCapPembString[3] = String.valueOf(subCapPemb.getChildCapPemb().getNamaCapPemb());
+			subCapPembString[4] = String.valueOf(subCapPemb.getChildCapPemb().getDeskripsiCapPemb());
 			if(subCapPemb.getParentCapPemb()!=null){ 
-				subCapPembString[5] = String.valueOf(subCapPemb.getParentCapPemb().getNamaCapPemb());//disini harusnya capaian induk
+				subCapPembString[5] = String.valueOf(subCapPemb.getParentCapPemb().getNamaCapPemb());//disini harusnya capaian induk 
+				subCapPembString[6] = String.valueOf(subCapPemb.getParentCapPemb().getDeskripsiCapPemb());
 			}
-			subCapPembString[6] = String.valueOf(subCapPemb.getChildCapPemb().getDeskripsiCapPemb());
-			subCapPembString[7] = String.valueOf(subCapPemb.getChildCapPemb().isStatusCapPemb());
-			subCapPembString[8] = String.valueOf(subCapPemb.getChildCapPemb().isStatusCapPemb());
+			subCapPembString[7] = String.valueOf(subCapPemb.getChildCapPemb().isStatusCapPemb()); 
 			aData.add(subCapPembString);
 		}
 		subCapPembDatatable.setAaData(aData);

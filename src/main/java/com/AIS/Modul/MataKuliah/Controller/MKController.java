@@ -137,6 +137,7 @@ public class MKController {
     public @ResponseBody AjaxResponse edit(@RequestParam("idMK") UUID idMK) {
 		AjaxResponse response;
 		MK mk = mkServ.findById(idMK);
+		System.out.println(mk.getKonversiNilai().getHuruf()); 
 		if(mk == null) response = new AjaxResponse("error","Data tidak ditemukan",null);
 		else response = new AjaxResponse("ok","Data ditemukan",mk);
         return response;

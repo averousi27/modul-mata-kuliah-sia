@@ -96,10 +96,9 @@ public class KurikulumServiceImpl implements KurikulumService {
 	}
 	@Override
 	public String save(Kurikulum kurikulum) {
-		if(kurikulum.getIdKurikulum() != null)
+		if(kurikulum.getIdKurikulum() != null )
 		{
-			//update
-			
+			//update 
 			kurikulumRepo.update(kurikulum);
 			return kurikulum.getIdKurikulum().toString();
 		}

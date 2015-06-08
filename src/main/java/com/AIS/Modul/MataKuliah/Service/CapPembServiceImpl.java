@@ -54,12 +54,16 @@ public class CapPembServiceImpl implements CapPembService {
 		if(capPemb.getIdCapPemb() != null)
 		{
 			//update
+//			java.util.Date currentTime = new java.util.Date(); 
+//			capPemb.setWaktuTambah(new java.sql.Timestamp(currentTime.getTime()));
 			capPembRepo.update(capPemb);
 			return capPemb.getIdCapPemb().toString();
 		}
 		else
 		{
-			//insert
+			//insert 
+			java.util.Date currentTime = new java.util.Date(); 
+			capPemb.setWaktuTambah(new java.sql.Timestamp(currentTime.getTime()));
 			return capPembRepo.insert(capPemb).toString();
 		}
 	}
@@ -75,7 +79,9 @@ public class CapPembServiceImpl implements CapPembService {
 		CapPemb capPemb = capPembRepo.findById(idCapPemb);
 		if(capPemb==null) return null;
 		else{
-			capPemb.setStatusCapPemb(true); 
+			capPemb.setStatusCapPemb(true);  
+			java.util.Date currentTime = new java.util.Date(); 
+			capPemb.setWaktuHapus(new java.sql.Timestamp(currentTime.getTime()));
 			capPembRepo.update(capPemb);
 			return "Ok";
 		}

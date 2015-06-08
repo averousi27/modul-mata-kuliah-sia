@@ -189,12 +189,12 @@
 							<div class="row">
 									<div class="col-md-8 masteractions"> 
 										<div class="pull-right">  
-											<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/'">
+											<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/matakuliah/kelola/'">
 												  Selanjutnya >>
 											</button>
 										</div> 
 										<div class="pull-right"> 
-											<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/capaianbelajar/satuanmanajemen/'">
+											<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/capaianbelajar/satuanmanajemen/'">
 												 << Kembali
 											</button>
 										</div>

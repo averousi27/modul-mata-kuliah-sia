@@ -198,12 +198,12 @@
 							<div class="row">
 								<div class="col-md-8 masteractions">
 									<div class="pull-right">  
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/satuanmanajemen/'">
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/matakuliah/satuanmanajemen/'">
 											  Selanjutnya >>
 										</button>
 									</div> 
 									<div class="pull-right"> 
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/rumpun/'">
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/matakuliah/rumpun/'">
 											 << Kembali
 										</button>
 									</div>
@@ -365,9 +365,9 @@
 							filters: [{id:'#filter', name:'statusMK'}],
 							callOnFillForm : function(response,options){ 
 								$("#idMK").val(response.data.idMK);
-								$("#idKurikulum").val(response.data.kurikulum.idKurikulum);
-								$("#idRumpunMK").val(response.data.rumpunMK.idRumpunMK);
+								$("#idKurikulum").val(response.data.kurikulum.idKurikulum); 
 								$("#idKonversi").val(response.data.konversiNilai.idKonversi);
+								$("#idRumpunMK").val(response.data.rumpunMK.idRumpunMK); 
 							}
 						});
 					});

@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +60,8 @@ public class CapPembController {
 		mav.addObject("kurikulumList", kurikulumList);
 		mav.addObject("satManList", satManList);
 		mav.addObject("capPemb", capPemb); 
+//		java.util.Date currentTime = new java.util.Date();
+//		 System.out.println(new java.sql.Timestamp(currentTime.getTime())); //gets you the current
 		mav.setViewName("ViewCapaianSatMan");
 		return mav;
 	}
@@ -116,7 +119,7 @@ public class CapPembController {
         } 
         //save
     	SatMan satManObj = satManServ.findById(idSatMan); 
-		Kurikulum kur = kurikulumServ.findById(idKurikulum);
+		Kurikulum kur = kurikulumServ.findById(idKurikulum); 
 		capPemb.setSatMan(satManObj);
 		capPemb.setKurikulum(kur);
         response.setData(capPembServ.save(capPemb));  

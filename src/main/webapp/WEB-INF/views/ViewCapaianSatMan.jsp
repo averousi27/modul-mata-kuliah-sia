@@ -177,11 +177,11 @@
 														<input class="checkbox-all" type="checkbox" id="flat-checkbox-1"> 
 												</td> 
 												<td>Tahun Kurikulum</td>   
-												<td>Nama Kurikulum</td> 
-												<td>Nama Satuan Manajemen</td> 
-												<td>Nama Capaian Utama</td> 
+												<td>Nama Kurikulum</td>  
+												<td>Nama Capaian Anak</td> 
+												<td>Deskripsi Capaian Anak</td>
 												<td>Nama Capaian Induk</td>
-												<td>Deskripsi Capaian</td>
+												<td>Deskripsi Capaian Induk</td>
 												<td>Status Hapus</td>
 												<td>Aksi</td>
 											</tr>
@@ -194,12 +194,12 @@
 							<div class="row">
 								<div class="col-md-8 masteractions">
 									<div class="pull-right">  
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/rumpun/'">
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/matakuliah/rumpun/'">
 											  Selanjutnya >>
 										</button>
 									</div> 
 									<div class="pull-right"> 
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/kurikulum/'">
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/kurikulum/'">
 											 << Kembali
 										</button>
 										</div>
@@ -327,13 +327,13 @@
 								{ "bVisible":    false }, 
 								/* nama kurikulum */
 								{ "bVisible":    true }, 
-								/* Nama satuan manajemen */
+								/* Nama capaian child */
+								{ "bVisible":    true }, 
+								/* deskripsi capaian child */
 								{ "bVisible":    true }, 
 								/* nama capaian induk */
-								{ "bVisible":    true },
-								/* nama capaian utama */
-								{ "bVisible":    true },
-								/* deskripsi capaian */
+								{ "bVisible":    true }, 
+								/* deskripsi capaian induk*/
 								{ "bVisible":    true },
 								/*status hapus*/
 								{ 
