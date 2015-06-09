@@ -256,7 +256,7 @@
 							editUrl: context_path+'matakuliah/satuanmanajemen/simpan',
 							deleteUrl: context_path+'matakuliah/satuanmanajemen/deletemany',
 							primaryKey: 'idSatManMK',
-					        order: [[1,"asc"]],
+					        order: [[2,"asc"]],
 							editOnClick: false,
 							editOnClickRow: true,
 							cols: [

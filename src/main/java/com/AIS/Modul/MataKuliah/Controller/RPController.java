@@ -161,6 +161,7 @@ public class RPController {
     		@RequestParam("bahanKajian") String bahanKajian) {
 		AjaxResponse response = new AjaxResponse();   
 		Silabus silabus = silabusServ.findById(idSilabus);
+		System.out.println(silabus.getMk().getNamaMK());
 		RP rpNew = new RP();
 		rpNew.setBahanKajian(bahanKajian);
 		rpNew.setSilabus(silabus);
@@ -284,6 +285,7 @@ public class RPController {
 			HashMap<UUID, Boolean> hashMsList = new HashMap<UUID, Boolean>();
 			HashMap<UUID, Boolean> hashPsList = new HashMap<UUID, Boolean>();
 			for(RPPerTemu rppt : rpPerTemuList){
+				System.out.println(rppt.getIdRPPerTemu());
 				List<MateriSilabus> msList = materiSilabusServ.findByRPPerTemu(rppt.getIdRPPerTemu());//dapat materi pembelajaran
 				for (MateriSilabus ms : msList) {
 					if(!hashMsList.containsKey(ms.getIdMateriSilabus())) {					

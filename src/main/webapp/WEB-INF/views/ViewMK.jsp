@@ -267,10 +267,10 @@
 										</div>
 										<div class="form-group">
 											<label>Nilai Minimal Mata Kuliah</label>
-											<select id="idKonversi" name="idKonversi" class="form-control" required="true">
+											<select id="idKonversi" name="idKonversi" class="form-control">
 													<option value="">Pilih nilai minimal untuk mata kuliah</option> 
 												<c:forEach items="${konversiNilaiList}" var="konvNilai"> 
-													<option value="${konvNilai.idKonversi}">${konvNilai.huruf} - Batas bawah : ${konvNilai.batasBawah} </option>
+													<option value="${konvNilai.idKonversi}">${konvNilai.huruf} - Batas bawah : ${konvNilai.batasBawah} </option> 
 												</c:forEach> 
 											</select>
 										</div>
@@ -305,7 +305,7 @@
 							editUrl: context_path+'matakuliah/kelola/simpan',
 							deleteUrl: context_path+'matakuliah/kelola/deletemany',
 							primaryKey: 'idMK',
-					        order: [[1,"asc"]],
+					        order: [[2,"asc"]],
 							editOnClick: false,
 							editOnClickRow: true,
 							cols: [
@@ -365,9 +365,21 @@
 							filters: [{id:'#filter', name:'statusMK'}],
 							callOnFillForm : function(response,options){ 
 								$("#idMK").val(response.data.idMK);
-								$("#idKurikulum").val(response.data.kurikulum.idKurikulum); 
-								$("#idKonversi").val(response.data.konversiNilai.idKonversi);
-								$("#idRumpunMK").val(response.data.rumpunMK.idRumpunMK); 
+								if(response.data.kurikulum.statusKurikulum==true){//kondisi non aktif
+									$("#idKurikulum").val("");
+									$("#idKonversi").val(response.data.konversiNilai.idKonversi); 
+								}
+								else{
+									$("#idKurikulum").val(response.data.kurikulum.idKurikulum);
+									$("#idKonversi").val(response.data.konversiNilai.idKonversi); 
+								} 
+								if(response.data.rumpunMK==null){//kondisi gak punya rumpun mk
+									$("#idRumpunMK").val(""); 
+								}
+								else{
+									$("#idRumpunMK").val(response.data.rumpunMK.idRumpunMK);  
+								}
+								//$("#idKonversi").val(response.data.konversiNilai.idKonversi); 
 							}
 						});
 					});
