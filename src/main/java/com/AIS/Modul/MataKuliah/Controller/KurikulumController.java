@@ -33,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "/kurikulum")
-public class KurikulumController {
+public class KurikulumController extends SessionController {
 	 
 	@Autowired
 	private KurikulumService kurikulumServ;
@@ -44,10 +44,12 @@ public class KurikulumController {
 	private static final Logger logger = LoggerFactory.getLogger(KurikulumController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView datatable(Locale locale, Model model) {
+	public ModelAndView datatable(Locale locale, Model model, HttpSession session) {
 		Kurikulum kurikulum = new Kurikulum();
 		List<SatMan> satManList = satManServ.findAll();
 		ModelAndView mav = new ModelAndView();
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Kelola Kurikulum"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		mav.setViewName("ViewKurikulum");
 		mav.addObject("kurikulum", kurikulum);
 		mav.addObject("satManList", satManList);

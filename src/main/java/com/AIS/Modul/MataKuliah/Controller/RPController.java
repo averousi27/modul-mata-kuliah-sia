@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ import com.sia.main.domain.*;
 
 @Controller
 @RequestMapping(value = "/rencanapembelajaran/kelola")
-public class RPController {
+public class RPController extends SessionController {
 
 	@Autowired
 	private MKService mkServ;
@@ -87,8 +88,10 @@ public class RPController {
 	private PemetaanSilabusService pemetaanSilabusServ;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView datatable(Locale locale, Model model) { 
+	public ModelAndView datatable(Locale locale, Model model, HttpSession session) { 
 		ModelAndView mav = new ModelAndView(); 
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Kelola Rencana Pembelajaran"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		List<MK> mkList = mkServ.findAll(); 
 		List<MetodePemb> metodePembList = metodePembServ.findAll();
 		List<BentukPenilaian> bentukList = bentukServ.findAll();
@@ -261,8 +264,11 @@ public class RPController {
 	}
 	 
 	@RequestMapping(value="/laporan", method = RequestMethod.GET)
-	public ModelAndView showSilabus(Locale locale, Model model) {  
+	public ModelAndView showSilabus(Locale locale, Model model, HttpSession session) {  
 		ModelAndView mav = new ModelAndView();
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Laporan Rencana Pembelajaran"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);} 
+		
 		List<MK> mkList = mkServ.findAll(); 
 		mav.addObject("mkList", mkList);
 		mav.setViewName("DaftarReportRencanaPembelajaran");
@@ -270,80 +276,89 @@ public class RPController {
 	}
 	
 	@RequestMapping(value="/laporan", method = RequestMethod.POST)
-	public ModelAndView getRPElement(Locale locale, Model model, @RequestParam("idMK") UUID idMK) {  
-		ModelAndView mav = new ModelAndView();   
+	public ModelAndView getRPElement(Locale locale, Model model, @RequestParam("idMK") UUID idMK, HttpSession session) {  
+		ModelAndView mav = new ModelAndView(); 
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Laporan Rencana Pembelajaran"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);} 
 		MK mk2 = mkServ.findById(idMK); //dapat objek MK
 		Silabus silabus = silabusServ.findByMK(idMK);//dapat silabusnya
 		if(silabus == null){
+			List<MK> mkList = mkServ.findAll(); 
+			mav.addObject("mkList", mkList);
 			mav.setViewName("DaftarReportRencanaPembelajaran");
 			return mav;
 		}
-		else {
+		else { 
 			RP rp = rpServ.findBySilabus(silabus.getIdSilabus());//dapat bahan kajian
 			List<DetailSilabus> dsList = detailSilabusServ.findByMK(idMK);//dapat pokok bahasannya
 			List<DetailPustaka> dpList = detailPustakaServ.findBySilabus(silabus.getIdSilabus()); //dapat pustakanya     
 			List<CapPembMK> cpmkList = capPembMKServ.findByMK(idMK); //dapat capaian mata kuliah
 			List<CapPemb> cpList = subCapPembMKServ.findByMK(idMK); //dapat capaian prodi   
-			List<PrasyaratMK> prasyaratList = prasyaratMKServ.findParentMK(idMK); //dapat MK prasyarat
-			List<RPPerTemu> rpPerTemuList = rpPerTemuServ.findByRP(rp.getIdRP());//dapat RP Per Temu 
-			List<MateriSilabus> msNewList = new ArrayList<MateriSilabus>();
-			List<PemetaanSilabus> psNewList = new ArrayList<PemetaanSilabus>();
-			
-			HashMap<UUID, Boolean> hashMsList = new HashMap<UUID, Boolean>();
-			HashMap<UUID, Boolean> hashPsList = new HashMap<UUID, Boolean>();
-			for(RPPerTemu rppt : rpPerTemuList){
-				System.out.println(rppt.getIdRPPerTemu());
-				List<MateriSilabus> msList = materiSilabusServ.findByRPPerTemu(rppt.getIdRPPerTemu());//dapat materi pembelajaran
-				for (MateriSilabus ms : msList) {
-					if(!hashMsList.containsKey(ms.getIdMateriSilabus())) {					
-						hashMsList.put(ms.getIdMateriSilabus(), true);
-						msNewList.add(ms);
-					}
-				}
-			}
-			
-			for(MateriSilabus ms : msNewList){
-				List<PemetaanSilabus> psList = pemetaanSilabusServ.findByDetailSilabus(ms.getDetailSilabus().getIdDetailSilabus());//dapat capaian pembelajaran mata kuliah
-				for (PemetaanSilabus ps : psList) {
-					if(!hashPsList.containsKey(ps.getIdPemetaanSilabus())) {
-						hashPsList.put(ps.getIdPemetaanSilabus(), true);
-						psNewList.add(ps);
-					}
-				}
-			}
-			
-			HashMap<UUID, List<CapPembMK>> hashCPMKPerTemu = new HashMap<UUID, List<CapPembMK>>();
-			
-			for (RPPerTemu rppt : rpPerTemuList) {
-				HashMap<UUID, Boolean> hashCPMKSementara = new HashMap<UUID, Boolean>();
-				List<CapPembMK> listCPMKSementara = new ArrayList<CapPembMK>();
-				for (PemetaanSilabus ps : psNewList) {
-					for (MateriSilabus ms : msNewList) {
-						if(ms.getRpPerTemu().getIdRPPerTemu() == rppt.getIdRPPerTemu() 
-								&& ms.getDetailSilabus().getIdDetailSilabus() == ps.getDetailSilabus().getIdDetailSilabus()) {
-							if(!hashCPMKSementara.containsKey(ps.getCapPembMK().getIdCapPembMK())) {
-								hashCPMKSementara.put(ps.getCapPembMK().getIdCapPembMK(), true);
-								listCPMKSementara.add(ps.getCapPembMK());
-							}
+			List<PrasyaratMK> prasyaratList = prasyaratMKServ.findParentMK(idMK); //dapat MK prasyarat 
+			try{
+				List<RPPerTemu> rpPerTemuList = rpPerTemuServ.findByRP(rp.getIdRP());//dapat RP Per Temu 
+				List<MateriSilabus> msNewList = new ArrayList<MateriSilabus>();
+				List<PemetaanSilabus> psNewList = new ArrayList<PemetaanSilabus>();
+				
+				HashMap<UUID, Boolean> hashMsList = new HashMap<UUID, Boolean>();
+				HashMap<UUID, Boolean> hashPsList = new HashMap<UUID, Boolean>();
+				for(RPPerTemu rppt : rpPerTemuList){
+					System.out.println(rppt.getIdRPPerTemu());
+					List<MateriSilabus> msList = materiSilabusServ.findByRPPerTemu(rppt.getIdRPPerTemu());//dapat materi pembelajaran
+					for (MateriSilabus ms : msList) {
+						if(!hashMsList.containsKey(ms.getIdMateriSilabus())) {					
+							hashMsList.put(ms.getIdMateriSilabus(), true);
+							msNewList.add(ms);
 						}
 					}
 				}
-				hashCPMKPerTemu.put(rppt.getIdRPPerTemu(), listCPMKSementara);
-				System.out.println(hashCPMKPerTemu.get(rppt.getIdRPPerTemu()));
+				
+				for(MateriSilabus ms : msNewList){
+					List<PemetaanSilabus> psList = pemetaanSilabusServ.findByDetailSilabus(ms.getDetailSilabus().getIdDetailSilabus());//dapat capaian pembelajaran mata kuliah
+					for (PemetaanSilabus ps : psList) {
+						if(!hashPsList.containsKey(ps.getIdPemetaanSilabus())) {
+							hashPsList.put(ps.getIdPemetaanSilabus(), true);
+							psNewList.add(ps);
+						}
+					}
+				}
+				
+				HashMap<UUID, List<CapPembMK>> hashCPMKPerTemu = new HashMap<UUID, List<CapPembMK>>();
+				
+				for (RPPerTemu rppt : rpPerTemuList) {
+					HashMap<UUID, Boolean> hashCPMKSementara = new HashMap<UUID, Boolean>();
+					List<CapPembMK> listCPMKSementara = new ArrayList<CapPembMK>();
+					for (PemetaanSilabus ps : psNewList) {
+						for (MateriSilabus ms : msNewList) {
+							if(ms.getRpPerTemu().getIdRPPerTemu() == rppt.getIdRPPerTemu() 
+									&& ms.getDetailSilabus().getIdDetailSilabus() == ps.getDetailSilabus().getIdDetailSilabus()) {
+								if(!hashCPMKSementara.containsKey(ps.getCapPembMK().getIdCapPembMK())) {
+									hashCPMKSementara.put(ps.getCapPembMK().getIdCapPembMK(), true);
+									listCPMKSementara.add(ps.getCapPembMK());
+								}
+							}
+						}
+					}
+					hashCPMKPerTemu.put(rppt.getIdRPPerTemu(), listCPMKSementara);
+					System.out.println(hashCPMKPerTemu.get(rppt.getIdRPPerTemu()));
+				}
+				
+				
+				mav.addObject("rp", rp); 
+				mav.addObject("msNewList", msNewList);
+				mav.addObject("psNewList", psNewList);
+				mav.addObject("rpPerTemuList", rpPerTemuList);
+				mav.addObject("hashCPMKPerTemu", hashCPMKPerTemu);
 			}
-			
+			catch(Exception e){  
+			}
 			mav.addObject("mk2", mk2);
-			mav.addObject("rp", rp);
 			mav.addObject("silabus", silabus);
 			mav.addObject("dsList", dsList);
 			mav.addObject("dpList", dpList);  
 			mav.addObject("cpmkList", cpmkList); 
 			mav.addObject("cpList", cpList); 
 			mav.addObject("prasyaratList", prasyaratList);
-			mav.addObject("msNewList", msNewList);
-			mav.addObject("psNewList", psNewList);
-			mav.addObject("rpPerTemuList", rpPerTemuList);
-			mav.addObject("hashCPMKPerTemu", hashCPMKPerTemu);
 			mav.setViewName("ReportRencanaPembelajaran");
 			return mav;
 		}   

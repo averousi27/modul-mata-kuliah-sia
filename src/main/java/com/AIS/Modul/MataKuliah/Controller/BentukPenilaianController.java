@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -30,16 +31,18 @@ import com.sia.main.domain.MetodePemb;
 
 @Controller
 @RequestMapping(value = "rencanapembelajaran/bentuk")
-public class BentukPenilaianController {
+public class BentukPenilaianController extends SessionController {
 	@Autowired
 	private BentukPenilaianService bentukServ;
 	  
 	private static final Logger logger = LoggerFactory.getLogger(MetodePembController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView datatable(Locale locale, Model model) {
+	public ModelAndView datatable(Locale locale, Model model, HttpSession session) {
 		BentukPenilaian bentukPenilaian = new BentukPenilaian(); 
 		ModelAndView mav = new ModelAndView();
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Kelola Bentuk Penilaian"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		mav.addObject("bentukPenilaian", bentukPenilaian);
 		mav.setViewName("ViewBentukPenilaian"); 
 		return mav;

@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
  
+
+
 import com.sia.main.domain.*;
 import com.AIS.Modul.MataKuliah.Service.AjaxResponse;
 import com.AIS.Modul.MataKuliah.Service.Datatable;
@@ -29,7 +32,7 @@ import com.AIS.Modul.MataKuliah.Service.RumpunMKService;
 
 @Controller
 @RequestMapping(value = "/matakuliah/rumpun")
-public class RumpunMKController {
+public class RumpunMKController extends SessionController {
 	
 	@Autowired
 	private RumpunMKService rumpunMKServ;
@@ -37,9 +40,11 @@ public class RumpunMKController {
 	private static final Logger logger = LoggerFactory.getLogger(RumpunMKController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView datatable(Locale locale, Model model) {
+	public ModelAndView datatable(Locale locale, Model model, HttpSession session) {
 		RumpunMK rumpunMK = new RumpunMK(); 
 		ModelAndView mav = new ModelAndView();
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Kelola Rumpun Mata Kuliah"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		mav.addObject("rumpunMK", rumpunMK);
 		mav.setViewName("ViewRumpunMK"); 
 		return mav;

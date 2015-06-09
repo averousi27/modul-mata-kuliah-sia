@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Max;
 
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ import com.sia.main.domain.SubCapPembMK;
 
 @Controller
 @RequestMapping(value = "/silabus/kelola")
-public class SilabusController {
+public class SilabusController extends SessionController {
 
 
 	@Autowired
@@ -83,11 +84,13 @@ public class SilabusController {
 	private static final Logger logger = LoggerFactory.getLogger(SilabusController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView datatable(Locale locale, Model model) { 
+	public ModelAndView datatable(Locale locale, Model model, HttpSession session) { 
 		List<MK> mkList = mkServ.findAll();
 		List<CapPembMK> cpmkList = capPembMKServ.findAll();
 		List<Pustaka> pustakaList = pustakaServ.findAll();
 		ModelAndView mav = new ModelAndView();  
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Kelola Silabus"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		mav.addObject("mkList", mkList);
 		mav.addObject("cpmkList", cpmkList);
 		mav.addObject("pustakaList", pustakaList);
@@ -187,6 +190,16 @@ public class SilabusController {
 		return response;
 	}
 	
+	@RequestMapping(value="/getpustaka", method = RequestMethod.POST)
+	public @ResponseBody AjaxResponse simpanDetailPustaka(@RequestParam("idSilabus") UUID idSilabus) {
+		AjaxResponse response = new AjaxResponse(); 
+		List<DetailPustaka> dpList = detailPustakaServ.findBySilabus(idSilabus);  
+		response.setData(dpList);
+		response.setStatus("ok");
+		response.setMessage("Data detail pustaka tersimpan");
+		return response;
+	}
+	
 	@RequestMapping(value="/getpokokbahasanlist", method=RequestMethod.GET)
 	public @ResponseBody AjaxResponse getPokokBahasanList(@RequestParam("idSilabus") UUID idSilabus){
 		AjaxResponse response = null;
@@ -222,8 +235,10 @@ public class SilabusController {
 	}
 	 
 	@RequestMapping(value="/laporan", method = RequestMethod.GET)
-	public ModelAndView showSilabus(Locale locale, Model model) {  
+	public ModelAndView showSilabus(Locale locale, Model model, HttpSession session) {  
 		ModelAndView mav = new ModelAndView();
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Laporan Silabus"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		List<MK> mkList = mkServ.findAll(); 
 		mav.addObject("mkList", mkList);
 		mav.setViewName("DaftarReportSilabus");
@@ -231,11 +246,13 @@ public class SilabusController {
 	}
 	
 	@RequestMapping(value="/laporan", method = RequestMethod.POST)
-	public ModelAndView getSilabusElement(Locale locale, Model model, @RequestParam("idMK") UUID idMK) {  
-		ModelAndView mav = new ModelAndView();   
+	public ModelAndView getSilabusElement(Locale locale, Model model, @RequestParam("idMK") UUID idMK, HttpSession session ) {  
+		ModelAndView mav = new ModelAndView();    
 		MK mk2 = mkServ.findById(idMK); //dapat objek MK
 		Silabus silabus = silabusServ.findByMK(idMK);//dapat silabusnya
-		if(silabus == null){
+		if(silabus == null){  
+			List<MK> mkList = mkServ.findAll(); 
+			mav.addObject("mkList", mkList);
 			mav.setViewName("DaftarReportSilabus");
 			return mav;
 		}

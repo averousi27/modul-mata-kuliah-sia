@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ import com.sia.main.domain.RumpunMK;
 
 @Controller
 @RequestMapping("/matakuliah/prasyarat")
-public class PrasyaratMKController { 
+public class PrasyaratMKController extends SessionController { 
 	
 	@Autowired
 	private MKService mkServ;
@@ -43,10 +44,12 @@ public class PrasyaratMKController {
 	private static final Logger logger = LoggerFactory.getLogger(PrasyaratMKController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView datatable(Locale locale, Model model) {
+	public ModelAndView datatable(Locale locale, Model model, HttpSession session) {
 		PrasyaratMK pMK = new PrasyaratMK();  
 		List<MK> mkList = mkServ.findAll();
 		ModelAndView mav = new ModelAndView();
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Kelola Mata Kuliah Prasyarat"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		mav.addObject("mkList", mkList);
 		mav.addObject("pMK", pMK);
 		mav.setViewName("ViewPrasyaratMK"); 

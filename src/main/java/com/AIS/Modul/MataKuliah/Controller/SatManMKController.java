@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ import com.sia.main.domain.SatManMK;
 
 @Controller
 @RequestMapping("/matakuliah/satuanmanajemen")
-public class SatManMKController {
+public class SatManMKController extends SessionController {
 	
 	@Autowired
 	private MKService mkServ;
@@ -52,12 +53,14 @@ public class SatManMKController {
 	private static final Logger logger = LoggerFactory.getLogger(SatManMKController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView datatable(Locale locale, Model model) {
+	public ModelAndView datatable(Locale locale, Model model, HttpSession session) {
 		SatManMK satManMK = new SatManMK();  
 		List<MK> mkList = mkServ.findAll();
 		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
 		List<SatMan> satManList = satManServ.findAll();
 		ModelAndView mav = new ModelAndView();
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Kelola Satuan Manajemen untuk Mata Kuliah"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		mav.addObject("mkList", mkList);
 		mav.addObject("kurikulumList", kurikulumList);
 		mav.addObject("satManList", satManList);

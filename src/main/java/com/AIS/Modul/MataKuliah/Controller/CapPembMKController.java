@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -37,7 +38,7 @@ import com.sia.main.domain.SubCapPembMK;
 
 @Controller
 @RequestMapping(value="/matakuliah/capaianbelajar")
-public class CapPembMKController {
+public class CapPembMKController extends SessionController {
 
 	@Autowired
 	private MKService mkServ;
@@ -54,8 +55,10 @@ public class CapPembMKController {
 	private static final Logger logger = LoggerFactory.getLogger(CapPembMKController.class); 
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public ModelAndView showCapPembMK() {
+	public ModelAndView showCapPembMK(HttpSession session) {
 		ModelAndView mav = new ModelAndView(); 
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Kelola Capaian Belajar Mata Kuliah"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		List<MK> mkList = mkServ.findAll();
 		CapPembMK capPembMK = new CapPembMK(); 
 		mav.addObject("mkList", mkList); 

@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ import com.sia.main.domain.RumpunMK;
 
 @Controller
 @RequestMapping(value = "/silabus/pustaka")
-public class PustakaController {
+public class PustakaController extends SessionController {
 
 	@Autowired
 	private PustakaService pustakaServ;
@@ -37,9 +38,11 @@ public class PustakaController {
 	private static final Logger logger = LoggerFactory.getLogger(RumpunMKController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView datatable(Locale locale, Model model) {
+	public ModelAndView datatable(Locale locale, Model model, HttpSession session) {
 		Pustaka pustaka = new Pustaka(); 
 		ModelAndView mav = new ModelAndView();
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Kelola Pustaka Mata Kuliah"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		mav.addObject("pustaka", pustaka);
 		mav.setViewName("ViewPustaka"); 
 		return mav;

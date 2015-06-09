@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ import com.AIS.Modul.MataKuliah.Service.SubCapPembService;
 
 @Controller
 @RequestMapping(value="/capaianbelajar/satuanmanajemen")
-public class CapPembController {
+public class CapPembController extends SessionController {
 		
 	@Autowired
 	private KurikulumService kurikulumServ;
@@ -52,8 +53,11 @@ public class CapPembController {
 	private static final Logger logger = LoggerFactory.getLogger(CapPembController.class); 
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public ModelAndView showCapPembSatMan() {
+	public ModelAndView showCapPembSatMan(HttpSession session) {
 		ModelAndView mav = new ModelAndView(); 
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Kelola Capaian Belajar Satuan Manajemen"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
+		
 		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
 		List<SatMan> satManList	= satManServ.findAll(); 
 		CapPemb capPemb = new CapPemb(); 

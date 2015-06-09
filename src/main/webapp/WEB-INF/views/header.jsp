@@ -95,7 +95,7 @@
 							class="fa fa-search"></i></a></li>
 					<li class="dropdown"><a href="#"
 						class="dropdown-toggle waves-effect waves-button waves-classic"
-						data-toggle="dropdown"> <span class="user-name">David<i
+						data-toggle="dropdown"> <span class="user-name">${userPd.nmPd}${userPtk.nmPtk}<i
 								class="fa fa-angle-down"></i></span> <img class="img-circle avatar"
 							src="${pageContext.servletContext.contextPath}/resources/images/avatar1.png"
 							width="40" height="40" alt="">
@@ -111,10 +111,10 @@
 							<li role="presentation" class="divider"></li>
 							<li role="presentation"><a href="lock-screen.html"><i
 									class="fa fa-lock"></i>Lock screen</a></li>
-							<li role="presentation"><a href="login.html"><i
+							<li role="presentation"><a href="${pageContext.servletContext.contextPath}/logout/"><i
 									class="fa fa-sign-out m-r-xs"></i>Log out</a></li>
 						</ul></li>
-					<li><a href="login.html"
+					<li><a href="${pageContext.servletContext.contextPath}/logout/"
 						class="log-out waves-effect waves-button waves-classic"> <span><i
 								class="fa fa-sign-out m-r-xs"></i>Log out</span>
 					</a></li>
@@ -143,47 +143,43 @@
 			</div>
 		</div>
 		<ul class="menu accordion-menu">
-
-			<li><a href="index.html" class="waves-effect waves-button"><span
-					class="menu-icon glyphicon glyphicon-home"></span>
-					<p>Dashboard</p></a></li>
-			<li><a href="profile.html" class="waves-effect waves-button"><span
-					class="menu-icon glyphicon glyphicon-user"></span>
-					<p>Profile</p></a></li>
-			<li class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-flash"></span>
-					<p>Menu</p> <span class="arrow"></span>
-				<ul class="sub-menu">
-					<li><a href="${pageContext.servletContext.contextPath}/kurikulum/">Kurikulum</a></li>
-					<li><a href="${pageContext.servletContext.contextPath}/matakuliah/rumpun/">Rumpun Mata Kuliah</a></li>
-					<li><a href="${pageContext.servletContext.contextPath}/silabus/pustaka/">Pustaka</a></li>
-					<li><a href="${pageContext.servletContext.contextPath}/rencanapembelajaran/metode/">Metode Pembelajaran</a></li>
-					<li><a href="${pageContext.servletContext.contextPath}/rencanapembelajaran/bentuk/">Bentuk Penilaian</a></li>
-					<li class="droplink"><a href="#"><p>Capaian Pembelajaran</p> <span class="arrow"></span> </a>
-						<ul class="sub-menu"> 
-							<li><a href="${pageContext.servletContext.contextPath}/capaianbelajar/satuanmanajemen/">Satuan Manajemen</a></li>
-							<li><a href="${pageContext.servletContext.contextPath}/matakuliah/capaianbelajar/">Mata Kuliah</a></li>
-						</ul>  
+ 			<c:forEach items="${listModul}" var="modul" varStatus="status">
+					<li class="droplink">
+						<a href="javascript:void(0)"	class="waves-effect waves-button">
+							<span class="menu-icon glyphicon glyphicon-list"></span>
+							<p>${modul.namaModul}</p>
+							<span class="arrow"></span>
+						</a>
+							<ul class="sub-menu">
+								<c:forEach items="${listListMenu[status.index]}" var="listMenu">
+									<li><a href="${pageContext.servletContext.contextPath}/${listMenu.urlMenu}">${listMenu.namaMenu}</a></li>
+								</c:forEach>
+							</ul>
 					</li>
-					<li class="droplink"><a href="#"><p>Mata Kuliah</p><span class="arrow"></span></a>
-							<ul class="sub-menu">  
-								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/satuanmanajemen/">Satuan Manajemen</a></li>
-								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/prasyarat/">Prasyarat</a></li>
-								<li><a href="${pageContext.servletContext.contextPath}/matakuliah/kelola/">Kelola</a></li>
-							</ul>
-					</li>  
-					<li class="droplink"><a href="#"><p>Silabus</p><span class="arrow"></span></a>
-							<ul class="sub-menu">  
-								<li><a href="${pageContext.servletContext.contextPath}/silabus/kelola/">Kelola</a></li> 
-								<li><a href="${pageContext.servletContext.contextPath}/silabus/kelola/laporan/">Laporan</a></li> 
-							</ul>
-					</li> 
-					<li class="droplink"><a href="#"><p>Rencana Pembelajaran</p><span class="arrow"></span></a>
-							<ul class="sub-menu">  
-								<li><a href="${pageContext.servletContext.contextPath}/rencanapembelajaran/kelola/">Kelola</a></li> 
-								<li><a href="${pageContext.servletContext.contextPath}/rencanapembelajaran/kelola/laporan/">Laporan</a></li>  
-							</ul>
-					</li> 
-				</ul></li> 
+				</c:forEach>
+				<li><a href="index.html" class="waves-effect waves-button"><span
+						class="menu-icon glyphicon glyphicon-home"></span>
+						<p>Dashboard</p></a></li>
+				<li><a href="profile.html" class="waves-effect waves-button"><span
+						class="menu-icon glyphicon glyphicon-user"></span>
+						<p>Profile</p></a></li>
+				<li class="droplink"><a href="#"
+					class="waves-effect waves-button"><span
+						class="menu-icon glyphicon glyphicon-flash"></span>
+						<p>Levels</p> <span class="arrow"></span></a>
+					<ul class="sub-menu">
+						<li class="droplink"><a href="#"><p>Level 1.1</p> <span
+								class="arrow"></span></a>
+							<ul class="sub-menu">
+								<li class="droplink"><a href="#"><p>Level 2.1</p> <span
+										class="arrow"></span></a>
+									<ul class="sub-menu">
+										<li><a href="#">Level 3.1</a></li>
+									</ul></li>
+								<li><a href="#">Level 2.2</a></li>
+							</ul></li>
+						<li><a href="#">Level 1.2</a></li>
+					</ul></li>
 		</ul>
 	</div>
 	<!-- Page Sidebar Inner -->

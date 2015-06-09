@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page session="false" %>
- <jsp:include page="atasnya.jsp" />
+<jsp:include page="atasnya.jsp" />
 		<div class="page-title">
 			<h3>Horizontal Menu</h3>
 			<div class="page-breadcrumb">
@@ -47,43 +47,51 @@
 				type="text/javascript"></script>
 			<script src="${pageContext.servletContext.contextPath}/resources/js/date.js" type="text/javascript" ></script>
 			<script src="${pageContext.servletContext.contextPath}/resources/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
-				
-				<div class="row"> 
-						<div class="col-md-12" style="margin-bottom:10px;"> 
-							<div class="panel panel-white">
-								<div class="panel-heading clearfix">
-									<h4 class="panel-title">Laporan Rencana Pembelajaran</h4>
-								</div>
-								<div class="panel-body">  
-									 <div class="row">
-									 	<div class="col-md-8 col-md-offset-2"> 
-									 		<form action="" method="POST">
-										 		<div class="form-group">
-													<label>Pilih mata kuliah</label>
-													<select id="idMK" name="idMK" class="form-control">
-															<option value="">Pilih kode dan nama mata kuliah</option> 
-														<c:forEach items="${mkList}" var="mk"> 
-															<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
-														</c:forEach> 
-													</select> 
-												</div>
-												<div class="form-group">
-													<button type="submit" id="showSilabus" class="btn btn-primary" onclick="cekSilabus(this)">Tampilkan</button>
-												</div>	
-											</form> 
-										</div>
-									 </div>
-								</div>
-							 </div>
-						</div>
-					</div>
-				</div> 
+				  <h1>
+						Hello ${pd.nmPd }${ptk.nmPtk}!  
+					</h1>
+					<h2>
+						${pengguna.satuanManajemen.nmSatMan }
+					</h2>
+					
+					<P>  The time on the server is ${serverTime}. </P>
+					<P>  The time on the server is ${workingDir}. </P>
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
-				<script> 
-				
+				<script>
+					 
 				</script>
 				<!-- akhir script custom pada halaman -->
 				
 				<!-- akhir dari content content -->
-<jsp:include page="footer.jsp" />	 
+				
+				<!-- footer -->
+				</div>
+				<!-- Main Wrapper -->
+				<div class="page-footer">
+					<p class="no-s">2015 &copy; Modern by Steelcoders.</p>
+				</div>
+			</div>
+			<!-- Page Inner -->
+			<!--content-->
+	</main>
+	
+				<!-- Javascripts -->
+				<script
+					src="${pageContext.servletContext.contextPath}/resources/plugins/jquery-blockui/jquery.blockui.js"></script>
+				<script
+					src="${pageContext.servletContext.contextPath}/resources/plugins/bootstrap/js/bootstrap.min.js"></script>
+				<script
+					src="${pageContext.servletContext.contextPath}/resources/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+				<script
+					src="${pageContext.servletContext.contextPath}/resources/plugins/switchery/switchery.min.js"></script>
+				<script
+					src="${pageContext.servletContext.contextPath}/resources/plugins/uniform/jquery.uniform.min.js"></script>
+				<script
+					src="${pageContext.servletContext.contextPath}/resources/plugins/waves/waves.min.js"></script>
+				<script
+					src="${pageContext.servletContext.contextPath}/resources/plugins/3d-bold-navigation/js/main.js"></script>
+				<script
+					src="${pageContext.servletContext.contextPath}/resources/js/modern.js"></script> 
+	</body>
+</html>
 		

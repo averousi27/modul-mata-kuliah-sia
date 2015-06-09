@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -29,6 +30,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
+
 import com.sia.main.domain.*;
 import com.AIS.Modul.MataKuliah.Service.AjaxResponse;
 import com.AIS.Modul.MataKuliah.Service.Datatable;
@@ -41,7 +44,7 @@ import com.AIS.Modul.MataKuliah.Service.SatManService;
 
 @Controller
 @RequestMapping(value = "/matakuliah/kelola")
-public class MKController {
+public class MKController extends SessionController {
 	 
 	@Autowired
 	private KurikulumService kurikulumServ;
@@ -61,13 +64,15 @@ public class MKController {
 	private static final Logger logger = LoggerFactory.getLogger(MKController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView datatable(Locale locale, Model model) {
+	public ModelAndView datatable(Locale locale, Model model, HttpSession session) {
 		MK mk = new MK(); 
 		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
 		List<RumpunMK> rumpunMKList = rumpunMKServ.findAll();
 		List<SatMan> satManList = satManServ.findAll();
 		List<KonversiNilai> konversiNilaiList = konversiNilaiServ.findAll();
 		ModelAndView mav = new ModelAndView();
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Kelola Mata Kuliah"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		mav.addObject("kurikulumList", kurikulumList);
 		mav.addObject("rumpunMKList", rumpunMKList);
 		mav.addObject("satManList", satManList);

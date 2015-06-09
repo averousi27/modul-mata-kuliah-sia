@@ -4,105 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page session="false" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<link rel="shortcut icon"
-		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Kelola Silabus</title>
-	
-	<meta content="width=device-width, initial-scale=1" name="viewport" />
-	<meta charset="UTF-8">
-	<meta name="description" content="Admin Dashboard Template" />
-	<meta name="keywords" content="admin,dashboard" />
-	<meta name="author" content="Steelcoders" />
-	
-	<!-- Styles -->
-	<link
-		href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600'
-		rel='stylesheet' type='text/css'>
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/plugins/uniform/css/uniform.default.min.css"
-		rel="stylesheet" />
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/plugins/bootstrap/css/bootstrap.min.css"
-		rel="stylesheet" type="text/css" />
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/plugins/fontawesome/css/font-awesome.css"
-		rel="stylesheet" type="text/css" />
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/plugins/line-icons/simple-line-icons.css"
-		rel="stylesheet" type="text/css" />
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/plugins/waves/waves.min.css"
-		rel="stylesheet" type="text/css" />
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/plugins/switchery/switchery.min.css"
-		rel="stylesheet" type="text/css" />
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/plugins/3d-bold-navigation/css/style.css"
-		rel="stylesheet" type="text/css" />
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/plugins/slidepushmenus/css/component.css"
-		rel="stylesheet" type="text/css" />
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/plugins/toastr/toastr.min.css"
-		rel="stylesheet" type="text/css" />
-		<link href="${pageContext.servletContext.contextPath}/resources/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css"/>
-				
-	<!-- Theme Styles -->
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/css/modern.min.css"
-		rel="stylesheet" type="text/css" />
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/css/themes/white.css"
-		class="theme-color" rel="stylesheet" type="text/css" />
-	<link
-		href="${pageContext.servletContext.contextPath}/resources/css/custom.css"
-		rel="stylesheet" type="text/css" />
-	
-	<script
-		src="${pageContext.servletContext.contextPath}/resources/plugins/3d-bold-navigation/js/modernizr.js"></script>
-	<script
-		src="${pageContext.servletContext.contextPath}/resources/plugins/offcanvasmenueffects/js/snap.svg-min.js"></script>
-	<script
-		src="${pageContext.servletContext.contextPath}/resources/plugins/jquery/jquery-2.1.3.min.js"></script>
-	<script
-		src="${pageContext.servletContext.contextPath}/resources/plugins/toastr/toastr.min.js"></script>
-	<script
-		src="${pageContext.servletContext.contextPath}/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
-		
-	
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-	        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	        <![endif]-->
-	<script>
-		var context_path = "${pageContext.servletContext.contextPath}/";
-	</script>
-	<title>Datatable</title>
-</head>	
-<body class="page-header-fixed page-horizontal-bar">
-	<form class="search-form" action="#" method="GET">
-		<div class="input-group">
-			<input type="text" name="search" class="form-control search-input"
-				placeholder="Search..."> <span class="input-group-btn">
-				<button
-					class="btn btn-default close-search waves-effect waves-button waves-classic"
-					type="button">
-					<i class="fa fa-times"></i>
-				</button>
-			</span>
-		</div>
-		<!-- Input Group -->
-	</form>
-	<!-- Search Form -->
-	<main class="page-content content-wrap">
-	  <jsp:include page="header.jsp" />
-	<div class="page-inner">
+  <jsp:include page="atasnya.jsp" />
 		<div class="page-title">
 			<h3>Horizontal Menu</h3>
 			<div class="page-breadcrumb">
@@ -206,8 +108,7 @@
 	                                                <div class="tab-pane fade" id="tab3">
 	                                                    <div class="row m-b-lg"> 
 	                                                        <div class="col-md-8 col-md-offset-2">
-			                                                    <h4 class="title">Isian Pustaka Silabus</h4>
-			                                                    		<input type="hidden" id="idSilabus" name="idSilabus" value=""/>
+			                                                    <h4 class="title">Isian Pustaka Silabus</h4> 
 			                                                            <table class="table"> 
 			                                                            	<thead>
 			                                                            		<tr>
@@ -348,7 +249,7 @@
 										data : {'idMK' : $("#idMK").val()},
 										traditional : true, 
 										success : function(data){  
-											$("#idSilabus").val(data.data.idSilabus);
+											$("#idSilabus").val(data.data.idSilabus); 
 											$("#titlepokokbahasan").html('Isian Pokok Bahasan '+data.data.mk.namaMK); 
 											/*-------------mengambil list pokok bahasan---------*/
 											$.ajax({
@@ -377,6 +278,7 @@
 									});
 									
 									/*-------------end menyimpan silabus---------*/
+									console.log(index);
 									return true;
 								}
 							}
@@ -388,7 +290,30 @@
 									toastr["warning"]("Anda harus mengisi form");  
 									return false;
 								}
-								else if(idPemetaanSilabus!=""){ 
+								else if(idPemetaanSilabus!=""){  
+									/*---------------get detail pustaka----------------*/
+									console.log($("#idSilabus").val());
+									$.ajax({
+										type:'POST', 
+										url: context_path+'silabus/kelola/getpustaka', 
+										dataType:"json",	
+										data: {'idSilabus' : $("#idSilabus").val() },
+										traditional:true, 
+										success: function(data){  	
+											for(var i=0; i<data.data.length; ++i){
+												$("#rowPustakaNew").before(
+														"<tr class='rowPustaka'>" 
+														+"<td><input type='text' class='form-control col-md-4' value='"+ data.data[i].pustaka.namaPustaka + "'/></td>"
+														+"<td><button type='button' class='btn btn-danger' onclick='deleteDetailPustaka(this)' name='"+data.data[i].idDetailPustaka+"'><i class='glyphicon glyphicon-minus'></i></td>"
+														+"</tr>"		
+													); 
+											} 
+										},
+										error: function(e){
+											toastr["error"]("Error input", "Pustaka mata kuliah harus dipilih");		 
+										}
+									});
+									/*---------------end get detail pustaka----------------*/
 									return true;
 								}
 							}
@@ -400,7 +325,10 @@
 									toastr["warning"]("Anda harus mengisi form");  
 									return false;
 								}
-								else if(idPemetaanSilabus!=""){ 
+								else if(idPemetaanSilabus!=""){  
+									
+									
+									console.log(index);
 									return true;
 								}
 							}
@@ -413,6 +341,7 @@
 									return false;
 								}
 								else if(idPemetaanSilabus!=""){ 
+									console.log(index);
 									return true;
 								}
 							}
@@ -433,7 +362,7 @@
 								dataType: 'json',
 								data : {'idDetailSilabus': idDetailSilabus},
 								success: function(data){ 
-									console.log(data);
+									//console.log(data);
 									if(data.data!=null){ 
 										for(var i=0; i<data.data.length; ++i){
 											$("#rowCapaianNew").before(
@@ -484,8 +413,8 @@
 							var idDetailSilabus = $(button).closest("tr").attr("name");
 							var tr = $(button).closest("tr");
 							var pokokBahasan = $(tr).find("input").val();
-							console.log(pokokBahasan);
-							console.log(idDetailSilabus);
+							//console.log(pokokBahasan);
+							//console.log(idDetailSilabus);
 							/*-------------edit detail silabus--------*/
 							$.ajax({
 								type:'POST',
@@ -507,7 +436,7 @@
 							var idDetailSilabus = $(button).closest("tr").attr("name");
 							var tr = $(button).closest("tr");
 							var pokokBahasan = $(tr).find("input").val(); 
-							console.log(idDetailSilabus);  
+							//console.log(idDetailSilabus);  
 							/*-------------hapus detail--------*/
 							$.ajax({
 								type:'POST',
@@ -562,7 +491,7 @@
 						
 						deletePemetaan = function deletePemetaan(button){  
 								var idPemetaan = $(button).attr("name");
-								console.log(idPemetaan);
+								//console.log(idPemetaan);
 								/*-------------tambah capaian untuk silabus---------*/
 								$.ajax({
 									type:'POST', 
@@ -615,7 +544,7 @@
 						
 						deleteDetailPustaka = function deleteDetailPustaka(button){    
 							var idDetailPustaka = $(button).attr("name");
-							console.log(idDetailPustaka);
+							//console.log(idDetailPustaka);
 								/*-------------tambah pustaka untuk silabus---------*/
 								$.ajax({
 									type:'POST', 
@@ -639,33 +568,4 @@
 				<!-- akhir dari content content -->
 				
 				<!-- footer -->
-				</div>
-				<!-- Main Wrapper -->
-				<div class="page-footer">
-					<p class="no-s">2015 &copy; Modern by Steelcoders.</p>
-				</div>
-			</div>
-			<!-- Page Inner -->
-			<!--content-->
-	</main>
-	
-				<!-- Javascripts -->
-				<script
-					src="${pageContext.servletContext.contextPath}/resources/plugins/jquery-blockui/jquery.blockui.js"></script>
-				<script
-					src="${pageContext.servletContext.contextPath}/resources/plugins/bootstrap/js/bootstrap.min.js"></script>
-				<script
-					src="${pageContext.servletContext.contextPath}/resources/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-				<script
-					src="${pageContext.servletContext.contextPath}/resources/plugins/switchery/switchery.min.js"></script>
-				<script
-					src="${pageContext.servletContext.contextPath}/resources/plugins/uniform/jquery.uniform.min.js"></script>
-				<script
-					src="${pageContext.servletContext.contextPath}/resources/plugins/waves/waves.min.js"></script>
-				<script
-					src="${pageContext.servletContext.contextPath}/resources/plugins/3d-bold-navigation/js/main.js"></script>
-				<script
-					src="${pageContext.servletContext.contextPath}/resources/js/modern.js"></script> 
-	</body>
-</html>
-		
+<jsp:include page="footer.jsp" />
