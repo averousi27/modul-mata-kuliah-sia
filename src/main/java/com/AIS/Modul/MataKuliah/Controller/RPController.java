@@ -198,16 +198,23 @@ public class RPController {
 			@RequestParam("idMetodePemb") UUID idMetodePemb, @RequestParam("indikatorPenilaian") String indikatorPenilaian,
 			@RequestParam("idBentuk") UUID idBentuk, @RequestParam("bobotPenilaian") double bobotPenilaian){
 		AjaxResponse response = new AjaxResponse(); 
-		RP rp = rpServ.findById(idRP);
-		MetodePemb metodePemb = metodePembServ.findById(idMetodePemb);
-		BentukPenilaian bp = bentukServ.findById(idBentuk);
+		
+
+		BentukPenilaian bp = null;
 		RPPerTemu rppt=null;
+		
+		RP rp = rpServ.findById(idRP);  
+		MetodePemb metodePemb = metodePembServ.findById(idMetodePemb);
+		//cek kalau bentuk penilaian tidak ada
+		if(idBentuk!=null){ 
+			bp = bentukServ.findById(idBentuk);
+		} 
 		if(idRPPerTemu==null){
 			rppt = new RPPerTemu();
 		}
 		else{
 			rppt = rpPerTemuServ.findById(idRPPerTemu);
-		}
+		} 
 		rppt.setBentukPenilaian(bp);
 		rppt.setBobotPenilaian(bobotPenilaian);
 		rppt.setIndikatorPenilaian(indikatorPenilaian);

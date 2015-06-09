@@ -268,11 +268,12 @@
 																					<c:forEach items="${bentukList}" var="bentuk"> 
 																						<option value="${bentuk.idBentuk}">${bentuk.namaBentuk}</option>
 																					</c:forEach> 
+																						<option value="">Tidak ada bentuk penilaian</option>
 																				</select> 
 																			</div>
 																			<div class="form-group">
 																				<label>Bobot Penilaian</label>
-																				<input type="number" min="0" max="100" class="form-control col-md-4" placeholder="Berisi angka skala pukuhan bobot penilaian" id="bobotPenilaian" required="true" digits="true"/>
+																				<input type="number" min="0" max="100" class="form-control col-md-4" placeholder="Berisi angka skala puluhan bobot penilaian" id="bobotPenilaian" required="true" digits="true"/>
 																			</div> 
 																		</form:form>
 					                                                </div>
@@ -360,6 +361,9 @@
 								backdrop: 'static',
 							    keyboard: false,
 							});
+							$("tr.rowRPPerTemu").each(function(index, element) {
+								$(element).remove();
+							});
 							var idRPPerTemu = $(button).attr("name"); //diambil dari halaman ketiga saat melakukan edit RP per pertemuan 
 							//console.log("idRPPerTemu : "+idRPPerTemu);
 							if(idRPPerTemu!=""){
@@ -413,31 +417,31 @@
 							 $("tr.rowMateriPemb").each(function(index, element) {
 									$(element).remove();
 								});
-							 $("#idRPPerTemu").val("");
 							 /*-------------get rp per temu---------*/
-// 								$.ajax({
-// 									type:'GET',
-// 									url: context_path+'rencanapembelajaran/kelola/getrppertemu',
-// 									dataType: 'json',
-// 									data : {'idRP': $("#idRP").val()},
-// 									success: function(data){  
-// 										//console.log(data.data);
-// 										if(data.data!=null){  
-// 											for(var i=0; i<data.data.length; ++i){ 
-// 												$("#rowRPPerTemuNew").before(
-// 													"<tr class='rowRPPerTemu'>" 
-// 													+"<td><input type='text' class='form-control col-md-4' value='RP minggu ke-"+ data.data[i].mingguPembKe + "' readonly='readonly'/></td>"
-// 													+"<td><button type='button' class='btn btn-primary'  onclick='showModal(this)' name='"+data.data[i].idRPPerTemu+"'><i class='glyphicon glyphicon-pencil'></i></button></td>" 
-// 													+"</tr>"		
-// 												); 
-// 											}  
-// 										}
-// 									} 
-// 								});
+								$.ajax({
+									type:'GET',
+									url: context_path+'rencanapembelajaran/kelola/getrppertemu',
+									dataType: 'json',
+									data : {'idRP': $("#idRP").val()},
+									success: function(data){  
+										//console.log(data.data);
+										if(data.data!=null){  
+											for(var i=0; i<data.data.length; ++i){ 
+												$("#rowRPPerTemuNew").before(
+													"<tr class='rowRPPerTemu'>" 
+													+"<td><input type='text' class='form-control col-md-4' value='RP minggu ke-"+ data.data[i].mingguPembKe + "' readonly='readonly'/></td>"
+													+"<td><button type='button' class='btn btn-primary'  onclick='showModal(this)' name='"+data.data[i].idRPPerTemu+"'><i class='glyphicon glyphicon-pencil'></i></button></td>" 
+													+"</tr>"		
+												); 
+											}  
+										}
+									} 
+								});
 							 	/*-------------end get rp per temu---------*/ 
+							 $("#idRPPerTemu").val(""); 
 						}; 
 						simpanRPPerTemu = function simpanRPPerTemu(button){ 
-							/*---------------simpan RP per pertemuan----------------*/
+							/*---------------simpan RP per pertemuan----------------*/ 
 							$.ajax({
 								type:'POST',
 								url: context_path+'rencanapembelajaran/kelola/simpanrppertemu',
@@ -451,14 +455,14 @@
 									if(data.data!=null){
 										console.log(data.data.idRPPerTemu);
 										$("#idRPPerTemu").val(data.data.idRPPerTemu); 
-										$("inputRPPerTemu").val("");
+// 										$("inputRPPerTemu").val("");
 										$("#tambahRPBaru, #tambahMateriPembBaru").toggleClass("hide");
-										$("#rowRPPerTemuNew").before(
-											"<tr class='rowRPPerTemu'>" 
-											+"<td><input type='text' class='form-control col-md-4' value='RP minggu ke-"+ data.data.mingguPembKe + "' readonly='readonly'/></td>"
-											+"<td><button type='button' class='btn btn-primary'  onclick='showModal(this)' name='"+data.data.idRPPerTemu+"'><i class='glyphicon glyphicon-pencil'></i></button></td>" 
-											+"</tr>"		
-										); 
+// 										$("#rowRPPerTemuNew").before(
+// 											"<tr class='rowRPPerTemu'>" 
+// 											+"<td><input type='text' class='form-control col-md-4' value='RP minggu ke-"+ data.data.mingguPembKe + "' readonly='readonly'/></td>"
+// 											+"<td><button type='button' class='btn btn-primary'  onclick='showModal(this)' name='"+data.data.idRPPerTemu+"'><i class='glyphicon glyphicon-pencil'></i></button></td>" 
+// 											+"</tr>"		
+// 										); 
 									}
 								},
 								error: function(data){
