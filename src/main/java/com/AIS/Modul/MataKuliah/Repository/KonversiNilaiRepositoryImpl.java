@@ -26,6 +26,7 @@ public class KonversiNilaiRepositoryImpl implements KonversiNilaiRepository{
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public KonversiNilai findById(UUID idKonversi) {
 		// TODO Auto-generated method stub

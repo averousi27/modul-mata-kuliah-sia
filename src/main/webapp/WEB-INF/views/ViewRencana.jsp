@@ -196,6 +196,7 @@
 	                                                    <div class="row m-b-lg"> 
 	                                                        <div class="col-md-8 col-md-offset-2">
 			                                                    <h4 class="title" id="titlerp"></h4>
+			                                                    	<input type="hidden" id="idRP" name="idRP" value=""/>
 			                                                    	<table class="table"> 
 		                                                            	<thead>
 		                                                            		<tr>
@@ -271,7 +272,7 @@
 																			</div>
 																			<div class="form-group">
 																				<label>Bobot Penilaian</label>
-																				<input type="number" min="10" max="100" class="form-control col-md-4" placeholder="Berisi angka skala pukuhan bobot penilaian" id="bobotPenilaian" required="true" digits="true"/>
+																				<input type="number" min="0" max="100" class="form-control col-md-4" placeholder="Berisi angka skala pukuhan bobot penilaian" id="bobotPenilaian" required="true" digits="true"/>
 																			</div> 
 																		</form:form>
 					                                                </div>
@@ -376,8 +377,18 @@
 											$("#waktuPemb").val(data.data.waktuPemb);
 											$("#idMetodePemb").val(data.data.metodePemb.idMetodePemb);
 											$("#indikatorPenilaian").val(data.data.indikatorPenilaian);
-											$("#idBentuk").val(data.data.bentukPenilaian.idBentuk);
-											$("#bobotPenilaian").val(data.data.bobotPenilaian); 
+											if(data.data.bentukPenilaian==null){
+												$("#idBentuk").val("");
+											}
+											else{
+												$("#idBentuk").val(data.data.bentukPenilaian.idBentuk);
+											} 
+											if(data.data.bobotPenilaian==null){
+												$("bobotPenilaian").val(0);
+											}
+											else{
+												$("#bobotPenilaian").val(data.data.bobotPenilaian); 
+											} 
 										}
 									}
 								}); 
@@ -438,6 +449,7 @@
 								traditional:true, 
 								success:function(data){    
 									if(data.data!=null){
+										console.log(data.data.idRPPerTemu);
 										$("#idRPPerTemu").val(data.data.idRPPerTemu); 
 										$("inputRPPerTemu").val("");
 										$("#tambahRPBaru, #tambahMateriPembBaru").toggleClass("hide");
@@ -550,6 +562,7 @@
 													data: {'idSilabus' : data.data.idSilabus},
 													traditional:true,
 													success:function(data){ 
+														//console.log(data.data);
 														if(data.data!=null){  
 															$("#bahanKajian").val(data.data.bahanKajian);
 															$("#idRP").val(data.data.idRP);
@@ -578,7 +591,7 @@
 							
 							/*---------------kondisi untuk tab 2----------------*/
 							else if(index==1){   
-								if($("#bahanKajian").val()==""){
+								if($("#idRP").val()==""){
 									/*-------------simpan rp---------*/
 									$.ajax({
 										type:'POST',
