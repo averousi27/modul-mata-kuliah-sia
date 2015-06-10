@@ -4,14 +4,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page session="false" %>
- <jsp:include page="atasnya.jsp" />
+ <jsp:include page="header.jsp" />
 		<div class="page-title">
 			<h3>Horizontal Menu</h3>
 			<div class="page-breadcrumb">
 				<ol class="breadcrumb">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="#">Layouts</a></li>
-					<li class="active">Horizontal Menu</li>
+					<li><a href="${pageContext.servletContext.contextPath}/">Beranda</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/silabus/kelola/laporan">Daftar Laporan Silabus</a></li>
+					<li class="active">Laporan Silabus ${mk2.namaMK}</li>
 				</ol>
 			</div>
 		</div>
@@ -47,7 +47,7 @@
 				type="text/javascript"></script>
 			<script src="${pageContext.servletContext.contextPath}/resources/js/date.js" type="text/javascript" ></script>
 			<script src="${pageContext.servletContext.contextPath}/resources/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
-				
+			
 				<div class="row"> 
 						<div class="col-md-12" style="margin-bottom:10px;"> 
 							<div class="panel panel-white">

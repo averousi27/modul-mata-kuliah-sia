@@ -4,14 +4,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page session="false" %>
- <jsp:include page="atasnya.jsp" />
+ <jsp:include page="header.jsp" />
 		<div class="page-title">
 			<h3>Horizontal Menu</h3>
 			<div class="page-breadcrumb">
 				<ol class="breadcrumb">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="#">Layouts</a></li>
-					<li class="active">Horizontal Menu</li>
+					<li><a href="${pageContext.servletContext.contextPath}/">Beranda</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/rencanapembelajaran/laporan">Daftar Laporan Rencana Pembelajaran</a></li>
+					<li class="active">Rencana Pembelajaran ${mk2.namaMK}</li>
 				</ol>
 			</div>
 		</div>
@@ -137,7 +137,7 @@
 					</div>
 				</div> 
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
-				<script> 
+				<script>  
 				</script>
 				<!-- akhir script custom pada halaman -->
 				
