@@ -78,9 +78,10 @@
 														<input class="checkbox-all" type="checkbox" id="flat-checkbox-1"> 
 												</td>   
 												<td>Mata Kuliah</td>
-												<td>Capaian Utama</td>  
-												<td>Capaian Induk</td>
-												<td>Deskripsi Capaian</td>
+												<td>Capaian MK</td>
+												<td>Deskripsi Capaian MK</td>  
+												<td>Capaian Satuan Manajemen</td>
+												<td>Deskripsi Capaian Satuan Manajemen</td>
 												<td>Status Hapus</td>
 												<td>Aksi</td>
 											</tr>
@@ -140,7 +141,7 @@
 											<form:input path="deskripsiCapPembMK" class="form-control" placeholder="Berisi deskripsi capaian pembelajaran untuk mata kuliah" />
 										</div>
 										
-										<div class="form-group detailcontrol">
+										<div class="form-group detailcontrol" id="triggerbutton">
 										</div>
 							        </form:form>
 							        </div>
@@ -188,7 +189,7 @@
 					var showModal;
 					$(document).ready(function(){
 						$('#masterpage').masterPage(
-						{
+						{ 
 							detailFocusId: '#idCapPembMK',
 							dataUrl: context_path+'matakuliah/capaianbelajar/json',
 							detailUrl: context_path+'matakuliah/capaianbelajar/edit',
@@ -205,13 +206,15 @@
 									"bVisible":    true,
 									bSortable: false,
 									mRender: function(data,type,full){ 
-										console.log(data);
+										//console.log(data);
 										return '<input type="checkbox" class="checkbox-data" name="idCapPembMK[]" value="'+data+'">';
 									}
 								},
 								/* mata kuliah */
 								{ "bVisible":    true }, 
-								/* nama capaian utama */
+								/* nama capaian MK */
+								{ "bVisible":    true },
+								/* deskripsi capaian MK */
 								{ "bVisible":    true }, 
 								/* nama capaian induk */
 								{ "bVisible":    true }, 
@@ -249,22 +252,23 @@
 									contentType : 'application/json; charset=utf-8', 
 									traditional : true, 
 									success : function(data){  
-										var labelId = "indukCapPemb";
-										console.log(data); 
+										var labelId = "indukCapPemb"; 
 										$("#capPembDiv").html("<input type='hidden' name='idCapPemb[]' value=''/>"); 
-										for(var i=0; i<data.data.length; ++i){
-											if(data.data[i].capPemb != null){
-												console.log(data.data[i].capPemb.namaCapPemb);
-												$("#capPembDiv").append(
-														"<div class='alert alert-warning alert-dismissable'>"
-															+ "<button type='button' id='button1' class='close' data-dismiss='alert' aria-hidden='true' onclick='removeHiddenId(\"" + labelId + i + "\")'>x</button>" 
-															+"<p>"+data.data[i].capPemb.namaCapPemb+"<p>"
-														+"</div>"
-														+"<input type='hidden' id='"+ labelId + i +"' name='idCapPemb[]' value='"+data.data[i].capPemb.idCapPemb+"' />")
-											} 
-											else{
-													$("#capPembDiv").append("<input type='hidden' name='idCapPemb[]' value=''/>"); 
-											}
+										if(data.data!=null){
+											for(var i=0; i<data.data.length; ++i){
+												if(data.data[i].capPemb != null){
+													//console.log(data.data[i].capPemb.namaCapPemb);
+													$("#capPembDiv").append(
+															"<div class='alert alert-warning alert-dismissable'>"
+																+ "<button type='button' id='button1' class='close' data-dismiss='alert' aria-hidden='true' onclick='removeHiddenId(\"" + labelId + i + "\")'>x</button>" 
+																+"<p>"+data.data[i].capPemb.namaCapPemb+"<p>"
+															+"</div>"
+															+"<input type='hidden' id='"+ labelId + i +"' name='idCapPemb[]' value='"+data.data[i].capPemb.idCapPemb+"' />")
+												} 
+												else{ 
+														$("#capPembDiv").append("<input type='hidden' name='idCapPemb[]' value=''/>"); 
+												}
+											}  
 										}  
 									},
 									error: function(e){
@@ -278,13 +282,19 @@
 						removeHiddenId = function(id){ 
 							var str = '#' + id;
 							var hiddenLabel = $(str);
-							console.log(hiddenLabel);
+							//console.log(hiddenLabel);
 							hiddenLabel.remove();
 						}
 						
 						showModal = function (){
 							$('#myModal').modal('show');
 						}
+						$("#triggerbutton").click(function(){
+							$("#capPembDiv").each(function(index, element) {
+								$(element).remove();
+							});
+						})
+						
 						$('#myModal').on('shown.bs.modal', function (e) {
 							$("#masterpageCapPemb").find('.dataTables_length select').change();
 							  //if (!data) return e.preventDefault() // stops modal from being shown
@@ -306,7 +316,7 @@
 									bSortable: false,
 									bSearchable: false,
 									mRender: function(data,type,full){
-										console.log(data);
+										//console.log(data);
 										return '<button type="button" class="btn btn-primary">Pilih</button>';
 									}
 								},
@@ -322,7 +332,7 @@
 								{ "bVisible":    true }, 
 							],
 							callOnSelect : function(aData, options){
-								console.log(aData);
+								//console.log(aData);
 								$("#capPembDiv").append(
 										"<div class='alert alert-warning alert-dismissable'>"
 											+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>x</button>"

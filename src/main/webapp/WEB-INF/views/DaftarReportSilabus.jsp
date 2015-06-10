@@ -57,6 +57,7 @@
 								<div class="panel-body">  
 									 <div class="row">
 									 	<div class="col-md-8 col-md-offset-2"> 
+									 		
 									 		<form action="" method="POST" id="showSilabus">
 										 		<div class="form-group">
 													<label>Pilih mata kuliah</label>
@@ -67,10 +68,17 @@
 														</c:forEach> 
 													</select> 
 												</div>
+												
 												<div class="form-group">
 													<button type="submit" class="btn btn-primary">Tampilkan</button>
 												</div>	
 											</form> 
+											<c:if test="${message!=null}">
+													<div class="alert alert-danger alert-dismissible" role="alert">
+				                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				                                        ${message}
+				                                    </div>
+												</c:if> 
 										</div>
 									 </div>
 								</div>
@@ -79,8 +87,7 @@
 					</div>
 				</div> 
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
-				<script> 
-				
+				<script>  
 				</script>
 				<!-- akhir script custom pada halaman -->
 				

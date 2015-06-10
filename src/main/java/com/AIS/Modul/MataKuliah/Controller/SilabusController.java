@@ -240,7 +240,9 @@ public class SilabusController extends SessionController {
 		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
 		if(!hasMenu(session, "Laporan Silabus"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		List<MK> mkList = mkServ.findAll(); 
-		mav.addObject("mkList", mkList);
+		String message = null;
+		mav.addObject("message", message);
+		mav.addObject("mkList", mkList); 
 		mav.setViewName("DaftarReportSilabus");
 		return mav;
 	}
@@ -248,11 +250,15 @@ public class SilabusController extends SessionController {
 	@RequestMapping(value="/laporan", method = RequestMethod.POST)
 	public ModelAndView getSilabusElement(Locale locale, Model model, @RequestParam("idMK") UUID idMK, HttpSession session ) {  
 		ModelAndView mav = new ModelAndView();    
+		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
+		if(!hasMenu(session, "Laporan Silabus"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		MK mk2 = mkServ.findById(idMK); //dapat objek MK
-		Silabus silabus = silabusServ.findByMK(idMK);//dapat silabusnya
+		Silabus silabus = silabusServ.findByMK(idMK);//dapat silabusnya 
 		if(silabus == null){  
+			String message = "Silabus mata kuliah tidak ada";
 			List<MK> mkList = mkServ.findAll(); 
 			mav.addObject("mkList", mkList);
+			mav.addObject("message", message);
 			mav.setViewName("DaftarReportSilabus");
 			return mav;
 		}

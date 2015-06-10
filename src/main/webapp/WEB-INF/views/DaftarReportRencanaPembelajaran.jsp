@@ -69,7 +69,13 @@
 												</div>
 												<div class="form-group">
 													<button type="submit" id="showSilabus" class="btn btn-primary" onclick="cekSilabus(this)">Tampilkan</button>
-												</div>	
+												</div>
+												<c:if test="${message!=null}">
+													<div class="alert alert-danger alert-dismissible" role="alert">
+				                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				                                        ${message}
+				                                    </div>
+												</c:if> 	
 											</form> 
 										</div>
 									 </div>

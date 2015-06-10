@@ -26,9 +26,9 @@ public class SubCapPembMKServiceImpl implements SubCapPembMKService {
 		return subCapPembMKRepo.findByCapPembMK(idCapPembMK);
 	}
 
-	private String [] column = {"cpmk.idCapPembMK","mk.namaMK", "cpmk.namaCapPembMK", 
-			"cp.namaCapPemb", "cpmk.deskripsiCapPembMK", "cpmk.statusCapPembMK"};
-	private Boolean[] searchable = {false,true,true,true,true,false};
+	private String [] column = {"cpmk.idCapPembMK","mk.namaMK", "cpmk.namaCapPembMK", "cpmk.deskripsiCapPembMK", 
+			"cp.namaCapPemb", "cp.deskripsiCapPemb", "cpmk.statusCapPembMK"};
+	private Boolean[] searchable = {false,true,true,true,true,true,false};
 	
 	@Override
 	public Datatable getdatatable(String sEcho, int iDisplayLength,
@@ -47,12 +47,13 @@ public class SubCapPembMKServiceImpl implements SubCapPembMKService {
 			subCapPembMKString[0] = subCapPembMK.getCapPembMK().getIdCapPembMK().toString();
 			subCapPembMKString[1] = String.valueOf(subCapPembMK.getCapPembMK().getMk().getNamaMK());
 			subCapPembMKString[2] = String.valueOf(subCapPembMK.getCapPembMK().getNamaCapPembMK());
+			subCapPembMKString[3] = String.valueOf(subCapPembMK.getCapPembMK().getDeskripsiCapPembMK());
 			if(subCapPembMK.getCapPembMK()!=null){ 
-				subCapPembMKString[3] = String.valueOf(subCapPembMK.getCapPemb().getNamaCapPemb());
-			} 
-			subCapPembMKString[4] = String.valueOf(subCapPembMK.getCapPembMK().getDeskripsiCapPembMK());  
-			subCapPembMKString[5] = String.valueOf(subCapPembMK.getCapPembMK().isStatusCapPembMK());  
+				subCapPembMKString[4] = String.valueOf(subCapPembMK.getCapPemb().getNamaCapPemb());
+				subCapPembMKString[5] = String.valueOf(subCapPembMK.getCapPemb().getDeskripsiCapPemb());
+			}   
 			subCapPembMKString[6] = String.valueOf(subCapPembMK.getCapPembMK().isStatusCapPembMK());  
+			subCapPembMKString[7] = String.valueOf(subCapPembMK.getCapPembMK().isStatusCapPembMK());  
 			aData.add(subCapPembMKString);
 		}
 		subCapPembDatatable.setAaData(aData);

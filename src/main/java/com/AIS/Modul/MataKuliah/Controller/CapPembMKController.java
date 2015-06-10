@@ -191,6 +191,9 @@ public class CapPembMKController extends SessionController {
 			} 
 			respongan = new AjaxResponse("ok","Success",scpMKList); 
 		} 
+		else{
+			respongan = new AjaxResponse("ok","Tidak ada cap pemb MK",null); 
+		}
 		return respongan;
 	}
 }

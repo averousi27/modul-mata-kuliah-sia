@@ -57,40 +57,40 @@
 								<div class="panel-body">  
 									 <div class="row">
 									 	<div class="col-md-8 col-md-offset-2">  
-									 			<p>Kode Mata Kuliah : ${mk2.kodeMK}</p>
-									 			<p>Nama Mata Kuliah : ${mk2.namaMK}</p>
-									 			<p>Rumpun Mata Kuliah : ${mk2.rumpunMK.namaRumpunMK}</p>
-									 			<p>Kredit : ${mk2.jumlahSKS} sks</p>
-									 			<p>Semester : ${mk2.tingkatPemb}</p>
-									 			<p>Deskripsi : ${mk2.deskripsiMK}</p>
+									 			<p><b>Kode Mata Kuliah :</b> ${mk2.kodeMK}</p>
+									 			<p><b>Nama Mata Kuliah :</b> ${mk2.namaMK}</p>
+									 			<p><b>Rumpun Mata Kuliah :</b> ${mk2.rumpunMK.namaRumpunMK}</p>
+									 			<p><b>Kredit :</b> ${mk2.jumlahSKS} sks</p>
+									 			<p><b>Semester :</b> ${mk2.tingkatPemb}</p>
+									 			<p><b>Deskripsi :</b> ${mk2.deskripsiMK}</p>
 								 			<br /> 
-								 			<p>Capaian Satuan Manajemen yang Didukung</p>
+								 			<p><b>Capaian Satuan Manajemen yang Didukung</b></p>
 											<ul>
 									 			<c:forEach items="${cpList}" var="cpList">
 									 			 	<li>${cpList.satMan.nmSatMan} | ${cpList.deskripsiCapPemb}</li>
 									 			</c:forEach>
 									 		</ul>
 									 		<br />
-									 		<p>Capaian MK</p> 
+									 		<p><b>Capaian Mata Kuliah</b></p> 
 											<ul>
 									 			<c:forEach items="${cpmkList}" var="cpmkList">
 									 			 	<li>${cpmkList.deskripsiCapPembMK}</li>
 									 			</c:forEach>
 									 		</ul>
 									 		<br />
-									 		<p>Pokok bahasan</p>
+									 		<p><b>Pokok bahasan</b></p>
 									 		<ul>
 									 		<c:forEach items="${dsList}" var="dsList"> 
 									 			<li>${dsList.pokokBahasan}</li> 
 									 		</c:forEach>
 									 		</ul>
 									 		<br />
-									 		<p>Prasyarat</p>
+									 		<p><b>Prasyarat</b></p>
 									 		<c:forEach items="${prasyaratList}" var="prasyaratList"> 
 									 			<p>${prasyaratList.parent.namaMK}</p>
 									 		</c:forEach>
 									 		<br />
-									 		<p>Pustaka</p>
+									 		<p><b>Pustaka</b></p>
 									 		<ul>
 									 		<c:forEach items="${dpList}" var="dpList"> 
 									 			<li>${dpList.pustaka.namaPustaka}</li> 

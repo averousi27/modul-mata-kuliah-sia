@@ -57,40 +57,19 @@
 								<div class="panel-body">  
 									 <div class="row">
 									 	<div class="col-md-8 col-md-offset-2">  
-									 			<p>Kode Mata Kuliah : ${mk2.kodeMK}</p>
-									 			<p>Nama Mata Kuliah : ${mk2.namaMK}</p>
-									 			<p>Rumpun Mata Kuliah : ${mk2.rumpunMK.namaRumpunMK}</p>
-									 			<p>Kredit : ${mk2.jumlahSKS} sks</p>
-									 			<p>Semester : ${mk2.tingkatPemb}</p>
-									 			<p>Deskripsi : ${mk2.deskripsiMK}</p>
-								 			<br /> 
-								 			<p>Capaian Satuan Manajemen yang Didukung</p>
-											<ul>
-									 			<c:forEach items="${cpList}" var="cpList">
-									 			 	<li>${cpList.satMan.nmSatMan} | ${cpList.deskripsiCapPemb}</li>
-									 			</c:forEach>
-									 		</ul>
-									 		<br />
-									 		<p>Capaian MK</p> 
-											<ul>
-									 			<c:forEach items="${cpmkList}" var="cpmkList">
-									 			 	<li>${cpmkList.deskripsiCapPembMK}</li>
-									 			</c:forEach>
-									 		</ul>
-									 		<br />
-									 		<p>Pokok bahasan</p>
-									 		<ul>
-									 		<c:forEach items="${dsList}" var="dsList"> 
-									 			<li>${dsList.pokokBahasan}</li> 
-									 		</c:forEach>
-									 		</ul>
-									 		<br />
-									 		<p>Prasyarat Mata Kuliah</p>
+									 			<p><b>Kode Mata Kuliah :</b> ${mk2.kodeMK}</p>
+									 			<p><b>Nama Mata Kuliah :</b> ${mk2.namaMK}</p>
+									 			<p><b>Rumpun Mata Kuliah :</b> ${mk2.rumpunMK.namaRumpunMK}</p>
+									 			<p><b>Kredit :</b> ${mk2.jumlahSKS} sks</p>
+									 			<p><b>Semester :</b> ${mk2.tingkatPemb}</p>
+									 			<p><b>Deskripsi :</b> ${mk2.deskripsiMK}</p>
+								 			<br />  
+									 		<p><b>Prasyarat Mata Kuliah</b></p>
 									 		<c:forEach items="${prasyaratList}" var="prasyaratList"> 
 									 			<p>${prasyaratList.parent.namaMK}</p>
 									 		</c:forEach>
 									 		<br />
-									 		<p>Pustaka</p>
+									 		<p><b>Pustaka</b></p>
 									 		<ul>
 									 		<c:forEach items="${dpList}" var="dpList"> 
 									 			<li>${dpList.pustaka.namaPustaka}</li> 
@@ -134,20 +113,7 @@
 															<li>${cpmk.deskripsiCapPembMK}</li>
 														</c:forEach>
 														</ul>
-													</td>
-													<!--  <td>
-														<ul>
-														<c:forEach items="${msNewList}" var="ms">
-															<c:if test="${ms.rpPerTemu.idRPPerTemu == rpPerTemu.idRPPerTemu}"> 
-																	<c:forEach items="${psNewList}" var="ps">
-																		<c:if test="${ps.detailSilabus.idDetailSilabus == ms.detailSilabus.idDetailSilabus}"> 
-																			<li>${ps.capPembMK.deskripsiCapPembMK}</li>
-																		</c:if>
-																	</c:forEach>
-															</c:if>
-														</c:forEach>
-														</ul>
-													</td> -->
+													</td> 
 													<td>
 														<ul>
 														<c:forEach items="${msNewList}" var="ms">

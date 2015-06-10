@@ -270,6 +270,8 @@ public class RPController extends SessionController {
 		if(!hasMenu(session, "Laporan Rencana Pembelajaran"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);} 
 		
 		List<MK> mkList = mkServ.findAll(); 
+		String message = null;
+		mav.addObject("message", message);
 		mav.addObject("mkList", mkList);
 		mav.setViewName("DaftarReportRencanaPembelajaran");
 		return mav;
@@ -285,6 +287,8 @@ public class RPController extends SessionController {
 		if(silabus == null){
 			List<MK> mkList = mkServ.findAll(); 
 			mav.addObject("mkList", mkList);
+			String message = "Rencana pembelajaran mata kuliah tidak ada";
+			mav.addObject("message", message);
 			mav.setViewName("DaftarReportRencanaPembelajaran");
 			return mav;
 		}
