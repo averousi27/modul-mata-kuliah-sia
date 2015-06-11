@@ -250,8 +250,7 @@
 									"bVisible":    true,
 									bSortable: false,
 									mRender: function(data,type,full){
-										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[7]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
+										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>'; 
 										return action;
 									}
 								}
