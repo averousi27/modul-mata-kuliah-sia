@@ -228,9 +228,9 @@
 				<script>
 					$(document).ready(function(){  
 						$("#idMK").select2();
-						$("#idMetodePemb").select2();
-						$("#idBentuk").select2();
-						$("#idDetailSilabus").select2();
+						//$("#idMetodePemb").select2();
+						//$("#idBentuk").select2();
+						//$("#idDetailSilabus").select2();
 						toastr.options = {
 								  "closeButton": true,
 								  "debug": false,
