@@ -194,8 +194,8 @@
 				<script>
 					$(document).ready(function(){ 
 						$("#idMK").select2();
-						$("#idPustaka").select2();
-						$("#idCapPembMK").select2(); 
+						//$("#idPustaka").select2();
+						//$("#idCapPembMK").select2(); 
 						var idPemetaanSilabus="";
 						var idPustaka="";
 						toastr.options = {
