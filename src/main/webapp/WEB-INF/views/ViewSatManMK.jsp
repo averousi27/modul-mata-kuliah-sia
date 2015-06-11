@@ -113,7 +113,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row" id="master-detail" style="display:none;"> 
+				<div class="row" id="master-detail" style="display:block;"> 
 						<div class="col-md-6 col-md-offset-3">
 							<div class="panel panel-white">
 								<div class="panel-heading clearfix">
@@ -150,8 +150,10 @@
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script>
 					$(document).ready(function(){
-						//$("#idSatMan").select2();
-						//$("#idMK").select2();
+						$("#idSatMan").select2();
+						$("#idMK").select2();
+
+						$("#master-detail").hide();
 						$('#masterpage').masterPage(
 						{
 							detailFocusId: '#idSatManMK',
@@ -201,6 +203,9 @@
 							validationRules: {idMK:{required: true}, idSatMan:{required: true}},
 							filters: [{id:'#filter', name:'statusSatManMK'}],
 							callOnFillForm : function(response,options){ 
+
+								//$("#idSatMan").select2();
+								//$("#idMK").select2();
 								$("#idSatManMK").val(response.data.idMK);
 								$("#idMK").val(response.data.mk.idMK);
 								$("#idSatMan").val(response.data.satMan.idSatMan);
