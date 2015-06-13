@@ -68,9 +68,8 @@
 	                                                <div class="tab-pane active fade in" id="tab1">
 	                                                    <div class="row m-b-lg">
 	                                                        <div class="col-md-6 col-md-offset-3"> 
-	                                                    	<h4 class="title">Isian Bahan Kajian</h4>
-	                                                        	<div class="form-group">
-																	<label>Mata Kuliah</label>
+	                                                    	<h4 class="title">Pilih Mata Kuliah</h4>
+	                                                        	<div class="form-group"> 
 																	<select id="idMK" name="idMK" class="form-control">
 																			<option value="">Pilih kode dan nama mata kuliah</option> 
 																		<c:forEach items="${mkList}" var="mk"> 

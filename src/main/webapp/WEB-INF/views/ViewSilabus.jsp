@@ -111,7 +111,7 @@
 			                                                            <table class="table"> 
 			                                                            	<thead>
 			                                                            		<tr>
-				                                                            		<td>Pokok Bahasan</td>
+				                                                            		<td>Pustaka</td>
 				                                                            		<td>Aksi</td>
 			                                                            		</tr>
 			                                                            	</thead> 
