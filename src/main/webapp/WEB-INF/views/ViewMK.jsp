@@ -82,7 +82,7 @@
 											<td>Nama MK</td>  
 											<td>Kurikulum</td>
 											<td>Rumpun MK</td> 
-											<td>Tingkat</td> 
+											<td>Semester</td> 
 											<td>Jumlah SKS</td>   
 											<td>Sifat MK</td>
 											<td>Nilai Minimal MK</td>
@@ -151,7 +151,7 @@
 											</select>
 										</div>
 										<div class="form-group">
-											<label>Tingkat Pembelajaran</label>
+											<label>Semester</label>
 											<form:input path="tingkatPemb" class="form-control" placeholder="Berisi angka tingkat pembelajaran mata kuliah (semester)" required="true" digits="true"/>
 										</div>
 										<div class="form-group">
