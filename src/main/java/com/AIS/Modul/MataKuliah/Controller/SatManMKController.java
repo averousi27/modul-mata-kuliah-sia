@@ -60,7 +60,7 @@ public class SatManMKController extends SessionController {
 		List<SatMan> satManList = satManServ.findAll();
 		ModelAndView mav = new ModelAndView();
 		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
-		if(!hasMenu(session, "Kelola Satuan Manajemen untuk Mata Kuliah"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
+		if(!hasMenu(session, "Kelola Mata Kuliah untuk Satuan Manajemen"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
 		mav.addObject("mkList", mkList);
 		mav.addObject("kurikulumList", kurikulumList);
 		mav.addObject("satManList", satManList);
