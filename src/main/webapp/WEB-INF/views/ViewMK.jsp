@@ -147,7 +147,8 @@
 													<option value="">Pilih rumpun untuk mata kuliah</option> 
 												<c:forEach items="${rumpunMKList}" var="rumpunMK"> 
 													<option value="${rumpunMK.idRumpunMK}">${rumpunMK.namaRumpunMK }</option>
-												</c:forEach> 
+												</c:forEach>  
+												<option value=null>Tidak ada rumpun mata kuliah</option> 
 											</select>
 										</div>
 										<div class="form-group">
@@ -173,6 +174,7 @@
 												<c:forEach items="${konversiNilaiList}" var="konvNilai"> 
 													<option value="${konvNilai.idKonversi}">${konvNilai.huruf} - Batas bawah : ${konvNilai.batasBawah} </option> 
 												</c:forEach> 
+												 
 											</select>
 										</div>
 										<div class="form-group">
@@ -270,20 +272,21 @@
 							callOnFillForm : function(response,options){ 
 								$("#idMK").val(response.data.idMK);
 								if(response.data.kurikulum.statusKurikulum==true){//kondisi non aktif
-									$("#idKurikulum").val("");
-									$("#idKonversi").val(response.data.konversiNilai.idKonversi); 
+									$("#idKurikulum").val(""); 
 								}
 								else{
-									$("#idKurikulum").val(response.data.kurikulum.idKurikulum);
-									$("#idKonversi").val(response.data.konversiNilai.idKonversi); 
-								} 
+									$("#idKurikulum").val(response.data.kurikulum.idKurikulum); 
+								}  
+								$("#idKonversi").val(response.data.konversiNilai.idKonversi);
 								if(response.data.rumpunMK==null){//kondisi gak punya rumpun mk
-									$("#idRumpunMK").val(""); 
+									$("#idRumpunMK").val('null'); 
 								}
 								else{
 									$("#idRumpunMK").val(response.data.rumpunMK.idRumpunMK);  
+								}  
+								if(response.data.deskripsiMK==null){
+									$("#deskripsiMK").val("");  
 								}
-								//$("#idKonversi").val(response.data.konversiNilai.idKonversi); 
 							}
 						});
 					});

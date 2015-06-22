@@ -75,11 +75,11 @@ public class PrasyaratMKController extends SessionController {
     public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("prasyaratMK") PrasyaratMK prasyaratMK, 
     		@RequestParam("idMK") UUID idMK, @RequestParam("mkIdMK") UUID mkIdMK, 
     		 BindingResult result, Map<String, Object> model) {
+		AjaxResponse response = new AjaxResponse();  
 		MK childMK = mkServ.findById(idMK);
 		MK parentMK = mkServ.findById(mkIdMK);
 		prasyaratMK.setChildMK(childMK);
-		prasyaratMK.setParentMK(parentMK);
-		AjaxResponse response = new AjaxResponse();   
+		prasyaratMK.setParentMK(parentMK); 
         if (result.hasErrors()) {
         	response.setStatus("error");
         	List<FieldError> fieldError = result.getFieldErrors();

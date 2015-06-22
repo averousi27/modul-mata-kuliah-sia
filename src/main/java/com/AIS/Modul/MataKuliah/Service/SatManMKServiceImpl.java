@@ -35,7 +35,7 @@ public class SatManMKServiceImpl implements SatManMKService {
 		if(satManMK.getIdSatManMK()!= null)
 		{
 			//update
-			
+			System.out.println(satManMK.getIdSatManMK());
 			satManMKRepo.update(satManMK);
 			return satManMK.getIdSatManMK().toString();
 		}
@@ -77,13 +77,14 @@ public class SatManMKServiceImpl implements SatManMKService {
 		List<SatManMK> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
 		List<String[]> aData = new ArrayList<String[]>();
 		for (SatManMK satManMK : queryResult) {
-			String[] satManMKString = new String[6]; 
+			String[] satManMKString = new String[7]; 
 			satManMKString[0] = satManMK.getIdSatManMK().toString();
 			satManMKString[1] = String.valueOf(satManMK.getMk().getKodeMK());
 			satManMKString[2] = String.valueOf(satManMK.getMk().getNamaMK()); 
-			satManMKString[3] = String.valueOf(satManMK.getSatMan().getNmSatMan());
-			satManMKString[4] = String.valueOf(satManMK.isStatusSatManMK());
-			satManMKString[5] = String.valueOf(satManMK.isStatusSatManMK()); 
+			satManMKString[3] = String.valueOf(satManMK.getTingkatPemb()); 
+			satManMKString[4] = String.valueOf(satManMK.getSatMan().getNmSatMan());
+			satManMKString[5] = String.valueOf(satManMK.isStatusSatManMK());
+			satManMKString[6] = String.valueOf(satManMK.isStatusSatManMK()); 
 			aData.add(satManMKString);
 		}
 		satManMKDatatable.setAaData(aData);

@@ -120,6 +120,7 @@
 								<div class="panel-body">
 									<h4 id="title">Kelola prasyarat mata kuliah</h4>
 									<form:form role="form" action="login" commandName="prasyaratMK" class="formdetail"> 
+										<input type="hidden" id="idPrasyaratMK" class="form-control" />
 										<div class="form-group">
 											<label>Kode dan Nama Mata Kuliah</label>
 											<select id="idMK" name="idMK" class="form-control">
@@ -193,7 +194,7 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[5]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
+										//if(full[5]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
 										return action;
 									}
 								}
@@ -201,6 +202,7 @@
 							validationRules: {idMK:{required: true}, mkIdMK:{required: true}},
 							filters: [{id:'#filter', name:'statusPrasyarat'}],
 							callOnFillForm : function(response,options){ 
+								console.log(response.data.idPrasyaratMK);
 								$("#idPrasyaratMK").val(response.data.idPrasyaratMK); 
 								$("#idMK").val(response.data.childMK.idMK);
 								$("#mkIdMK").val(response.data.parentMK.idMK);

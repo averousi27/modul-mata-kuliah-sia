@@ -84,6 +84,7 @@
 											</td> 
 											<td>Kode MK</td>  
 											<td>Nama MK</td>  
+											<td>Semester</td> 
 											<td>Nama Satuan Manajemen</td> 
 											<td>Status Aktif</td>
 											<td>Aksi</td>
@@ -93,27 +94,12 @@
 									</tbody>
 								</table>
 								</div>
-							</form> 
-				<div class="row">
-						<div class="col-md-8 masteractions">
-							<div class="pull-right">  
-								<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/matakuliah/prasyarat/'">
-									  Selanjutnya >>
-								</button>
-							</div>
-							&nbsp;
-							<div class="pull-right"> 
-								<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/matakuliah/kelola/'">
-									 << Kembali
-								</button>
-										</div>
-									</div>
-								</div> 
+							</form>  
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row" id="master-detail" style="display:block;"> 
+				<div class="row" id="master-detail" style="display:none;"> 
 						<div class="col-md-6 col-md-offset-3">
 							<div class="panel panel-white">
 								<div class="panel-heading clearfix">
@@ -122,6 +108,7 @@
 							<div class="panel-body">
 									<h4 id="title">Assign mata kuliah untuk satuan manajemen</h4>
 									<form:form role="form" action="login" commandName="satManMK" class="formdetail"> 
+										
 										<div class="form-group">
 											<label>Kode dan Nama Mata Kuliah</label>
 											<select id="idMK" name="idMK" class="form-control">
@@ -130,7 +117,13 @@
 													<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
 												</c:forEach> 
 											</select>
-										</div> 
+										</div> 	
+										
+										<div class="form-group">
+											<label>Semester</label>
+											<form:input path="tingkatPemb" class="form-control" placeholder="Berisi angka semester" required="true" /> 
+											<form:hidden path="idSatManMK" class="form-control" />
+										</div>
 										<div class="form-group">
 											<label>Nama Satuan Manajemen</label>
 											<select id="idSatMan" name="idSatMan" class="form-control"> 
@@ -150,10 +143,10 @@
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script>
 					$(document).ready(function(){
-						$("#idSatMan").select2();
-						$("#idMK").select2();
+						//$("#idSatMan").select2();
+						//$("#idMK").select2();
 
-						$("#master-detail").hide();
+						//$("#master-detail").hide();
 						$('#masterpage').masterPage(
 						{
 							detailFocusId: '#idSatManMK',
@@ -179,13 +172,15 @@
 								{ "bVisible":    true }, 
 								/* Nama mata kuliah */
 								{ "bVisible":    true }, 
+								/* semester */
+								{ "bVisible":    true },
 								/* nama satuan manajamen */
 								{ "bVisible":    true },
 								/*status hapus*/
 								{ 
 									"bVisible":    false, 
 									mRender: function(data,type,full){
-										if(full[4]=='false') return "Aktif";
+										if(full[5]=='false') return "Aktif";
 										return "Terhapus";
 									}
 								},
@@ -195,18 +190,18 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[4]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
+										//if(full[4]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
 										return action;
 									}
 								}
 							],
-							validationRules: {idMK:{required: true}, idSatMan:{required: true}},
+							validationRules: {idMK:{required: true}, idSatMan:{required: true}, tingkatPemb:{required: true, digits: true}},
 							filters: [{id:'#filter', name:'statusSatManMK'}],
 							callOnFillForm : function(response,options){ 
 
 								//$("#idSatMan").select2();
 								//$("#idMK").select2();
-								$("#idSatManMK").val(response.data.idMK);
+								$("#idSatManMK").val(response.data.idSatManMK);
 								$("#idMK").val(response.data.mk.idMK);
 								$("#idSatMan").val(response.data.satMan.idSatMan);
 							}

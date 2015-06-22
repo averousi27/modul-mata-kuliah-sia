@@ -88,12 +88,13 @@ public class SatManMKController extends SessionController {
 	@RequestMapping(value = "/simpan", method = RequestMethod.POST)
     public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("satManMK") SatManMK satManMK, 
     		@RequestParam("idMK") UUID idMK, @RequestParam("idSatMan") UUID idSatMan, 
-    		 BindingResult result, Map<String, Object> model) {   
+    		 BindingResult result, Map<String, Object> model) { 
+		System.out.println(satManMK.getIdSatManMK());
+		AjaxResponse response = new AjaxResponse();   
 		MK mk = mkServ.findById(idMK);
 		SatMan satMan = satManServ.findById(idSatMan);
 		satManMK.setMk(mk);
 		satManMK.setSatMan(satMan);
-		AjaxResponse response = new AjaxResponse();   
         if (result.hasErrors()) {
         	response.setStatus("error");
         	List<FieldError> fieldError = result.getFieldErrors();
@@ -122,7 +123,7 @@ public class SatManMKController extends SessionController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
     public @ResponseBody AjaxResponse edit(@RequestParam("idSatManMK") UUID idSatManMK) {
 		AjaxResponse response;
-		SatManMK satManMK = satManMKServ.findById(idSatManMK);
+		SatManMK satManMK = satManMKServ.findById(idSatManMK); 
 		if(satManMK == null) response = new AjaxResponse("error","Data tidak ditemukan",null);
 		else response = new AjaxResponse("ok","Data ditemukan",satManMK);
         return response;
