@@ -90,21 +90,7 @@
 										</tbody>
 									</table>
 								</div>
-							</form>
-							<div class="row">
-								<div class="col-md-8 masteractions">
-									<div class="pull-right">  
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/matakuliah/rumpun/'">
-											  Selanjutnya >>
-										</button>
-									</div> 
-									<div class="pull-right"> 
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/kurikulum/'">
-											 << Kembali
-										</button>
-										</div>
-									</div>
-								</div> 
+							</form> 
 							</div>
 						</div>
 					</div>

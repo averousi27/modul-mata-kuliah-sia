@@ -73,6 +73,7 @@ public class PrasyaratMKController extends SessionController {
 	}
 	@RequestMapping(value = "/simpan", method = RequestMethod.POST)
     public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("prasyaratMK") PrasyaratMK prasyaratMK, 
+    		@RequestParam("idPrasyaratMK") UUID idPrasyaratMK,
     		@RequestParam("idMK") UUID idMK, @RequestParam("mkIdMK") UUID mkIdMK, 
     		 BindingResult result, Map<String, Object> model) {
 		AjaxResponse response = new AjaxResponse();  
@@ -95,6 +96,9 @@ public class PrasyaratMKController extends SessionController {
         	response.setData(fieldError);
             return response;
         }
+        if(idPrasyaratMK!=null){
+        	prasyaratMK.setIdPrasyaratMK(idPrasyaratMK);
+        } 
         response.setData(prasyaratMKServ.save(prasyaratMK));
         if(response.getData()!=null) response.setMessage("Data berhasil disimpan");
         else 

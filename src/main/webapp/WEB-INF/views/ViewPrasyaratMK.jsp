@@ -92,21 +92,6 @@
 										</table>
 										</div>
 									</form>
-					<div class="row">
-						<div class="col-md-8 masteractions">
-							<div class="pull-right">  
-								<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/matakuliah/capaianbelajar/'">
-									  Selanjutnya >>
-								</button>
-							</div>
-							&nbsp;
-							<div class="pull-right"> 
-								<button type="button" class="btn btn-primary btn-block" onclick="location.href='${pageContext.servletContext.contextPath}/matakuliah/satuanmanajemen/'">
-									 << Kembali
-								</button>
-							</div>
-						</div> 
-					</div> 
 								</div>
 							</div>
 						</div>
@@ -119,8 +104,8 @@
 								</div>
 								<div class="panel-body">
 									<h4 id="title">Kelola prasyarat mata kuliah</h4>
-									<form:form role="form" action="login" commandName="prasyaratMK" class="formdetail"> 
-										<input type="hidden" id="idPrasyaratMK" class="form-control" />
+									<form:form role="form" action="login" commandName="prasyaratMK" class="formdetail">  
+										<input type="hidden" id="idPrasyaratMK" name="idPrasyaratMK" />
 										<div class="form-group">
 											<label>Kode dan Nama Mata Kuliah</label>
 											<select id="idMK" name="idMK" class="form-control">
@@ -128,7 +113,7 @@
 												<c:forEach items="${mkList}" var="mk"> 
 													<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
 												</c:forEach> 
-											<select>
+											</select> 
 										</div> 
 										<div class="form-group">
 											<label>Kode dan Nama Mata Kuliah Prasyarat</label>
@@ -137,7 +122,7 @@
 												<c:forEach items="${mkList}" var="mk"> 
 													<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
 												</c:forEach>  
-											<select>
+											</select>
 										</div>
 										<div class="form-group detailcontrol">
 										</div>

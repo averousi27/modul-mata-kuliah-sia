@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,11 @@ public class SilabusServiceImpl implements SilabusService {
 	public Silabus findById(UUID idSilabus) {
 		// TODO Auto-generated method stub
 		return silabusRepo.findById(idSilabus);
+	}
+
+	@Override
+	public List<Silabus> findAll() {
+		// TODO Auto-generated method stub
+		return silabusRepo.findAll();
 	}
 }

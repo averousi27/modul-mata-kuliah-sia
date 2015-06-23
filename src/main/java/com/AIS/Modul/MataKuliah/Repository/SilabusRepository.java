@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.sia.main.domain.Silabus;
@@ -13,5 +14,7 @@ public interface SilabusRepository {
 	public Silabus findByMK(UUID idMK);
 
 	public Silabus findById(UUID idSilabus);
+
+	public List<Silabus> findAll();
 
 }

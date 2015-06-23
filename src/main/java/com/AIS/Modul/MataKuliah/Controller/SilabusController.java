@@ -239,10 +239,12 @@ public class SilabusController extends SessionController {
 		ModelAndView mav = new ModelAndView();
 		if(!isLogin(session)){ mav.setViewName("redirect:/login/");	return mav;}
 		if(!hasMenu(session, "Laporan Silabus"))	{ mav.setViewName("redirect:/");return mav;}else{mav = addNavbar(session,mav);}
-		List<MK> mkList = mkServ.findAll(); 
+		List<MK> mkList = mkServ.findAll();  
+		List<Silabus> silabusList = silabusServ.findAll();
 		String message = null;
 		mav.addObject("message", message);
-		mav.addObject("mkList", mkList); 
+		mav.addObject("mkList", mkList);
+		mav.addObject("silabusList", silabusList);
 		mav.setViewName("DaftarReportSilabus");
 		return mav;
 	}

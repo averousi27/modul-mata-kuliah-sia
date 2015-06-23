@@ -62,4 +62,13 @@ public class SilabusRepositoryImpl implements SilabusRepository {
 		return queryResult.get(0);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Silabus> findAll() {
+		// TODO Auto-generated method stub
+		List<Silabus> queryResult = sessionFactory.getCurrentSession().createQuery("from Silabus").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
+
 }
