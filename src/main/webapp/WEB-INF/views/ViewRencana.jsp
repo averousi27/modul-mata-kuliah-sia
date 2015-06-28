@@ -147,30 +147,11 @@
 																			<div class="form-group">
 																				<label>Waktu Pembelajaran</label>
 																				<input type="number" min="50" max="150" class="form-control col-md-4" placeholder="Berisi angka menit waktu pembelajaran" id="waktuPemb" required="true" digits="true"/>
-																			</div>
-																			<div class="form-group">
-																				<label>Metode Pembelajaran</label>
-																				<select id="idMetodePemb" name="idMetodePemb" class="form-control">
-																						<option value="">Pilih metode pembelajaran</option> 
-																					<c:forEach items="${metodePembList}" var="metodePemb"> 
-																						<option value="${metodePemb.idMetodePemb}">${metodePemb.namaMetodePemb}</option>
-																					</c:forEach> 
-																				</select> 
-																			</div>
+																			</div> 
 																			<div class="form-group">
 																				<label>Indikator Penilaian</label>
 																				<input type="text" class="form-control col-md-4" placeholder="Berisi isian indikator penilaian" id="indikatorPenilaian" required="true"/>
 																			</div>  
-																			<div class="form-group">
-																				<label>Bentuk Penilaian</label>
-																				<select id="idBentuk" name="idBentuk" class="form-control">
-																						<option value="">Pilih bentuk penilaian</option> 
-																					<c:forEach items="${bentukList}" var="bentuk"> 
-																						<option value="${bentuk.idBentuk}">${bentuk.namaBentuk}</option>
-																					</c:forEach> 
-																						<option value="">Tidak ada bentuk penilaian</option>
-																				</select> 
-																			</div>
 																			<div class="form-group">
 																				<label>Bobot Penilaian</label>
 																				<input type="number" min="0" max="100" class="form-control col-md-4" placeholder="Berisi angka skala puluhan bobot penilaian" id="bobotPenilaian" required="true" digits="true"/>
@@ -183,7 +164,7 @@
 													      	<button type="button" class="btn btn-primary pull-right" onclick="simpanRPPerTemu(this)">Next &gt;</button>
 													      </div>
 													   </div><!-- end tambahRPBaru -->
-													   <div class="hide" id="tambahMateriPembBaru">	
+													   <div id="tambahMateriPembBaru">	
 													      <div class="modal-body">
 														      	<div class="row">
 															      	<div class="col-md-12"> 
@@ -199,7 +180,7 @@
 			                                                            		<tr id="rowMateriPembNew">
 			                                                            			<td>
 							                                                   			 <select id="idDetailSilabus" name="idDetailSilabus" class="form-control">
-																							<option value="">Pilih materi pembelajaran untuk mata kuliah</option> 
+																							<option value="">Pilih materi pembelajaran untuk perkuliahan</option> 
 																								<c:forEach items="${dsList}" var="dsList"> 
 																									<option value="${dsList.idDetailSilabus}">${dsList.silabus.mk.namaMK} - ${dsList.pokokBahasan}</option>
 																								</c:forEach> 
@@ -212,9 +193,75 @@
 					                                                </div>
 				                                              </div>
 													      </div><!-- modal-body  --> 
-													      <div class="modal-footer">
+													      <div class="modal-footer"> 
+													      	<button type="button" class="btn btn-primary pull-right" onclick="nextButton()">Next &gt;</button> 
 													      </div>
 													   </div><!-- end tambahMateriPembBaru --> 
+													   <div id="tambahRPMetodePembBaru">	
+													      <div class="modal-body">
+														      	<div class="row">
+															      	<div class="col-md-12"> 
+															      		<input type="hidden" id="idRPPerTemu" name="idRPPerTemu" value=""/>
+															      		<table class="table"> 
+			                                                            	<thead>
+			                                                            		<tr>
+				                                                            		<td>Metode Pembelajaran</td>
+				                                                            		<td>Aksi</td>
+			                                                            		</tr>
+			                                                            	</thead> 
+			                                                            	<tbody>
+			                                                            		<tr id="rowRPMetodePembNew">
+			                                                            			<td>
+							                                                   			 <select id="idMetodePemb" name="idMetodePemb" class="form-control">
+																							<option value="">Pilih metode pembelajaran untuk perkuliahan</option> 
+																								<c:forEach items="${metodePembList}" var="metodePemb"> 
+																									<option value="${metodePemb.idMetodePemb}">${metodePemb.namaMetodePemb}</option>
+																								</c:forEach> 
+																						</select>
+																					</td>
+																					<td><button type="button" class="btn btn-success" onClick="simpanMetodePemb(this)"><i class="glyphicon glyphicon-plus"></i></button></td>
+	                                                                    		</tr>
+			                                                            	</tbody>
+			                                                            </table> 
+					                                                </div>
+				                                              </div>
+													      </div><!-- modal-body  --> 
+													      <div class="modal-footer">
+													      	<button type="button" class="btn btn-primary pull-right" onclick="nextButton2()">Next &gt;</button> 
+													      </div>
+													   </div><!-- end tambahRPMetodePembBaru -->
+													   <div id="tambahRPBentukPenilaianBaru">	
+													      <div class="modal-body">
+														      	<div class="row">
+															      	<div class="col-md-12"> 
+															      		<input type="hidden" id="idRPPerTemu" name="idRPPerTemu" value=""/>
+															      		<table class="table"> 
+			                                                            	<thead>
+			                                                            		<tr>
+				                                                            		<td>Bentuk Penilaian</td>
+				                                                            		<td>Aksi</td>
+			                                                            		</tr>
+			                                                            	</thead> 
+			                                                            	<tbody>
+			                                                            		<tr id="rowRPBentukPenilaianNew">
+			                                                            			<td>
+							                                                   			 <select id="idBentukPenilaian" name="idBentukPenilaian" class="form-control">
+																							<option value="">Pilih bentuk penilaian untuk perkuliahan</option>  
+																								<c:forEach items="${bentukList}" var="bentuk"> 
+																									<option value="${bentuk.idBentuk}">${bentuk.namaBentuk}</option>
+																								</c:forEach> 
+																						</select>
+																					</td>
+																					<td><button type="button" class="btn btn-success" onClick="simpanBentukPenilaian(this)"><i class="glyphicon glyphicon-plus"></i></button></td>
+	                                                                    		</tr>
+			                                                            	</tbody>
+			                                                            </table> 
+					                                                </div>
+				                                              </div>
+													      </div><!-- modal-body  --> 
+													      <div class="modal-footer">
+													      </div>
+													   </div><!-- end tambahRPBentukPenilaianBaru -->
 											    </div><!-- /.modal-content -->
 											  </div><!-- /.modal-dialog -->
 											</div><!-- /.modal --> 
@@ -265,11 +312,14 @@
 								backdrop: 'static',
 							    keyboard: false,
 							});
+							$("#tambahRPBaru").show();
+							$("#tambahMateriPembBaru").hide();
+							$("#tambahRPMetodePembBaru").hide();
+							$("#tambahRPBentukPenilaianBaru").hide();
 							$("tr.rowRPPerTemu").each(function(index, element) {
 								$(element).remove();
 							});
-							var idRPPerTemu = $(button).attr("name"); //diambil dari halaman ketiga saat melakukan edit RP per pertemuan 
-							//console.log("idRPPerTemu : "+idRPPerTemu);
+							var idRPPerTemu = $(button).attr("name"); //diambil dari halaman ketiga saat melakukan edit RP per pertemuan  
 							if(idRPPerTemu!=""){
 								$("#idRPPerTemu").val(idRPPerTemu);
 								/*---------------memanggil data RP Per Pertemuan----------------*/
@@ -282,15 +332,8 @@
 									success:function(data){  
 										if(data.data!=null){    
 											$("#mingguPemb").val(data.data.mingguPembKe);
-											$("#waktuPemb").val(data.data.waktuPemb);
-											$("#idMetodePemb").val(data.data.metodePemb.idMetodePemb);
-											$("#indikatorPenilaian").val(data.data.indikatorPenilaian);
-											if(data.data.bentukPenilaian==null){
-												$("#idBentuk").val("");
-											}
-											else{
-												$("#idBentuk").val(data.data.bentukPenilaian.idBentuk);
-											} 
+											$("#waktuPemb").val(data.data.waktuPemb); 
+											$("#indikatorPenilaian").val(data.data.indikatorPenilaian); 
 											if(data.data.bobotPenilaian==null){
 												$("bobotPenilaian").val(0);
 											}
@@ -303,22 +346,25 @@
 								/*---------------memanggil data RP Per Pertemuan----------------*/
 							} 
 						};
-						closeModal = function closeModal(button){ 
-							 if($("#tambahRPBaru").hasClass("hide")){
-								 $("#tambahRPBaru").toggleClass("hide");
-							 }
-							 if($("#tambahMateriPembBaru").hasClass("hide")==false){
-								 $("#tambahMateriPembBaru").toggleClass("hide");
-							 }  
+						closeModal = function closeModal(button){  
+							 $("#tambahRPBaru").hide();
+							 $("#tambahMateriPembBaru").hide();
+							 $("#tambahRPMetodePembBaru").hide();
+							 $("#tambahRPBentukPenilaianBaru").hide();
+							 
 							 $("#mingguPemb").val("");
-							 $("#waktuPemb").val("");
-							 $("#idMetodePemb").val("");
-							 $("#indikatorPenilaian").val("");
-							 $("#idBentuk").val("");
+							 $("#waktuPemb").val(""); 
+							 $("#indikatorPenilaian").val(""); 
 							 $("#bobotPenilaian").val(""); 
 							 $("#idDetailSilabus").val("");
 							 
 							 $("tr.rowMateriPemb").each(function(index, element) {
+									$(element).remove();
+								});
+							 $("tr.rowMetodePemb").each(function(index, element) {
+									$(element).remove();
+								});
+							 $("tr.rowBentukPenilaian").each(function(index, element) {
 									$(element).remove();
 								});
 							 /*-------------get rp per temu---------*/
@@ -351,22 +397,17 @@
 								url: context_path+'rencanapembelajaran/kelola/simpanrppertemu',
 								dataType:'json',
 								data: {'idRPPerTemu': $("#idRPPerTemu").val(), 'idRP' : $("#idRP").val(), 'mingguPemb' : $("#mingguPemb").val(),
-									'waktuPemb': $("#waktuPemb").val(), 'idMetodePemb' : $("#idMetodePemb").val(),
-									'indikatorPenilaian' : $("#indikatorPenilaian").val(), 'idBentuk' : $("#idBentuk").val(),
+									'waktuPemb': $("#waktuPemb").val(), 'indikatorPenilaian' : $("#indikatorPenilaian").val(),
 									'bobotPenilaian': $("#bobotPenilaian").val()},
 								traditional:true, 
 								success:function(data){    
 									if(data.data!=null){
 										console.log(data.data.idRPPerTemu);
-										$("#idRPPerTemu").val(data.data.idRPPerTemu); 
-// 										$("inputRPPerTemu").val("");
-										$("#tambahRPBaru, #tambahMateriPembBaru").toggleClass("hide");
-// 										$("#rowRPPerTemuNew").before(
-// 											"<tr class='rowRPPerTemu'>" 
-// 											+"<td><input type='text' class='form-control col-md-4' value='RP minggu ke-"+ data.data.mingguPembKe + "' readonly='readonly'/></td>"
-// 											+"<td><button type='button' class='btn btn-primary'  onclick='showModal(this)' name='"+data.data.idRPPerTemu+"'><i class='glyphicon glyphicon-pencil'></i></button></td>" 
-// 											+"</tr>"		
-// 										); 
+										$("#idRPPerTemu").val(data.data.idRPPerTemu);   
+										$("#tambahRPBaru").hide();
+										$("#tambahMateriPembBaru").show();
+										$("#tambahRPMetodePembBaru").hide();
+										$("#tambahRPBentukPenilaianBaru").hide();
 									}
 								},
 								error: function(data){
@@ -375,9 +416,7 @@
 								
 							}); 
 							/*---------------end simpan RP per pertemuan----------------*/ 
-							/*---------------ambil materi per pertemuan----------------*/
-							
-							//console.log("idRPPerTemu : "+$("#idRPPerTemu").val());
+							/*---------------ambil materi per pertemuan----------------*/ 
 							$.ajax({
 								type:'GET',
 								url: context_path+'rencanapembelajaran/kelola/getmateri',
@@ -417,16 +456,71 @@
 	                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteMateri(this)" name="'+data.idMateriSilabus+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
 	                                    		+'</tr>'
 											); 
-										$("idDetailSilabus").val(""); 
+										$("#idDetailSilabus").val(""); 
 									}	
 								}
 							});
-							/*---------------end materi per pertemuan----------------*/
+							/*---------------end materi per pertemuan----------------*/ 
+							
 						}
+						simpanMetodePemb = function simpanMetodePemb(button){
+							/*---------------simpan metode per pertemuan----------------*/
+							$.ajax({
+								type:'POST',
+								url: context_path+'rencanapembelajaran/kelola/simpanmetode',
+								dataType:'json',
+								data: {'idMetodePemb' : $("#idMetodePemb").val(), 'idRPPerTemu': $("#idRPPerTemu").val()},
+								traditional:true,
+								success:function(data){  
+									toastr["success"]("Metode pembelajaran sudah tersimpan");  
+									if(data.data!=null){     
+										$("#rowRPMetodePembNew").before(
+												'<tr class="rowMetodePemb">' 
+	                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="'+data.data.metodePemb.namaMetodePemb+'"></td>'
+	                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteMetode(this)" name="'+data.idRPMetodePemb+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
+	                                    		+'</tr>'
+											); 
+										$("#idMetodePemb").val(""); 
+									}	
+								}
+							});
+							/*---------------end materi per pertemuan----------------*/ 
+						}
+						simpanBentukPenilaian = function simpanBentukPenilaian(button){
+							/*---------------ambil bentuk penilaian per pertemuan----------------*/ 
+							$.ajax({
+								type:'POST',
+								url: context_path+'rencanapembelajaran/kelola/simpanbentuk',
+								dataType:'json',
+								data: {'idRPPerTemu': $("#idRPPerTemu").val(), 'idBentukPenilaian': $("#idBentukPenilaian").val()},
+								traditional:true,
+								success:function(data){   
+									toastr["success"]("Bentuk penilaian sudah tersimpan");  
+									if(data.data.bentukPenilaian!=null){     
+										$("#rowRPBentukPenilaianNew").before(
+												'<tr class="rowBentukPenilaian">' 
+	                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="'+data.data.bentukPenilaian.namaBentuk+'"></td>'
+	                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteBentuk(this)" name="'+data.idRPBentukPenilaian+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
+	                                    		+'</tr>'
+											);  
+									}	
+									else{
+										$("#rowRPBentukPenilaianNew").before(
+												'<tr class="rowBentukPenilaian">' 
+	                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="Tidak ada bentuk penilaian"></td>'
+	                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteBentuk(this)" name="'+data.idRPBentukPenilaian+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
+	                                    		+'</tr>'
+											); 
+									}
+									$("#idBentukPenilaian").val(""); 
+								}
+							});
+							/*---------------end ambil metode per pertemuan----------------*/
+						} 
+						
 						deleteMateri = function deleteMateri(button){
-							/*---------------simpan materi per pertemuan----------------*/
-							var idMateriSilabus = $(button).attr("name");
-							console.log(idMateriSilabus);
+							/*---------------hapus materi per pertemuan----------------*/
+							var idMateriSilabus = $(button).attr("name"); 
 							$.ajax({
 								type:'POST',
 								url: context_path+'rencanapembelajaran/kelola/deletemateri',
@@ -442,6 +536,115 @@
 							});
 							/*---------------end materi per pertemuan----------------*/
 						}
+						deleteMetode = function deleteMetode(button){
+							/*---------------hapus metode per pertemuan----------------*/
+							var idRPMetodePemb = $(button).attr("name"); 
+							$.ajax({
+								type:'POST',
+								url: context_path+'rencanapembelajaran/kelola/deletemetode',
+								dataType:'json',
+								data: {'idRPMetodePemb' : idRPMetodePemb},
+								traditional:true,
+								success:function(data){  
+									if(data.message!=null){    
+										toastr["success"]("Metode pembelajaran sudah dihapus");
+										$(button).closest("tr").remove();
+									}
+								}
+							});
+							/*---------------end hapus metode per pertemuan----------------*/
+						}
+						deleteBentuk = function deleteBentuk(button){
+							/*---------------hapus metode per pertemuan----------------*/
+							var idRPBentukPenilaian = $(button).attr("name"); 
+							$.ajax({
+								type:'POST',
+								url: context_path+'rencanapembelajaran/kelola/deletebentuk',
+								dataType:'json',
+								data: {'idRPBentukPenilaian' : idRPBentukPenilaian},
+								traditional:true,
+								success:function(data){  
+									if(data.message!=null){    
+										toastr["success"]("Bentuk penilaian sudah dihapus");
+										$(button).closest("tr").remove();
+									}
+								}
+							});
+							/*---------------end hapus metode per pertemuan----------------*/
+						}
+						nextButton = function nextButton(){
+							/*---------------ambil metode per pertemuan----------------*/ 
+							$.ajax({
+								type:'GET',
+								url: context_path+'rencanapembelajaran/kelola/getmetode',
+								dataType:'json',
+								data: {'idRPPerTemu': $("#idRPPerTemu").val()},
+								traditional:true,
+								success:function(data){   
+									if(data.data!=null){  
+										for(var i=0; i<data.data.length;++i){ 
+											$("#rowRPMetodePembNew").before(
+													'<tr class="rowMetodePemb">' 
+		                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="'+data.data[i].metodePemb.namaMetodePemb+'"></td>'
+		                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteMetode(this)" name="'+data.data[i].idRPMetodePemb+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
+		                                    		+'</tr>'
+											); 
+										}  
+									}	
+								}
+							});
+							/*---------------end ambil metode per pertemuan----------------*/
+							$("#tambahRPBaru").hide();
+							$("#tambahMateriPembBaru").hide();
+							$("#tambahRPMetodePembBaru").show();
+							$("#tambahRPBentukPenilaianBaru").hide();
+						}
+						nextButton2 = function nextButton2(){
+							/*---------------ambil bentuk penilaian per pertemuan----------------*/ 
+							$.ajax({
+								type:'GET',
+								url: context_path+'rencanapembelajaran/kelola/getbentuk',
+								dataType:'json',
+								data: {'idRPPerTemu': $("#idRPPerTemu").val()},
+								traditional:true,
+								success:function(data){   
+									if(data.data!=null){  
+										for(var i=0; i<data.data.length;++i){ 
+											if(data.data[i].bentukPenilaian!=null){
+												$("#rowRPBentukPenilaianNew").before(
+														'<tr class="rowBentukPenilaian">' 
+			                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="'+data.data[i].bentukPenilaian.namaBentuk+'"></td>'
+			                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteBentuk(this)" name="'+data.data[i].idRPBentukPenilaian+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
+			                                    		+'</tr>'
+												); 
+											}
+											else{
+												$("#rowRPBentukPenilaianNew").before(
+														'<tr class="rowBentukPenilaian">' 
+			                                       		+	'<td><input type="text" class="form-control col-md-4" readonly="readonly" value="Tidak ada bentuk penilaian"></td>'
+			                                    		+	'<td><button type="button" class="btn btn-danger" onClick="deleteBentuk(this)" name="'+data.data[i].idRPBentukPenilaian+'"><i class="glyphicon glyphicon-minus"></i></button></td>'
+			                                    		+'</tr>'
+												); 
+											}
+										}  
+									}
+								}
+							});
+							/*---------------end ambil metode per pertemuan----------------*/
+							$("#tambahRPBaru").hide();
+							$("#tambahMateriPembBaru").hide();
+							$("#tambahRPMetodePembBaru").hide();
+							$("#tambahRPBentukPenilaianBaru").show();
+						}
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						function validateTab(index){  
 							/*---------------kondisi untuk tab 1----------------*/
 							if(index==0){   

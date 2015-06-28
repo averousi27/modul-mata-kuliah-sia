@@ -10,11 +10,15 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Max;
 
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +34,7 @@ import com.AIS.Modul.MataKuliah.Service.MKService;
 import com.AIS.Modul.MataKuliah.Service.PemetaanSilabusService;
 import com.AIS.Modul.MataKuliah.Service.PrasyaratMKService;
 import com.AIS.Modul.MataKuliah.Service.PustakaService;
+import com.AIS.Modul.MataKuliah.Service.SatManMKService;
 import com.AIS.Modul.MataKuliah.Service.SilabusService;
 import com.AIS.Modul.MataKuliah.Service.SubCapPembMKService;
 import com.sia.main.domain.CapPemb;
@@ -42,6 +47,7 @@ import com.sia.main.domain.PemetaanSilabus;
 import com.sia.main.domain.PrasyaratMK;
 import com.sia.main.domain.Pustaka;
 import com.sia.main.domain.RumpunMK;
+import com.sia.main.domain.SatManMK;
 import com.sia.main.domain.Silabus;
 import com.sia.main.domain.SubCapPemb;
 import com.sia.main.domain.SubCapPembMK;
@@ -80,6 +86,10 @@ public class SilabusController extends SessionController {
 	
 	@Autowired
 	private CapPembService capPembServ;
+	
+	@Autowired
+	private SatManMKService satManMKServ;
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(SilabusController.class);
 	
@@ -270,7 +280,7 @@ public class SilabusController extends SessionController {
 			List<CapPembMK> cpmkList = capPembMKServ.findByMK(idMK); //dapat capaian mata kuliah
 			List<CapPemb> cpList = subCapPembMKServ.findByMK(idMK); //dapat capaian prodi  
 			List<PrasyaratMK> prasyaratList = prasyaratMKServ.findParentMK(idMK); 
-			
+			List<SatManMK> smmkList = satManMKServ.findByMK(idMK);//dapat satuan manajemen MK 	 
 			mav.addObject("mk2", mk2);
 			mav.addObject("silabus", silabus);
 			mav.addObject("dsList", dsList);
@@ -278,10 +288,27 @@ public class SilabusController extends SessionController {
 			mav.addObject("prasyaratList", prasyaratList); 
 			mav.addObject("cpmkList", cpmkList); 
 			mav.addObject("cpList", cpList); 
+			mav.addObject("smmkList", smmkList);
 			mav.setViewName("ReportSilabus");
 			return mav;
 		} 
 	}
 	 
-	
+	@RequestMapping(value="/laporan/{idMK}", method = RequestMethod.GET)
+	public ModelAndView showSilabusTemp(Locale locale, Model model, @PathVariable("idMK") UUID idMK){
+		ModelAndView modelAndView = new ModelAndView();  
+		Map<String,Object> parameterMap = new HashMap<String,Object>(); 
+        //
+        MK mk = mkServ.findById(idMK); 
+        //SatManMK smmk = satManMKServ.findByMK(idMK);
+        List<CapPemb> cpList = capPembServ.findAll();
+        JRDataSource jRdataSource = new JRBeanCollectionDataSource(cpList);
+        parameterMap.put("mk", mk); 
+        parameterMap.put("datasource", jRdataSource);
+ 
+        //pdfReport bean has ben declared in the jasper-views.xml file
+        modelAndView = new ModelAndView("reportSilabus", parameterMap);
+ 
+        return modelAndView;
+	}
 }

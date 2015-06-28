@@ -86,7 +86,7 @@ public class PustakaRepositoryImpl implements PustakaRepository{
 	@Override
 	public List<Pustaka> findAll() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("from Pustaka where statusPustaka = false").list();
+		return sessionFactory.getCurrentSession().createQuery("from Pustaka where statusPustaka = false order by namaPustaka asc").list();
 	}
 
 }

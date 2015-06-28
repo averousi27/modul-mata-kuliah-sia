@@ -27,4 +27,6 @@ public interface SatManMKService {
 
 	public List<SatManMK> get(String where, String order, int limit, int offset);
 
+	public List<SatManMK> findByMK(UUID idMK);
+
 }

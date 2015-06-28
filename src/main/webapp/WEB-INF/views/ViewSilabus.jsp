@@ -168,7 +168,7 @@
 		                                                   			 <select id="idCapPembMK" name="idCapPembMK" class="form-control">
 																			<option value="">Pilih capaian pembelajaran mata kuliah</option> 
 																				<c:forEach items="${cpmkList}" var="cpmk"> 
-																					<option value="${cpmk.idCapPembMK}">${cpmk.mk.namaMK} - ${cpmk.namaCapPembMK}</option>
+																					<option value="${cpmk.idCapPembMK}">${cpmk.mk.namaMK} - ${cpmk.deskripsiCapPembMK}</option>
 																				</c:forEach> 
 																	</select>
 																</td>
@@ -369,7 +369,7 @@
 										for(var i=0; i<data.data.length; ++i){
 											$("#rowCapaianNew").before(
 												"<tr class='rowCapaian'>" 
-												+"<td><input type='text' class='form-control col-md-4' value='"+ data.data[i].capPembMK.namaCapPembMK + "' readonly='readonly'/></td>"
+												+"<td><input type='text' class='form-control col-md-4' value='"+ data.data[i].capPembMK.deskripsiCapPembMK + "' readonly='readonly'/></td>"
 												+"<td><button type='button' class='btn btn-danger' name='"+data.data[i].idPemetaanSilabus+"' onclick='deletePemetaan(this)'><i class='glyphicon glyphicon-minus'></i></td>"
 												+"</tr>"		
 											);
@@ -471,7 +471,7 @@
 										toastr["success"]("Data pemetaan capaian telah tersimpan");		 
 										$("#rowCapaianNew").before(
 											"<tr class='rowCapaian'>" 
-											+"<td><input type='text' class='form-control col-md-4' value='"+ data.data.capPembMK.namaCapPembMK + "' readonly='readonly'/></td>"
+											+"<td><input type='text' class='form-control col-md-4' value='"+ data.data.capPembMK.deskripsiCapPembMK + "' readonly='readonly'/></td>"
 											+"<td><button type='button' class='btn btn-danger' name='"+data.data.idPemetaanSilabus+"' onclick='deletePemetaan(this)'><i class='glyphicon glyphicon-minus'></i></td>"
 											+"</tr>"		
 										);

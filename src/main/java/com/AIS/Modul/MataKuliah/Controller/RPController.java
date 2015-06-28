@@ -35,8 +35,11 @@ import com.AIS.Modul.MataKuliah.Service.MateriSilabusService;
 import com.AIS.Modul.MataKuliah.Service.MetodePembService;
 import com.AIS.Modul.MataKuliah.Service.PemetaanSilabusService;
 import com.AIS.Modul.MataKuliah.Service.PrasyaratMKService;
+import com.AIS.Modul.MataKuliah.Service.RPBentukPenilaianService;
+import com.AIS.Modul.MataKuliah.Service.RPMetodePembService;
 import com.AIS.Modul.MataKuliah.Service.RPPerTemuService;
 import com.AIS.Modul.MataKuliah.Service.RPService;
+import com.AIS.Modul.MataKuliah.Service.SatManMKService;
 import com.AIS.Modul.MataKuliah.Service.SilabusService;
 import com.AIS.Modul.MataKuliah.Service.SubCapPembMKService;
 import com.sia.main.domain.*;
@@ -87,6 +90,15 @@ public class RPController extends SessionController {
 	@Autowired
 	private PemetaanSilabusService pemetaanSilabusServ;
 	
+	@Autowired
+	private RPMetodePembService rpMetodePembServ;
+	
+	@Autowired
+	private RPBentukPenilaianService rpBentukPenilaianServ;
+	
+	@Autowired
+	private SatManMKService satManMKServ;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView datatable(Locale locale, Model model, HttpSession session) { 
 		ModelAndView mav = new ModelAndView(); 
@@ -100,7 +112,7 @@ public class RPController extends SessionController {
 		mav.addObject("metodePembList", metodePembList); 
 		mav.addObject("bentukList", bentukList); 
 		mav.addObject("dsList", dsList); 
-		mav.setViewName("ViewRencana"); 
+		mav.setViewName("ViewRencana");  
 		return mav;
 	}   
 	@RequestMapping(value = "/deletemany", method = RequestMethod.POST)
@@ -198,30 +210,26 @@ public class RPController extends SessionController {
 	@RequestMapping(value="/simpanrppertemu", method=RequestMethod.POST)
 	public @ResponseBody AjaxResponse simpanRPPerTemu(@RequestParam("idRPPerTemu") UUID idRPPerTemu, @RequestParam("idRP") UUID idRP,
 			@RequestParam("mingguPemb") int mingguPemb, @RequestParam("waktuPemb") int waktuPemb,
-			@RequestParam("idMetodePemb") UUID idMetodePemb, @RequestParam("indikatorPenilaian") String indikatorPenilaian,
-			@RequestParam("idBentuk") UUID idBentuk, @RequestParam("bobotPenilaian") double bobotPenilaian){
+			@RequestParam("indikatorPenilaian") String indikatorPenilaian,
+			@RequestParam("bobotPenilaian") double bobotPenilaian){
 		AjaxResponse response = new AjaxResponse(); 
-		
-
-		BentukPenilaian bp = null;
+		 
 		RPPerTemu rppt=null;
 		
-		RP rp = rpServ.findById(idRP);  
-		MetodePemb metodePemb = metodePembServ.findById(idMetodePemb);
-		//cek kalau bentuk penilaian tidak ada
-		if(idBentuk!=null){ 
-			bp = bentukServ.findById(idBentuk);
-		} 
+		RP rp = rpServ.findById(idRP);   
 		if(idRPPerTemu==null){
 			rppt = new RPPerTemu();
 		}
 		else{
 			rppt = rpPerTemuServ.findById(idRPPerTemu);
 		} 
-		rppt.setBentukPenilaian(bp);
 		rppt.setBobotPenilaian(bobotPenilaian);
-		rppt.setIndikatorPenilaian(indikatorPenilaian);
-		rppt.setMetodePemb(metodePemb);
+		if(indikatorPenilaian==""){
+			rppt.setIndikatorPenilaian(null);  
+		}
+		else{
+			rppt.setIndikatorPenilaian(indikatorPenilaian);  
+		}
 		rppt.setMingguPembKe(mingguPemb);
 		rppt.setWaktuPemb(waktuPemb);
 		rppt.setRp(rp); 
@@ -245,7 +253,41 @@ public class RPController extends SessionController {
 		materiSilabusServ.save(mp);
 		response.setData(mp);
 		return response;
-	}
+	} 
+	
+	@RequestMapping(value="/simpanmetode", method=RequestMethod.POST)
+	public @ResponseBody AjaxResponse simpanMetode(@RequestParam("idRPPerTemu") UUID idRPPerTemu,
+			@RequestParam("idMetodePemb") UUID idMetodePemb){
+		AjaxResponse response = new AjaxResponse(); 
+		MetodePemb metodePemb = metodePembServ.findById(idMetodePemb); 
+		RPPerTemu rppt = rpPerTemuServ.findById(idRPPerTemu);
+		RPMetodePemb mp = new RPMetodePemb();
+		mp.setRpPerTemu(rppt);
+		mp.setMetodePemb(metodePemb);
+		rpMetodePembServ.save(mp);
+		response.setData(mp);
+		return response;
+	} 
+	
+	@RequestMapping(value="/simpanbentuk", method=RequestMethod.POST)
+	public @ResponseBody AjaxResponse simpanBentuk(@RequestParam("idRPPerTemu") UUID idRPPerTemu,
+			@RequestParam("idBentukPenilaian") UUID idBentuk){
+		System.out.println(idBentuk);
+		AjaxResponse response = new AjaxResponse();  
+		RPPerTemu rppt = rpPerTemuServ.findById(idRPPerTemu);
+		RPBentukPenilaian mp = new RPBentukPenilaian();
+		if(idBentuk!=null){
+			BentukPenilaian bp = bentukServ.findById(idBentuk);
+			mp.setBentukPenilaian(bp);
+		}
+		else{
+			mp.setBentukPenilaian(null);
+		}
+		mp.setRpPerTemu(rppt); 
+		rpBentukPenilaianServ.save(mp);
+		response.setData(mp);
+		return response;
+	} 
 	
 	@RequestMapping(value="/deletemateri", method=RequestMethod.POST)
 	public @ResponseBody AjaxResponse hapusMateri(@RequestParam("idMateriSilabus") UUID idMateriSilabus){
@@ -255,11 +297,35 @@ public class RPController extends SessionController {
 		return response;
 	}
 	
+	@RequestMapping(value="/deletemetode", method=RequestMethod.POST)
+	public @ResponseBody AjaxResponse hapusMetode(@RequestParam("idRPMetodePemb") UUID idRPMetodePemb){
+		AjaxResponse response = new AjaxResponse();  
+		rpMetodePembServ.delete(idRPMetodePemb);
+		response.setMessage("Data sudah dihapus");
+		return response;
+	}
+	
 	@RequestMapping(value="/getmateri", method=RequestMethod.GET)
 	public @ResponseBody AjaxResponse getMateri(@RequestParam("idRPPerTemu") UUID idRPPerTemu){
 		AjaxResponse response = new AjaxResponse(); 
 		List<MateriSilabus> msList = materiSilabusServ.findByRPPerTemu(idRPPerTemu);  
 		response.setData(msList);
+		return response;
+	}
+	
+	@RequestMapping(value="/getmetode", method=RequestMethod.GET)
+	public @ResponseBody AjaxResponse getMetode(@RequestParam("idRPPerTemu") UUID idRPPerTemu){
+		AjaxResponse response = new AjaxResponse();  
+		List<RPMetodePemb> rpmbList = rpMetodePembServ.findByRPPerTemu(idRPPerTemu);   
+		response.setData(rpmbList);
+		return response;
+	}
+	
+	@RequestMapping(value="/getbentuk", method=RequestMethod.GET)
+	public @ResponseBody AjaxResponse getBentuk(@RequestParam("idRPPerTemu") UUID idRPPerTemu){
+		AjaxResponse response = new AjaxResponse();  
+		List<RPBentukPenilaian> rpbpList = rpBentukPenilaianServ.findByRPPerTemu(idRPPerTemu);   
+		response.setData(rpbpList);
 		return response;
 	}
 	 
@@ -299,6 +365,9 @@ public class RPController extends SessionController {
 			List<CapPembMK> cpmkList = capPembMKServ.findByMK(idMK); //dapat capaian mata kuliah
 			List<CapPemb> cpList = subCapPembMKServ.findByMK(idMK); //dapat capaian prodi   
 			List<PrasyaratMK> prasyaratList = prasyaratMKServ.findParentMK(idMK); //dapat MK prasyarat 
+			List<RPMetodePemb> rpmbList = rpMetodePembServ.findAll();//dapat metode pembelajaran
+			List<RPBentukPenilaian> rpbpList = rpBentukPenilaianServ.findAll();//dapat bentuk penilaian
+			List<SatManMK> smmkList = satManMKServ.findByMK(idMK);//dapat satuan manajemen MK 	 
 			try{
 				List<RPPerTemu> rpPerTemuList = rpPerTemuServ.findByRP(rp.getIdRP());//dapat RP Per Temu 
 				List<MateriSilabus> msNewList = new ArrayList<MateriSilabus>();
@@ -306,8 +375,7 @@ public class RPController extends SessionController {
 				
 				HashMap<UUID, Boolean> hashMsList = new HashMap<UUID, Boolean>();
 				HashMap<UUID, Boolean> hashPsList = new HashMap<UUID, Boolean>();
-				for(RPPerTemu rppt : rpPerTemuList){
-					System.out.println(rppt.getIdRPPerTemu());
+				for(RPPerTemu rppt : rpPerTemuList){ 
 					List<MateriSilabus> msList = materiSilabusServ.findByRPPerTemu(rppt.getIdRPPerTemu());//dapat materi pembelajaran
 					for (MateriSilabus ms : msList) {
 						if(!hashMsList.containsKey(ms.getIdMateriSilabus())) {					
@@ -343,8 +411,7 @@ public class RPController extends SessionController {
 							}
 						}
 					}
-					hashCPMKPerTemu.put(rppt.getIdRPPerTemu(), listCPMKSementara);
-					System.out.println(hashCPMKPerTemu.get(rppt.getIdRPPerTemu()));
+					hashCPMKPerTemu.put(rppt.getIdRPPerTemu(), listCPMKSementara); 
 				}
 				
 				
@@ -363,6 +430,9 @@ public class RPController extends SessionController {
 			mav.addObject("cpmkList", cpmkList); 
 			mav.addObject("cpList", cpList); 
 			mav.addObject("prasyaratList", prasyaratList);
+			mav.addObject("rpmbList", rpmbList);
+			mav.addObject("rpbpList", rpbpList);
+			mav.addObject("smmkList", smmkList);
 			mav.setViewName("ReportRencanaPembelajaran");
 			return mav;
 		}   

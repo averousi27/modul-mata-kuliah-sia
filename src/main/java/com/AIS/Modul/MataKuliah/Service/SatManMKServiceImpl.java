@@ -113,5 +113,11 @@ public class SatManMKServiceImpl implements SatManMKService {
 	public List<SatManMK> get(String where, String order, int limit, int offset) {
 		return satManMKRepo.get(where, order, limit, offset);
 	}
+
+	@Override
+	public List<SatManMK> findByMK(UUID idMK) {
+		// TODO Auto-generated method stub
+		return satManMKRepo.findByMK(idMK);
+	}
 	
 }

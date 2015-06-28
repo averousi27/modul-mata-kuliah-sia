@@ -280,11 +280,11 @@
 						showModal = function (){
 							$('#myModal').modal('show');
 						}
-						$("#triggerbutton").click(function(){
-							$("#capPembDiv").each(function(index, element) {
-								$(element).remove();
-							});
-						})
+// 						$("#triggerbutton").click(function(){
+// 							$("#capPembDiv").each(function(index, element) {
+// 								$(element).remove();
+// 							});
+// 						})
 						
 						$('#myModal').on('shown.bs.modal', function (e) {
 							$("#masterpageCapPemb").find('.dataTables_length select').change();

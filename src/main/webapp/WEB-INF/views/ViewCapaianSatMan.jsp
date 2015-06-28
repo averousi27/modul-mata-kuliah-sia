@@ -78,8 +78,8 @@
 												</td> 
 												<td>Tahun Kurikulum</td>   
 												<td>Nama Kurikulum</td>  
-												<td>Nama Capaian Anak</td> 
-												<td>Deskripsi Capaian Anak</td>
+												<td>Nama Capaian</td> 
+												<td>Deskripsi Capaian</td>
 												<td>Nama Capaian Induk</td>
 												<td>Deskripsi Capaian Induk</td>
 												<td>Status Hapus</td>

@@ -86,5 +86,14 @@ public class SatManMKRepositoryImpl implements SatManMKRepository {
 		
 		return query.list();
 	}
+ 
+	@Override
+	public List<SatManMK> findByMK(UUID idMK) {
+		// TODO Auto-generated method stub
+		List<SatManMK> queryResult = sessionFactory.getCurrentSession().createQuery(
+				"select sMMK from SatManMK sMMK join sMMK.satMan sm join sMMK.mk mk where mk.idMK='"+idMK.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
 
 }

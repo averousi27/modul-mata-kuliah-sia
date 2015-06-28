@@ -52,28 +52,39 @@
 						<div class="col-md-12" style="margin-bottom:10px;"> 
 							<div class="panel panel-white">
 								<div class="panel-heading clearfix">
-									<h4 class="panel-title">Laporan Silabus</h4>
+									<h4 class="panel-title">Laporan Silabus</h4> 
 								</div>
 								<div class="panel-body">  
 									 <div class="row">
 									 	<div class="col-md-8 col-md-offset-2">  
+									 			<p><b>Kurikulum :</b> ${mk2.kurikulum.namaKurikulum}</p>
 									 			<p><b>Kode Mata Kuliah :</b> ${mk2.kodeMK}</p>
 									 			<p><b>Nama Mata Kuliah :</b> ${mk2.namaMK}</p>
 									 			<p><b>Rumpun Mata Kuliah :</b> ${mk2.rumpunMK.namaRumpunMK}</p>
-									 			<p><b>Kredit :</b> ${mk2.jumlahSKS} sks</p>
-									 			<p><b>Semester :</b> ${mk2.tingkatPemb}</p>
+									 			<p><b>Jurusan :</b></p>
+									 			<ul>
+											 		<c:forEach items="${smmkList}" var="smmk"> 
+											 			<li>${smmk.satMan.nmSatMan} - Semester : ${smmk.tingkatPemb}</li> 
+											 		</c:forEach>
+									 			</ul>
+									 			<p><b>Kredit :</b> ${mk2.jumlahSKS} sks</p> 
 									 			<p><b>Deskripsi :</b> ${mk2.deskripsiMK}</p>
 								 			<br />  
 									 		<p><b>Prasyarat Mata Kuliah</b></p>
-									 		<c:forEach items="${prasyaratList}" var="prasyaratList"> 
-									 			<p>${prasyaratList.parent.namaMK}</p>
-									 		</c:forEach>
+									 		<c:if test="${prasyaratList != null}">
+												<c:forEach items="${prasyaratList}" var="prasyaratList"> 
+									 				<p>${prasyaratList.parent.namaMK}</p>
+									 			</c:forEach>
+											</c:if>  
+											<c:if test="${prasyaratList == null}">
+												<p>Tidak ada prasyarat</p>
+											</c:if> 
 									 		<br />
 									 		<p><b>Pustaka</b></p>
 									 		<ul>
-									 		<c:forEach items="${dpList}" var="dpList"> 
-									 			<li>${dpList.pustaka.namaPustaka}</li> 
-									 		</c:forEach>
+										 		<c:forEach items="${dpList}" var="dpList"> 
+										 			<li>${dpList.pustaka.namaPustaka}</li> 
+										 		</c:forEach>
 									 		</ul>
 										</div>
 										
@@ -122,9 +133,30 @@
 															</c:if> 
 														</c:forEach>
 														</ul>
+													</td> 
+													<td>
+														<ul>
+														<c:forEach items="${rpmbList}" var="rpmp">
+															<c:if test="${rpmp.rpPerTemu.idRPPerTemu == rpPerTemu.idRPPerTemu}">
+																<li>${rpmp.metodePemb.namaMetodePemb}</li>
+															</c:if>    
+														</c:forEach>
+														</ul>
 													</td>
-													<td>${rpPerTemu.metodePemb.namaMetodePemb}</td>
-													<td>${rpPerTemu.bentukPenilaian.namaBentuk}</td>
+													<td>
+														<ul>
+														<c:forEach items="${rpbpList}" var="rpbp">
+															<c:if test="${rpbp.rpPerTemu.idRPPerTemu == rpPerTemu.idRPPerTemu}">
+																<c:if test="${rpbp.bentukPenilaian!=null}">
+																	<li>${rpbp.bentukPenilaian.namaBentuk}</li>
+																</c:if> 
+																<c:if test="${rpbp.bentukPenilaian==null}">
+																	Tidak ada bentuk penilaian
+																</c:if> 
+															</c:if>  
+														</c:forEach>
+														</ul>
+													</td>
 													<td>${rpPerTemu.indikatorPenilaian}</td>
 													<td>${rpPerTemu.bobotPenilaian}</td>
 												</tr>

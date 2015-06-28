@@ -14,6 +14,8 @@ public interface SatManMKRepository {
 	public SatManMK findById(UUID idSatManMK);
 	public long count(String string);
 
-	public List<SatManMK> get(String where, String order, int limit, int offset); 
+	public List<SatManMK> get(String where, String order, int limit, int offset);
+
+	public List<SatManMK> findByMK(UUID idMK); 
 
 }
