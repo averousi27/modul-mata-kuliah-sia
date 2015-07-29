@@ -56,7 +56,10 @@
 								</div>
 								<div class="panel-body">  
 									 <div class="row">
-									 	<div class="col-md-8 col-md-offset-2">  
+									 	<button type="button" class="btn btn-primary col-md-4 col-md-offset-4" onclick="printSilabus(this)" name="${mk2.idMK}">Cetak Silabus&nbsp;&nbsp;<span class="glyphicon glyphicon-print"></span></button>
+									 	
+									 	<div class="col-md-8 col-md-offset-2">   
+									 			<br />
 									 			<p><b>Kurikulum :</b> ${mk2.kurikulum.namaKurikulum}</p>
 									 			<p><b>Kode Mata Kuliah :</b> ${mk2.kodeMK}</p>
 									 			<p><b>Nama Mata Kuliah :</b> ${mk2.namaMK}</p>
@@ -129,6 +132,10 @@
 				</div> 
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script> 
+				printSilabus = function printSilabus(button){
+					var mk = $(button).attr('name'); 
+					window.open(context_path+'silabus/kelola/laporan/'+mk,'_blank');
+				}
 				</script>
 				<!-- akhir script custom pada halaman -->
 				

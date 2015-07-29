@@ -21,7 +21,7 @@ public class SatManMKServiceImpl implements SatManMKService {
 	private MKService mkServ;
 	
 	@Autowired
-	private SatManService satManServ;
+	private SatManService satManServ; 
 	
 	@Autowired
 	private SatManMKRepository satManMKRepo;
@@ -41,6 +41,16 @@ public class SatManMKServiceImpl implements SatManMKService {
 		}
 		else
 		{
+
+			List<SatManMK> satManMKList = findAll();
+			for (SatManMK satManMK2 : satManMKList) {//kondisi satuan manajemen yang sama dan tingkat pemb sama dan MK sama, gabole
+				if(satManMK.getSatMan().getIdSatMan()==satManMK2.getSatMan().getIdSatMan() && 
+						satManMK.getTingkatPemb()==satManMK2.getTingkatPemb() &&
+							satManMK.getMk().getIdMK()==satManMK2.getMk().getIdMK()){ 
+							String message = "Semester dan satuan manajemen sudah ada";
+							return message;
+				}
+			}  
 			//insert 
 			return satManMKRepo.insert(satManMK).toString();
 		}
@@ -118,6 +128,12 @@ public class SatManMKServiceImpl implements SatManMKService {
 	public List<SatManMK> findByMK(UUID idMK) {
 		// TODO Auto-generated method stub
 		return satManMKRepo.findByMK(idMK);
+	}
+
+	@Override
+	public List<SatManMK> findAll() {
+		// TODO Auto-generated method stub
+		return satManMKRepo.findAll();
 	}
 	
 }

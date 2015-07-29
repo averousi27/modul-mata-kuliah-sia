@@ -96,4 +96,14 @@ public class SatManMKRepositoryImpl implements SatManMKRepository {
 		return queryResult;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SatManMK> findAll() {
+		// TODO Auto-generated method stub
+		List<SatManMK> queryResult = sessionFactory.getCurrentSession().createQuery(
+				"from SatManMK where statusSatManMK=false").list();
+		if(queryResult.size()==0) return null;
+		return queryResult;
+	}
+
 }

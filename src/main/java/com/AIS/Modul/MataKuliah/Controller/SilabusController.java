@@ -13,6 +13,7 @@ import javax.validation.constraints.Max;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
+import org.apache.taglibs.standard.tei.ForEachTEI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.AIS.Modul.MataKuliah.Service.AjaxResponse;
 import com.AIS.Modul.MataKuliah.Service.CapPembMKService;
+import com.AIS.Modul.MataKuliah.Service.CapPembMKTemporary;
 import com.AIS.Modul.MataKuliah.Service.CapPembService;
 import com.AIS.Modul.MataKuliah.Service.DetailPustakaService;
 import com.AIS.Modul.MataKuliah.Service.DetailSilabusService;
@@ -35,6 +37,8 @@ import com.AIS.Modul.MataKuliah.Service.PemetaanSilabusService;
 import com.AIS.Modul.MataKuliah.Service.PrasyaratMKService;
 import com.AIS.Modul.MataKuliah.Service.PustakaService;
 import com.AIS.Modul.MataKuliah.Service.SatManMKService;
+import com.AIS.Modul.MataKuliah.Service.SatManMKTemporary;
+import com.AIS.Modul.MataKuliah.Service.SilabusDataReport;
 import com.AIS.Modul.MataKuliah.Service.SilabusService;
 import com.AIS.Modul.MataKuliah.Service.SubCapPembMKService;
 import com.sia.main.domain.CapPemb;
@@ -42,6 +46,7 @@ import com.sia.main.domain.CapPembMK;
 import com.sia.main.domain.DetailPemetaan;
 import com.sia.main.domain.DetailPustaka;
 import com.sia.main.domain.DetailSilabus;
+import com.sia.main.domain.Kurikulum;
 import com.sia.main.domain.MK;
 import com.sia.main.domain.PemetaanSilabus;
 import com.sia.main.domain.PrasyaratMK;
@@ -298,17 +303,80 @@ public class SilabusController extends SessionController {
 	public ModelAndView showSilabusTemp(Locale locale, Model model, @PathVariable("idMK") UUID idMK){
 		ModelAndView modelAndView = new ModelAndView();  
 		Map<String,Object> parameterMap = new HashMap<String,Object>(); 
-        //
-        MK mk = mkServ.findById(idMK); 
-        //SatManMK smmk = satManMKServ.findByMK(idMK);
-        List<CapPemb> cpList = capPembServ.findAll();
-        JRDataSource jRdataSource = new JRBeanCollectionDataSource(cpList);
-        parameterMap.put("mk", mk); 
-        parameterMap.put("datasource", jRdataSource);
- 
-        //pdfReport bean has ben declared in the jasper-views.xml file
+		
+		//inisialisasi
+		List<SilabusDataReport> listObj = new ArrayList<SilabusDataReport>();
+        SilabusDataReport obj = new SilabusDataReport();  
+		List<Pustaka> pustakaPendukungTemp = new ArrayList<Pustaka>();
+		List<Pustaka> pustakaUtamaTemp = new ArrayList<Pustaka>(); 
+		List<SatManMKTemporary> satManMKTemp = new ArrayList<SatManMKTemporary>(); 
+		List<CapPembMKTemporary> cpmkTemp = new ArrayList<CapPembMKTemporary>();
+		List<MK> mkTemp = new ArrayList<MK>();
+		
+        MK mk = mkServ.findById(idMK); //dapat mk nya
+        Kurikulum kur = mk.getKurikulum();// dapat kurikulum nya
+        RumpunMK rumpunMK = mk.getRumpunMK();
+        Silabus silabus = silabusServ.findByMK(idMK);//dapat silabusnya 
+        
+        List<CapPemb> cpList = subCapPembMKServ.findByMK(idMK); //dapat capaian prodi    
+        
+        List<CapPembMK> cpmkList = capPembMKServ.findByMK(idMK); //dapat capaian mata kuliah
+        for (CapPembMK capPembMK : cpmkList) {
+        	CapPembMKTemporary cpmkObjTemp = new CapPembMKTemporary();
+        	cpmkObjTemp.setNamaCapPembMK(capPembMK.getNamaCapPembMK());
+        	cpmkObjTemp.setDeskripsiCapPembMK(capPembMK.getDeskripsiCapPembMK());
+        	cpmkTemp.add(cpmkObjTemp);
+		}
+        List<DetailSilabus> dsList = detailSilabusServ.findByMK(idMK);//dapat pokok bahasannya 
+        
+        List<DetailPustaka> dpList = detailPustakaServ.findBySilabus(silabus.getIdSilabus()); //dapat pustakanya     
+        for (DetailPustaka detailPustaka : dpList) {
+        	if(detailPustaka.getPustaka().getSifatPustaka().equals("U")){ //kondisi jika pustaka utama
+        		System.out.println("ini utama "+detailPustaka.getPustaka().getSifatPustaka());
+        		pustakaUtamaTemp.add(detailPustaka.getPustaka());
+        	}
+        	else if(detailPustaka.getPustaka().getSifatPustaka().equals("P")){//kondisi jika pustaka pendukung
+        		System.out.println("ini pendukung "+detailPustaka.getPustaka().getSifatPustaka());
+        		pustakaPendukungTemp.add(detailPustaka.getPustaka()); 
+        	}
+		}
+        List<PrasyaratMK> prasyaratList = prasyaratMKServ.findParentMK(idMK); //dapat prasyarat MK 
+        if(prasyaratList!=null){//kondisi jika prasyarat ada
+        	for (PrasyaratMK prasyaratMK : prasyaratList) { 
+            	mkTemp.add(prasyaratMK.getParentMK());
+    		}
+        }  
+        else{//kondisi jika ada prasyarat tidak ada
+        	MK mkNull = new MK();
+        	mkNull.setKodeMK("-");
+        	mkNull.setNamaMK("Tidak ada prasyarat");
+        	mkTemp.add(mkNull);
+        }
+		List<SatManMK> smmkList = satManMKServ.findByMK(idMK);//dapat satuan manajemen MK 	 
+        for (SatManMK satManMK : smmkList) {
+        	SatManMKTemporary smmkTemp = new SatManMKTemporary();
+        	smmkTemp.setNmSatMan(satManMK.getSatMan().getNmSatMan());
+        	smmkTemp.setTingkatPemb(satManMK.getTingkatPemb());
+			satManMKTemp.add(smmkTemp); 
+		}
+        //memasukkan data  
+        obj.setCapPembMKReport(cpmkTemp); 
+        obj.setCapPembReport(cpList); 
+        obj.setPokokBahasanReport(dsList);
+        obj.setPrasyaratMKReport(mkTemp);
+        obj.setPustakaUtamaReport(pustakaUtamaTemp);
+        obj.setPustakaPendukungReport(pustakaPendukungTemp);
+        obj.setSatManMKReport(satManMKTemp);
+        listObj.add(obj);
+        
+        JRDataSource jRdataSource = new JRBeanCollectionDataSource(listObj);  
+        parameterMap.put("mk", mk);
+        parameterMap.put("rumpunMK", rumpunMK);
+        parameterMap.put("kur", kur);
+        parameterMap.put("datasource", jRdataSource); 
         modelAndView = new ModelAndView("reportSilabus", parameterMap);
- 
-        return modelAndView;
+        
+		return modelAndView; 
+         
 	}
 }

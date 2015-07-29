@@ -16,6 +16,8 @@ public interface SatManMKRepository {
 
 	public List<SatManMK> get(String where, String order, int limit, int offset);
 
-	public List<SatManMK> findByMK(UUID idMK); 
+	public List<SatManMK> findByMK(UUID idMK);
+
+	public List<SatManMK> findAll(); 
 
 }

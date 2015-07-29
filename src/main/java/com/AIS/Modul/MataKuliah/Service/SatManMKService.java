@@ -29,4 +29,6 @@ public interface SatManMKService {
 
 	public List<SatManMK> findByMK(UUID idMK);
 
+	public List<SatManMK> findAll();
+
 }

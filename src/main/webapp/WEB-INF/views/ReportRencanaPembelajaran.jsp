@@ -52,11 +52,12 @@
 						<div class="col-md-12" style="margin-bottom:10px;"> 
 							<div class="panel panel-white">
 								<div class="panel-heading clearfix">
-									<h4 class="panel-title">Laporan Silabus</h4> 
+									<h4 class="panel-title">Detail Mata Kuliah</h4> 
 								</div>
 								<div class="panel-body">  
 									 <div class="row">
 									 	<div class="col-md-8 col-md-offset-2">  
+									 			
 									 			<p><b>Kurikulum :</b> ${mk2.kurikulum.namaKurikulum}</p>
 									 			<p><b>Kode Mata Kuliah :</b> ${mk2.kodeMK}</p>
 									 			<p><b>Nama Mata Kuliah :</b> ${mk2.namaMK}</p>
@@ -97,9 +98,10 @@
 						<div class="col-md-12">
 							<div class="panel panel-white">
 								<div class="panel-heading clearfix">
-									<h4 class="panel-title">Laporan RP Per Pertemuan</h4>
+									<h4 class="panel-title">Laporan RP Per Pertemuan</h4>  
 								</div>
 								<div class="panel-body">
+									<button type="button" class="btn btn-primary col-md-4 col-md-offset-4" onclick="printRP(this)" name="${mk2.idMK}">Cetak Rencana Pembelajaran&nbsp;&nbsp;<span class="glyphicon glyphicon-print"></span></button>
 									<table class="table">
 										<thead>
 											<tr>
@@ -165,11 +167,15 @@
 									</table>
 								</div>
 							</div>
-						</div>
-					</div>
+						</div> 
+					</div> 
 				</div> 
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script>  
+				printRP = function printRP(button){
+					var mk = $(button).attr('name');
+					window.open(context_path+'rencanapembelajaran/kelola/laporan/'+mk,'_blank');
+				}
 				</script>
 				<!-- akhir script custom pada halaman -->
 				

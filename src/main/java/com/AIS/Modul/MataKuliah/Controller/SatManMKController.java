@@ -88,11 +88,22 @@ public class SatManMKController extends SessionController {
 	@RequestMapping(value = "/simpan", method = RequestMethod.POST)
     public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("satManMK") SatManMK satManMK, 
     		@RequestParam("idMK") UUID idMK, @RequestParam("idSatMan") UUID idSatMan, 
-    		 BindingResult result, Map<String, Object> model) { 
-		System.out.println(satManMK.getIdSatManMK());
+    		 BindingResult result, Map<String, Object> model) {  
 		AjaxResponse response = new AjaxResponse();   
 		MK mk = mkServ.findById(idMK);
 		SatMan satMan = satManServ.findById(idSatMan);
+//		List<SatManMK> satManMKList = satManMKServ.findAll();
+//		for (SatManMK satManMK2 : satManMKList) {//kondisi satuan manajemen yang sama dan tingkat pemb sama dan MK sama, gabole
+//			if(idSatMan==satManMK2.getSatMan().getIdSatMan() && 
+//					satManMK.getTingkatPemb()==satManMK2.getTingkatPemb() &&
+//						idMK==satManMK2.getMk().getIdMK()){
+//						response.setStatus("error");
+//						String message = "Satuan manajemen dan semester yang dimasukkan sudah ada";
+//						response.setMessage(message);  
+//			            return response;
+//			}
+//		}  
+		
 		satManMK.setMk(mk);
 		satManMK.setSatMan(satMan);
         if (result.hasErrors()) {
@@ -111,7 +122,8 @@ public class SatManMKController extends SessionController {
             return response;
         }
         response.setData(satManMKServ.save(satManMK));
-        if(response.getData()!=null) response.setMessage("Data berhasil disimpan");
+        if(response.getData()!=null && response.getData().equals("Semester dan satuan manajemen sudah ada")==false)
+        	response.setMessage("Data berhasil disimpan"); 
         else 
         {
         	response.setStatus("error");

@@ -104,6 +104,15 @@ public class KurikulumServiceImpl implements KurikulumService {
 		}
 		else
 		{
+			List<Kurikulum> kurikulumList = findAll();
+			for (Kurikulum kurikulum2 : kurikulumList) {
+				if(kurikulum.getSatMan().getIdSatMan()==kurikulum2.getSatMan().getIdSatMan() &&  
+						kurikulum.getThnMulai().equals(kurikulum2.getThnMulai()) &&
+							kurikulum.getThnAkhir().equals(kurikulum2.getThnAkhir())){  
+							String message = null;
+							return message;
+				}
+			} 
 			//insert
 //	        kurikulum.setaStatusKurikulum(true);
 			return kurikulumRepo.insert(kurikulum).toString();

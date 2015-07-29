@@ -134,7 +134,6 @@
 												<c:forEach items="${rumpunMKList}" var="rumpunMK"> 
 													<option value="${rumpunMK.idRumpunMK}">${rumpunMK.namaRumpunMK }</option>
 												</c:forEach>  
-												<option value=null>Tidak ada rumpun mata kuliah</option> 
 											</select>
 										</div>
 										<div class="form-group">
